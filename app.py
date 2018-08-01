@@ -49,7 +49,7 @@ def verify_fb_token(token_sent):
 
 # chooses a random message to send to the user
 def get_message(message):
-    sample_responses = [classify(message)]
+    sample_responses = [message]
     # return selected item to the user
     return random.choice(sample_responses)
 
