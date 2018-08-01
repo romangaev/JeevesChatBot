@@ -37,7 +37,7 @@ ERROR_THRESHOLD = 0.25
 def classify(sentence):
     # import our chat-bot intents file
     import json
-    with open('/app/support/intents.json') as json_data:
+    with open('intents.json') as json_data:
         intents = json.load(json_data)
     words = []
     classes = []
