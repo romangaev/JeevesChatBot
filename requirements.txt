@@ -1,3 +1,4 @@
+nltk==3.3
 numpy==1.15.0
 pymessenger==0.0.7.0
 tensorboard==1.9.0
