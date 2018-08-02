@@ -3,7 +3,7 @@ import random
 import os
 from flask import Flask, request
 from pymessenger.bot import Bot
-from support.tensorBot import classify
+from tensorBot import classify
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
