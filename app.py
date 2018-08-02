@@ -48,9 +48,10 @@ def verify_fb_token(token_sent):
 
 # chooses a random message to send to the user
 def get_message(message):
-    sample_responses = [''.join(classify(message))]
+    #sample_responses = [classify(message)]
     # return selected item to the user
-    return random.choice(sample_responses)
+    #return random.choice(sample_responses)
+    return classify(message)[0]
 
 
 # uses PyMessenger to send response to user
