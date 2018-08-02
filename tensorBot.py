@@ -143,5 +143,3 @@ def classify(sentence):
 
             results.pop(0)'''
 
-
-print(classify('hello'))
