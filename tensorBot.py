@@ -11,6 +11,7 @@ import random
 from nltk.corpus import stopwords
 
 
+
 def clean_up_sentence(sentence):
     # tokenize the pattern
     sentence_words = nltk.word_tokenize(sentence)
@@ -35,6 +36,7 @@ def bow(sentence, words, show_details=False):
 
 ERROR_THRESHOLD = 0.25
 def classify(sentence):
+
     # import our chat-bot intents file
     import json
     with open('intents.json') as json_data:
