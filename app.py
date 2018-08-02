@@ -51,7 +51,9 @@ def get_message(message):
     #sample_responses = [classify(message)]
     # return selected item to the user
     #return random.choice(sample_responses)
-    return classify(message)[0]
+    respond_text= classify(message)
+    print(respond_text)
+    return respond_text
 
 
 # uses PyMessenger to send response to user
