@@ -52,8 +52,9 @@ def get_message(message):
     # return selected item to the user
     #return random.choice(sample_responses)
     respond_text='echo'
-    respond_text2=classify(message)
+    respond_text2=''.join(classify(message))
     print(respond_text)
+    print(respond_text2)
     return respond_text
 
 
