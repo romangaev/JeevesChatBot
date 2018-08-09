@@ -1,8 +1,13 @@
 {"intents": [
         {"tag": "greeting",
          "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day"],
-         "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?"],
-         "context_set": ""
+         "responses": ["Hi", "Good to see you again", "Hi there, how can I help?"],
+         "state": ""
+        },
+        {"tag": "info",
+          "patterns": ["I want to know more about bot","What can you do","Help!","How can you help me","Tell me about yourself","What is your abilities","What are you able to do","How can I use you","What can you do for me"],
+          "responses": ["Well. I'm English learning bot. You can check level of your English with me, ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn. Hopefully you'll learn something more than just offensive language"],
+          "state": ""
         },
         {"tag": "goodbye",
          "patterns": ["Bye", "See you later", "Goodbye"],
@@ -12,6 +17,24 @@
          "patterns": ["Thanks", "Thank you", "That's helpful"],
          "responses": ["Happy to help!", "Any time!", "My pleasure"]
         },
+        {"tag": "dictopen",
+         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary"],
+          "responses": ["Sure"],
+          "state": ""
+        },
+         {"tag": "dictadd",
+          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word"],
+            "responses": ["Sure"]
+          },
+
+
+
+
+
+
+
+
+
         {"tag": "hours",
          "patterns": ["What hours are you open?", "What are your hours?", "When are you open?" ],
          "responses": ["We're open every day 9am-9pm", "Our hours are 9am-9pm every day"]
