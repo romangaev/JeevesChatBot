@@ -4,7 +4,6 @@ import os
 from flask import Flask, request
 from pymessenger.bot import Bot
 from tensorBot import classify
-from pymongo import MongoClient
 import StateMachine
 import json
 
@@ -12,10 +11,8 @@ import json
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-MONGODB_URI = os.environ['MONGODB_URI']
+
 bot = Bot(ACCESS_TOKEN)
-client = MongoClient(MONGODB_URI)
-db = client.chatbot_db
 states={}
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route("/", methods=['GET', 'POST'])
@@ -64,9 +61,9 @@ def get_message(user_id, message):
     new_state = ''
     with open('intents.json') as json_data:
         intents = json.load(json_data)
-    for intent in intents['intents']:
-            if intent['tag'] == intent:
-                new_state = intent['state']
+    for every in intents['intents']:
+            if every['tag'] == intent:
+                new_state = every['state']
 
     if user_id in states:
         user_state_machine = states[user_id]

@@ -143,4 +143,3 @@ def classify(sentence):
                     return print(random.choice(i['responses']))
 
             results.pop(0)'''
-
