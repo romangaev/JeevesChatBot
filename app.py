@@ -71,7 +71,7 @@ def get_message(user_id, message):
     if user_id in states:
         user_state_machine = states[user_id]
     else:
-        states[user_id] = StateMachine('')
+        states[user_id] = StateMachine.StateMachine('')
         user_state_machine = states[user_id]
 
     respond_text = user_state_machine.state_respond(intent, confidence, new_state)
