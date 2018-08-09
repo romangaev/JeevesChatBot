@@ -61,7 +61,7 @@ def get_message(user_id, message):
     intent_matrix = classify(message)
     intent = intent_matrix[0][0]
     confidence=intent_matrix[0][1]
-
+    new_state = ''
     with open('intents.json') as json_data:
         intents = json.load(json_data)
     for intent in intents['intents']:
