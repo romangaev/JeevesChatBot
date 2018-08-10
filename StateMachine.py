@@ -48,7 +48,7 @@ class StateMachine:
                 response = random.choice(self.intents['intents'][0]['responses'])
             print(response)
             print(intent)
-            print('StateMachineState:'+self.state)
+            print('StateMachineState:'+ self.state)
             #dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)

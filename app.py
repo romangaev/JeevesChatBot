@@ -54,13 +54,15 @@ def get_message(user_id, message):
     #sample_responses = [classify(message)]
     # return selected item to the user
     #return random.choice(sample_responses)
-
+    print(user_id)
+    print("user id in dictionary? "+user_id in states)
     if user_id in states:
         user_state_machine = states[user_id]
     else:
         states[user_id] = StateMachine.StateMachine('')
         user_state_machine = states[user_id]
-    print(user_id in states)
+
+    print(user_id)
     respond_text = user_state_machine.state_respond(message)
     print("FLASK response- "+respond_text)
     return respond_text
