@@ -13,6 +13,7 @@ class StateMachine:
             self.intents = json.load(json_data)
 
     def state_respond(self, message):
+        print(self.state)
 
         # classify the intent and get a new state
         intent_matrix = classify(message)
@@ -79,7 +80,7 @@ class StateMachine:
                 word_to_add = ''
 
             # change the state
-            self.state = new_state
+            self.state = 'dictadd'
 
             # if we didnt find the word then ask for the word
             if word_to_add == '':
