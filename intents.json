@@ -11,20 +11,23 @@
         },
         {"tag": "goodbye",
          "patterns": ["Bye", "See you later", "Goodbye"],
-         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."]
+         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."],
+          "state": ""
         },
         {"tag": "thanks",
          "patterns": ["Thanks", "Thank you", "That's helpful"],
-         "responses": ["Happy to help!", "Any time!", "My pleasure"]
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+          "state": ""
         },
         {"tag": "dictopen",
          "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary"],
-          "responses": ["Sure"],
-          "state": ""
+          "responses": ["Sure"]
         },
          {"tag": "dictadd",
           "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word"],
-            "responses": ["Sure"]
+            "responses_if_word_given": ["Sure!","Just to clarify."],
+           "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
+           "state": "dictadd"
           },
 
 
@@ -60,6 +63,16 @@
          "patterns": ["today"],
          "responses": ["For rentals today please call 1-800-MYMOPED", "Same-day rentals please call 1-800-MYMOPED"],
          "context_filter": "rentalday"
+        },
+        {"tag": "confirmation",
+               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure"],
+               "responses": [""],
+               "state": ""
+        },
+        {"tag": "rejection",
+                     "patterns": ["No","I don't want","nope","Wrong","You didn't get me","negative","Nah","No, thanks"],
+                     "responses": [""],
+                     "state": ""
         }
    ]
 }

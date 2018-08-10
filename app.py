@@ -3,9 +3,8 @@ import random
 import os
 from flask import Flask, request
 from pymessenger.bot import Bot
-from tensorBot import classify
 import StateMachine
-import json
+
 
 
 app = Flask(__name__)
@@ -55,15 +54,6 @@ def get_message(user_id, message):
     #sample_responses = [classify(message)]
     # return selected item to the user
     #return random.choice(sample_responses)
-    intent_matrix = classify(message)
-    intent = intent_matrix[0][0]
-    confidence=intent_matrix[0][1]
-    new_state = ''
-    with open('intents.json') as json_data:
-        intents = json.load(json_data)
-    for every in intents['intents']:
-            if every['tag'] == intent:
-                new_state = every['state']
 
     if user_id in states:
         user_state_machine = states[user_id]
@@ -71,7 +61,7 @@ def get_message(user_id, message):
         states[user_id] = StateMachine.StateMachine('')
         user_state_machine = states[user_id]
 
-    respond_text = user_state_machine.state_respond(intent, confidence, new_state)
+    respond_text = user_state_machine.state_respond(message)
 
     return respond_text
 
