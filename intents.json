@@ -24,12 +24,11 @@
           "responses": ["Sure"]
         },
          {"tag": "dictadd",
-          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word"],
+          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "vocabulary", "dictionary"],
             "responses_if_word_given": ["Sure!","Just to clarify."],
            "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
            "state": "dictadd"
           },
-
 
 
 
@@ -73,6 +72,11 @@
                      "patterns": ["No","I don't want","nope","Wrong","You didn't get me","negative","Nah","No, thanks"],
                      "responses": [""],
                      "state": ""
+        },
+        {"tag": "agreement",
+                           "patterns": ["Nice","Fair enough","make sense","Lovely","good","I like it"],
+                           "responses": ["I'm glad you like it"],
+                           "state": ""
         }
    ]
 }
