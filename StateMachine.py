@@ -13,7 +13,7 @@ class StateMachine:
             self.intents = json.load(json_data)
 
     def state_respond(self, message):
-        print(self.state)
+
 
         # classify the intent and get a new state
         intent_matrix = classify(message)
@@ -48,8 +48,10 @@ class StateMachine:
                 response = random.choice(self.intents['intents'][0]['responses'])
             print(response)
             print(intent)
+            print('StateMachineState:'+self.state)
             #dont forget to change the state
             self.state = new_state
+            print('StateMachineState:' + self.state)
             return response
         elif(self.state == 'dictadd'):
             self.dict_add_transitions(message,intent,confidence,new_state)
@@ -86,7 +88,7 @@ class StateMachine:
             if word_to_add == '':
                 return random.choice(self.intents['intents'][5]['responses_if_not_given'])
             # otherwise
-            data['dictadd']=word_to_add
+            data['dictadd'] = word_to_add
             return random.choice(self.intents['intents'][5]['responses_if_word_given']) + ' Add to your dictionary:' + word_to_add +'. Right?'
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
