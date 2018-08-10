@@ -90,7 +90,7 @@ class StateMachine:
                 return random.choice(self.intents['intents'][5]['responses_if_not_given'])
             # otherwise
             data['dictadd'] = word_to_add
-            return random.choice(self.intents['intents'][5]['responses_if_word_given']) + ' Add to your dictionary:' + word_to_add +'. Right?'
+            return random.choice(self.intents['intents'][5]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
@@ -110,7 +110,8 @@ class StateMachine:
             self.data = {}
             self.state = ''
             print('almost added...'+sentence)
-            return 'added!'
+            response = sentence + " - added!"
+            return response
 
 
 
