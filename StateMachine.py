@@ -109,7 +109,8 @@ class StateMachine:
             # DBQUERY
             self.data = {}
             self.state = ''
-            return sentence + ' added!'
+            print('almost added...'+sentence)
+            return 'added!'
 
 
 
