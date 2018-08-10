@@ -57,9 +57,10 @@ class StateMachine:
             self.dict_add_transitions(message,intent,confidence,new_state)
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
-
+        print('inside dict add method')
         # if we are entering dictadd context
         if self.state == '' and new_state == 'dictadd':
+            print('inside entering dict add context')
             # retrieving the word to add
             data = pos_tag(word_tokenize(sentence.lower()))
             index_vocab = 0
@@ -92,6 +93,7 @@ class StateMachine:
             return random.choice(self.intents['intents'][5]['responses_if_word_given']) + ' Add to your dictionary:' + word_to_add +'. Right?'
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
+            print('inside dictadd+data')
             if intent == 'confirmation':
                 # DBQUERY
                 self.data={}
@@ -102,6 +104,7 @@ class StateMachine:
                 self.data={}
                 return random.choice(self.intents['intents'][5]['responses_if_not_given'])
         elif self.state == 'dictadd' and not self.data:
+            print('inside dictadd+no data')
             # adding a word
             # DBQUERY
             self.data = {}
