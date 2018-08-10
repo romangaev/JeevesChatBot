@@ -26,7 +26,6 @@ class StateMachine:
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
-
             response = 'default'
             if confidence < 0.3:
                 response = "Not sure what you mean"
@@ -79,6 +78,9 @@ class StateMachine:
             if word_to_add.__contains__('something') or word_to_add.__contains__('a word') or word_to_add.__contains__('word'):
                 word_to_add = ''
 
+            # change the state
+            self.state = new_state
+
             # if we didnt find the word then ask for the word
             if word_to_add == '':
                 return random.choice(self.intents['intents'][5]['responses_if_not_given'])
@@ -96,7 +98,7 @@ class StateMachine:
                 # user wants some other word
                 self.data={}
                 return random.choice(self.intents['intents'][5]['responses_if_not_given'])
-        elif self.state=='dictadd' and not self.data:
+        elif self.state == 'dictadd' and not self.data:
             # adding a word
             # DBQUERY
             self.data = {}
