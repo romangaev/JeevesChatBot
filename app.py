@@ -62,7 +62,7 @@ def get_message(user_id, message):
         user_state_machine = states[user_id]
     print(user_id in states)
     respond_text = user_state_machine.state_respond(message)
-
+    print("FLASK response- "+respond_text)
     return respond_text
 
 
