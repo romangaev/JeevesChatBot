@@ -29,7 +29,7 @@ class StateMachine:
 
             response = 'default'
             if confidence < 0.3:
-                response="Not sure what you mean"
+                response = "Not sure what you mean"
             elif intent == 'dictopen':
                 response = random.choice(self.intents['intents'][4]['responses'])
                 # DB
@@ -47,6 +47,7 @@ class StateMachine:
             elif intent == 'greeting':
                 response = random.choice(self.intents['intents'][0]['responses'])
             print(response)
+            print(intent)
             #dont forget to change the state
             self.state = new_state
             return response
