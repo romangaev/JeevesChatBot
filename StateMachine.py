@@ -111,7 +111,7 @@ class StateMachine:
             self.state = ''
             print('almost added...'+sentence)
 
-            return str(sentence + " - added!")
+            return str(sentence + ' - added!')
     def printing_state(self):
         print(self.state)
     def change_state(self,state):
