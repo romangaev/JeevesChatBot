@@ -5,7 +5,9 @@ from pymongo import MongoClient
 from nltk import word_tokenize, pos_tag
 from tensorBot import classify
 
+
 class StateMachine:
+
     def __init__(self, state):
         self.state = state
         self.data = {}
@@ -58,6 +60,9 @@ class StateMachine:
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
+        respond='default respond'
+
+
         # if we are entering dictadd context
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')
@@ -87,22 +92,22 @@ class StateMachine:
 
             # if we didnt find the word then ask for the word
             if word_to_add == '':
-                return random.choice(self.intents['intents'][5]['responses_if_not_given'])
-            # otherwise
-            data['dictadd'] = word_to_add
-            return random.choice(self.intents['intents'][5]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
+                respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
+            else:
+                data['dictadd'] = word_to_add
+                respond = random.choice(self.intents['intents'][5]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
             if intent == 'confirmation':
                 # DBQUERY
-                self.data={}
-                self.state=''
-                return self.data['dictadd']+' added!'
-            if intent == 'rejection':
+                self.data = {}
+                self.state = ''
+                respond = self.data['dictadd']+' added!'
+            elif intent == 'rejection':
                 # user wants some other word
-                self.data={}
-                return random.choice(self.intents['intents'][5]['responses_if_not_given'])
+                self.data = {}
+                respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
         elif self.state == 'dictadd' and not self.data:
             print('inside dictadd+no data')
             # adding a word
@@ -110,8 +115,11 @@ class StateMachine:
             self.data = {}
             self.state = ''
             print('almost added...'+sentence)
+            respond = sentence + ' - added!'
+        else:
+            respond = 'I dont know'
+        return respond
 
-            return str(sentence + ' - added!')
     def printing_state(self):
         print(self.state)
     def change_state(self,state):
