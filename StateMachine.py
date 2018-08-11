@@ -101,9 +101,10 @@ class StateMachine:
             print('inside dictadd+data')
             if intent == 'confirmation':
                 # DBQUERY
+
+                respond = self.data['dictadd']+' added!'
                 self.data = {}
                 self.state = ''
-                respond = self.data['dictadd']+' added!'
             elif intent == 'rejection':
                 # user wants some other word
                 self.data = {}
