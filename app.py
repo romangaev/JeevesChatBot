@@ -35,7 +35,7 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        response_sent_text = get_message( recipient_id,message['message'].get('text'))
+                        response_sent_text = get_message(recipient_id, message['message'].get('text'))
                         send_message(recipient_id, response_sent_text)
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
@@ -81,7 +81,6 @@ def get_message(user_id, message):
     respond_text = user_state_machine.state_respond(message)
     print("State after")
     user_state_machine.printing_state()
-    print("FLASK response- "+respond_text)
     # save it back to db
     s_m_bytes = pickle.dumps(user_state_machine)
     post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
