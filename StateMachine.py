@@ -60,7 +60,7 @@ class StateMachine:
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
-        respond='default respond'
+        respond = 'default respond'
 
 
         # if we are entering dictadd context
@@ -114,8 +114,9 @@ class StateMachine:
             # DBQUERY
             self.data = {}
             self.state = ''
-            print('almost added...'+sentence)
+            print('almost added...' + sentence)
             respond = sentence + ' - added!'
+            print(type(respond))
         else:
             respond = 'I dont know'
         return respond
