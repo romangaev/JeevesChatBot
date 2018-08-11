@@ -82,6 +82,10 @@ def get_message(user_id, message):
     print("State after")
     user_state_machine.printing_state()
     print("FLASK response- "+respond_text)
+    # save it back to db
+    s_m_bytes = pickle.dumps(user_state_machine)
+    post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
+    user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
     return respond_text
 
 

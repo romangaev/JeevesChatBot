@@ -114,7 +114,8 @@ class StateMachine:
             return response
     def printing_state(self):
         print(self.state)
-
+    def change_state(self,state):
+        self.state=state
 
 
 
