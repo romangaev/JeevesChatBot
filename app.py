@@ -65,7 +65,7 @@ def get_message(user_id, message):
     print(user_id)
     print("user id in dictionary? "+user_id in states)
     # if user_id in states:
-    if user_state_collection.posts.find_one({'user_id': user_id}) is not 'None':
+    if user_state_collection.posts.find_one({'user_id': user_id}) is not None:
         # user_state_machine = states[user_id]
         user_state_machine = user_state_collection.posts.find_one({'user_id': user_id})
     else:
