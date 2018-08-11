@@ -81,6 +81,7 @@ def get_message(user_id, message):
     respond_text = user_state_machine.state_respond(message)
     print("State after")
     user_state_machine.printing_state()
+    print(type(respond_text))
     # save it back to db
     s_m_bytes = pickle.dumps(user_state_machine)
     post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
