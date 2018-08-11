@@ -55,8 +55,7 @@ class StateMachine:
             #dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)
-
-        elif(self.state == 'dictadd'):
+        elif self.state == 'dictadd':
             response = self.dict_add_transitions(message,intent,confidence,new_state)
         return response
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
@@ -68,23 +67,23 @@ class StateMachine:
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')
             # retrieving the word to add
-            data = pos_tag(word_tokenize(sentence.lower()))
+            pos_results = pos_tag(word_tokenize(sentence.lower()))
             index_vocab = 0
-            for i in range(0, len(data)):
-                if data[i][0] == 'dictionary' or data[i][0] == 'vocabulary':
+            for i in range(0, len(pos_results)):
+                if pos_results[i][0] == 'dictionary' or pos_results[i][0] == 'vocabulary':
                     index_vocab = i
                     break
             index_prep = 0
             index_begin = 0
             for i in range(index_vocab, 0, -1):
-                if data[i][1] == 'IN' or data[i][1] == 'TO':
+                if pos_results[i][1] == 'IN' or pos_results[i][1] == 'TO':
                     index_prep = i
-                if data[i][1] == 'VB':
+                if pos_results[i][1] == 'VB':
                     index_begin = i + 1
                     break
             word_to_add = ''
             for i in range(index_begin, index_prep):
-                word_to_add = word_to_add + data[i][0] + ' '
+                word_to_add = word_to_add + pos_results[i][0] + ' '
             if word_to_add.__contains__('something') or word_to_add.__contains__('a word') or word_to_add.__contains__('word'):
                 word_to_add = ''
 
@@ -95,7 +94,7 @@ class StateMachine:
             if word_to_add == '':
                 respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
             else:
-                data['dictadd'] = word_to_add
+                self.data['dictadd'] = word_to_add
                 respond = random.choice(self.intents['intents'][5]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
