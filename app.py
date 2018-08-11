@@ -4,15 +4,18 @@ import os
 from flask import Flask, request
 from pymessenger.bot import Bot
 import StateMachine
-
+from pymongo import MongoClient
 
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-
+MONGODB_URI = os.environ['MONGODB_URI']
+client = MongoClient(MONGODB_URI)
+db = client.chatbot_db
+user_state_collection=db.user_state_collection
 bot = Bot(ACCESS_TOKEN)
-states={}
+states = {}
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
@@ -54,13 +57,23 @@ def get_message(user_id, message):
     #sample_responses = [classify(message)]
     # return selected item to the user
     #return random.choice(sample_responses)
+
+
+
+
+
     print(user_id)
     print("user id in dictionary? "+user_id in states)
-    if user_id in states:
-        user_state_machine = states[user_id]
+    # if user_id in states:
+    if user_state_collection.posts.find_one({'user_id': user_id}) is not 'None':
+        # user_state_machine = states[user_id]
+        user_state_machine = user_state_collection.posts.find_one({'user_id': user_id})
     else:
-        states[user_id] = StateMachine.StateMachine('')
-        user_state_machine = states[user_id]
+        user_state_machine = StateMachine.StateMachine('')
+        post = {'user_id': user_id, 'state_machine': user_state_machine}
+        user_state_collection.posts.insert_one(post)
+        # states[user_id] = StateMachine.StateMachine('')
+        # user_state_machine = states[user_id]
         print(states)
 
     respond_text = user_state_machine.state_respond(message)
