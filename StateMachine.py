@@ -22,6 +22,7 @@ class StateMachine:
         intent = intent_matrix[0][0]
         confidence = intent_matrix[0][1]
         new_state = ''
+        response = 'default'
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 new_state = every['state']
@@ -29,7 +30,7 @@ class StateMachine:
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
-            response = 'default'
+
             if confidence < 0.3:
                 response = "Not sure what you mean"
             elif intent == 'dictopen':
