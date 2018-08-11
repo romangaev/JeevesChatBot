@@ -54,10 +54,10 @@ class StateMachine:
             #dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)
-            return response
-        elif(self.state == 'dictadd'):
-            self.dict_add_transitions(message,intent,confidence,new_state)
 
+        elif(self.state == 'dictadd'):
+            response = self.dict_add_transitions(message,intent,confidence,new_state)
+        return response
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
         respond = 'default respond'
