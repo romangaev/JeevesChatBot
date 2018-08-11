@@ -58,19 +58,20 @@ def get_message(user_id, message):
     # return selected item to the user
     #return random.choice(sample_responses)
 
-
-
-
+    from bson.binary import Binary
+    import pickle
 
     print(user_id)
     print("user id in dictionary? "+user_id in states)
     # if user_id in states:
     if user_state_collection.posts.find_one({'user_id': user_id}) is not None:
         # user_state_machine = states[user_id]
-        user_state_machine = user_state_collection.posts.find_one({'user_id': user_id})
+        s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
+        user_state_machine = pickle.load(s_m_bytes)
     else:
         user_state_machine = StateMachine.StateMachine('')
-        post = {'user_id': user_id, 'state_machine': user_state_machine}
+        s_m_bytes = pickle.dumps(user_state_machine)
+        post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
         user_state_collection.posts.insert_one(post)
         # states[user_id] = StateMachine.StateMachine('')
         # user_state_machine = states[user_id]
