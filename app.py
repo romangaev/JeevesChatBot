@@ -78,7 +78,7 @@ def get_message(user_id, message):
         print(states)
     print("state before")
     user_state_machine.printing_state()
-    respond_text = str(user_state_machine.state_respond(message))
+    respond_text = user_state_machine.state_respond(message)
     print("State after")
     user_state_machine.printing_state()
     print(type(respond_text))
