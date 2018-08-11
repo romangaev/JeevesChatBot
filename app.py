@@ -62,7 +62,6 @@ def get_message(user_id, message):
     import pickle
 
     print(user_id)
-    print("user id in dictionary? "+user_id in states)
     # if user_id in states:
     if user_state_collection.posts.find_one({'user_id': user_id}) is not None:
         # user_state_machine = states[user_id]
@@ -76,8 +75,11 @@ def get_message(user_id, message):
         # states[user_id] = StateMachine.StateMachine('')
         # user_state_machine = states[user_id]
         print(states)
-
+    print("state before")
+    user_state_machine.printing_state()
     respond_text = user_state_machine.state_respond(message)
+    print("State after")
+    user_state_machine.printing_state()
     print("FLASK response- "+respond_text)
     return respond_text
 
