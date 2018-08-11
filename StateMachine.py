@@ -60,7 +60,8 @@ class StateMachine:
         return response
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
-        respond = 'default respond'
+        print(self.data)
+        respond = 'default'
 
 
         # if we are entering dictadd context

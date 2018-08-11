@@ -71,7 +71,7 @@
         {"tag": "rejection",
                      "patterns": ["No","I don't want","nope","Wrong","You didn't get me","negative","Nah","No, thanks"],
                      "responses": [""],
-                     "state": ""
+                     "state": "dictadd"
         },
         {"tag": "agreement",
                            "patterns": ["Nice","Fair enough","make sense","Lovely","good","I like it"],
