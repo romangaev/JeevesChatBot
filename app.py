@@ -67,7 +67,7 @@ def get_message(user_id, message):
     if user_state_collection.posts.find_one({'user_id': user_id}) is not None:
         # user_state_machine = states[user_id]
         s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
-        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+        user_state_machine = StateMachine.StateMachine(pickle.loads(s_m_bytes['state_machine']))
     else:
         user_state_machine = StateMachine.StateMachine('')
         s_m_bytes = pickle.dumps(user_state_machine)
@@ -78,7 +78,7 @@ def get_message(user_id, message):
         print(states)
     print("state before")
     user_state_machine.printing_state()
-    respond_text = user_state_machine.state_respond(message)
+    respond_text = str(user_state_machine.state_respond(message))
     print("State after")
     user_state_machine.printing_state()
     print(type(respond_text))
