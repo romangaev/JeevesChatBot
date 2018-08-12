@@ -5,7 +5,7 @@
          "state": ""
         },
         {"tag": "info",
-          "patterns": ["I want to know more about bot","What can you do","Help!","How can you help me","Tell me about yourself","What is your abilities","What are you able to do","How can I use you","What can you do for me"],
+          "patterns": ["Help!"],
           "responses": ["Well. I'm English learning bot. You can check level of your English with me, ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn. Hopefully you'll learn something more than just offensive language"],
           "state": ""
         },

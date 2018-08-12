@@ -9,18 +9,21 @@ db = client.chatbot_db
 user_state_collection=db.user_state_collection
 user_id = 'test'
 
-#newinstace = StateMachine.StateMachine("")
-#newinstace.printing_state()
+newinstace = StateMachine.StateMachine("")
+newinstace.printing_state()
 
 
-#newinstace.change_state("")
-#s_m_bytes = pickle.dumps(newinstace)
+newinstace.change_state("")
+s_m_bytes = pickle.dumps(newinstace)
 
-#post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
+post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
 #user_state_collection.posts.update_one({'user_id': user_id},{"$set": post}, upsert=False)
 #user_state_collection.posts.insert_one(post)
 s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
 loaded = pickle.loads(s_m_bytes['state_machine'])
 loaded.printing_state()
-print(loaded.state_respond("NO"))
+print(loaded.state_respond("I want to add lemma in my dictionary"))
+s_m_bytes = pickle.dumps(loaded)
+post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
 
+user_state_collection.posts.update_one({'user_id': user_id},{"$set": post}, upsert=False)
