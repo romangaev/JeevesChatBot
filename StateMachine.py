@@ -26,13 +26,13 @@ class StateMachine:
         intent = intent_matrix[0][0]
         confidence = intent_matrix[0][1]
         new_state = ''
-        number_of_intent=0
+        number_of_intent = 0
         response = 'default'
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 new_state = every['state']
                 break
-            ++number_of_intent
+            number_of_intent+=1
 
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
@@ -75,7 +75,7 @@ class StateMachine:
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 break
-            ++number_of_intent
+            number_of_intent+=1
         respond = 'I didn\'t get you'
 
         # if we are entering dictadd context
