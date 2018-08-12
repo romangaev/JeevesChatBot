@@ -4,13 +4,17 @@ import random
 from pymongo import MongoClient
 from nltk import word_tokenize, pos_tag
 from tensorBot import classify
+MONGODB_URI = os.environ['MONGODB_URI']
 
 
 class StateMachine:
+    client = MongoClient(MONGODB_URI)
+    db = client.chatbot_db
 
-    def __init__(self, state):
+    def __init__(self, state,user_id):
         self.state = state
         self.data = {}
+        self.user_id = user_id
         with open('intents.json') as json_data:
             self.intents = json.load(json_data)
 
@@ -102,6 +106,8 @@ class StateMachine:
             print('inside dictadd+data')
             if intent == 'confirmation':
                 # DBQUERY
+                user_vocab_collection = StateMachine.db.user_vocab_collection
+                user_vocab_collection.posts.update_one({'user_id': self.user_id}, {"$push": {'vocabulary': self.data['dictadd']}}, upsert=True)
 
                 respond = self.data['dictadd']+' added!'
                 self.data = {}
@@ -114,6 +120,8 @@ class StateMachine:
             print('inside dictadd+no data')
             # adding a word
             # DBQUERY
+            user_vocab_collection = StateMachine.db.user_vocab_collection
+            user_vocab_collection.posts.update_one({'user_id': self.user_id},{"$push":{'vocabulary': sentence}}, upsert=True)
             self.data = {}
             self.state = ''
             print('almost added...' + sentence)
@@ -126,7 +134,7 @@ class StateMachine:
     def printing_state(self):
         print(self.state)
     def change_state(self,state):
-        self.state=state
+        self.state = state
 
 
 

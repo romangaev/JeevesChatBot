@@ -69,7 +69,7 @@ def get_message(user_id, message):
         s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
     else:
-        user_state_machine = StateMachine.StateMachine('')
+        user_state_machine = StateMachine.StateMachine('', user_id)
         s_m_bytes = pickle.dumps(user_state_machine)
         post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
         user_state_collection.posts.insert_one(post)
