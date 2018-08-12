@@ -26,10 +26,13 @@ class StateMachine:
         intent = intent_matrix[0][0]
         confidence = intent_matrix[0][1]
         new_state = ''
+        number_of_intent=0
         response = 'default'
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 new_state = every['state']
+                break
+            ++number_of_intent
 
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
@@ -38,8 +41,11 @@ class StateMachine:
             if confidence < 0.3:
                 response = "Not sure what you mean"
             elif intent == 'dictopen':
-                response = random.choice(self.intents['intents'][4]['responses'])
-                # DB
+                response = random.choice(self.intents['intents'][number_of_intent]['responses'])
+                user_vocab_collection = StateMachine.db.user_vocab_collection
+                result = user_vocab_collection.posts.find_one({'user_id': self.user_id})
+                if result is not None:
+                    response += result['vocabulary']
             elif intent == 'dictadd':
 
                 response = self.dict_add_transitions(message,intent,confidence,new_state)
@@ -50,9 +56,9 @@ class StateMachine:
                # post_id = posts.insert_one(post).inserted_id
 
             elif intent == 'info':
-                response = random.choice(self.intents['intents'][1]['responses'])
+                response = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'greeting':
-                response = random.choice(self.intents['intents'][0]['responses'])
+                response = random.choice(self.intents['intents'][number_of_intent]['responses'])
             print(response)
             print(intent)
             print('StateMachineState:'+ self.state)
@@ -65,8 +71,12 @@ class StateMachine:
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
         print(self.data)
+        number_of_intent=0
+        for every in self.intents['intents']:
+            if every['tag'] == intent:
+                break
+            ++number_of_intent
         respond = 'I didn\'t get you'
-
 
         # if we are entering dictadd context
         if self.state == '' and new_state == 'dictadd':
@@ -97,10 +107,10 @@ class StateMachine:
             print("word to add:"+word_to_add)
             # if we didnt find the word then ask for the word
             if word_to_add == '':
-                respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
+                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
             else:
                 self.data['dictadd'] = word_to_add
-                respond = random.choice(self.intents['intents'][5]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
+                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
@@ -115,7 +125,7 @@ class StateMachine:
             elif intent == 'rejection':
                 # user wants some other word
                 self.data = {}
-                respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
+                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
         elif self.state == 'dictadd' and not self.data:
             print('inside dictadd+no data')
             # adding a word
