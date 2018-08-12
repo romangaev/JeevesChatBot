@@ -90,7 +90,7 @@ class StateMachine:
 
             # change the state
             self.state = 'dictadd'
-
+            print("word to add:"+word_to_add)
             # if we didnt find the word then ask for the word
             if word_to_add == '':
                 respond = random.choice(self.intents['intents'][5]['responses_if_not_given'])
