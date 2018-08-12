@@ -73,11 +73,10 @@ class StateMachine:
         print(self.data)
         number_of_intent=0
         for every in self.intents['intents']:
-            if every['tag'] == intent:
+            if every['tag'] == 'dictadd':
                 break
             number_of_intent+=1
         respond = 'I didn\'t get you'
-
         # if we are entering dictadd context
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')

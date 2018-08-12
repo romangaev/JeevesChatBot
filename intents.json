@@ -65,7 +65,7 @@
          "context_filter": "rentalday"
         },
         {"tag": "confirmation",
-               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure"],
+               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure","Exactly"],
                "responses": [""],
                "state": ""
         },
