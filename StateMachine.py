@@ -61,7 +61,7 @@ class StateMachine:
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
         print(self.data)
-        respond = 'default'
+        respond = 'I didn\'t get you'
 
 
         # if we are entering dictadd context
