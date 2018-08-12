@@ -45,7 +45,7 @@ class StateMachine:
                 user_vocab_collection = StateMachine.db.user_vocab_collection
                 result = user_vocab_collection.posts.find_one({'user_id': self.user_id})
                 if result is not None:
-                    response += result['vocabulary']
+                    response += str(result['vocabulary'])
             elif intent == 'dictadd':
 
                 response = self.dict_add_transitions(message,intent,confidence,new_state)
