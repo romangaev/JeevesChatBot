@@ -4,6 +4,7 @@ import random
 from pymongo import MongoClient
 from nltk import word_tokenize, pos_tag
 from tensorBot import classify
+import OxfordDictionary
 MONGODB_URI = os.environ['MONGODB_URI']
 
 
@@ -38,7 +39,7 @@ class StateMachine:
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
 
-            if confidence < 0.3:
+            if confidence < 0.5:
                 response = "Not sure what you mean"
             elif intent == 'dictopen':
                 response = random.choice(self.intents['intents'][number_of_intent]['responses'])
@@ -50,34 +51,71 @@ class StateMachine:
 
                 response = self.dict_add_transitions(message,intent,confidence,new_state)
 
-               # post = {'user_id': ['']}
-              #  post[]
-               # posts = db.posts
-               # post_id = posts.insert_one(post).inserted_id
-
             elif intent == 'info':
                 response = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'greeting':
                 response = random.choice(self.intents['intents'][number_of_intent]['responses'])
+            elif intent == 'oxford_dic':
+                response = self.oxford_dic_transitions(message)
+
+            # elif self.state == 'listening':
+                # response = self.listening_transitions(message, intent, confidence, new_state)
             print(response)
             print(intent)
+            print(confidence)
             print('StateMachineState:'+ self.state)
             #dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)
         elif self.state == 'dictadd':
             response = self.dict_add_transitions(message,intent,confidence,new_state)
+
+        # elif self.state == 'listening':
+            # response = self.listening_transitions(message, intent, confidence, new_state)
+
         return response
+
+    '''def listening_transitions(self, sentence, intent, confidence, new_state):
+        number_of_intent = 0
+        for every in self.intents['intents']:
+            if every['tag'] == 'listening':
+                break
+            number_of_intent += 1
+
+
+        if self.state=='':
+            return random.choice(self.intents['intents'][number_of_intent]['responses'])
+        else:
+            if sentence.lower.__contains__('beginner'):
+                
+
+            # elif sentence.lower.__contains__('intermediate'):
+            # elif sentence.lower.__contains__('advanced'):
+            else:
+                return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"'''
+    def oxford_dic_transitions(self, message):
+        number_of_intent = 0
+        for every in self.intents['intents']:
+            if every['tag'] == 'dictadd':
+                break
+            number_of_intent += 1
+
+        response = random.choice(self.intents['intents'][number_of_intent]['responses'])
+        response += OxfordDictionary.oxford_dic_request(word_tokenize(message.lower()[-1]))
+        return response
+
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
         print(self.data)
-        number_of_intent=0
+        number_of_intent = 0
         for every in self.intents['intents']:
             if every['tag'] == 'dictadd':
                 break
             number_of_intent+=1
         respond = 'I didn\'t get you'
         # if we are entering dictadd context
+
+
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')
             # retrieving the word to add

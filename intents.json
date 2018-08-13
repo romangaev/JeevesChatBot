@@ -1,6 +1,6 @@
 {"intents": [
         {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day","hey"],
+         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey"],
          "responses": ["Hi", "Good to see you again", "Hi there, how can I help?"],
          "state": ""
         },
@@ -30,40 +30,6 @@
            "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
            "state": "dictadd"
           },
-
-
-
-
-
-
-
-
-        {"tag": "hours",
-         "patterns": ["What hours are you open?", "What are your hours?", "When are you open?" ],
-         "responses": ["We're open every day 9am-9pm", "Our hours are 9am-9pm every day"]
-        },
-        {"tag": "mopeds",
-         "patterns": ["Which mopeds do you have?", "What kinds of mopeds are there?", "What do you rent?" ],
-         "responses": ["We rent Yamaha, Piaggio and Vespa mopeds", "We have Piaggio, Vespa and Yamaha mopeds"]
-        },
-        {"tag": "payments",
-         "patterns": ["Do you take credit cards?", "Do you accept Mastercard?", "Are you cash only?" ],
-         "responses": ["We accept VISA, Mastercard and AMEX", "We accept most major credit cards"]
-        },
-        {"tag": "opentoday",
-         "patterns": ["Are you open today?", "When do you open today?", "What are your hours today?"],
-         "responses": ["We're open every day from 9am-9pm", "Our hours are 9am-9pm every day"]
-        },
-        {"tag": "rental",
-         "patterns": ["Can we rent a moped?", "I'd like to rent a moped", "How does this work?" ],
-         "responses": ["Are you looking to rent today or later this week?"],
-         "context_set": "rentalday"
-        },
-        {"tag": "today",
-         "patterns": ["today"],
-         "responses": ["For rentals today please call 1-800-MYMOPED", "Same-day rentals please call 1-800-MYMOPED"],
-         "context_filter": "rentalday"
-        },
         {"tag": "confirmation",
                "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure","Exactly"],
                "responses": [""],
@@ -78,6 +44,22 @@
                            "patterns": ["Nice","Fair enough","make sense","Lovely","good","I like it"],
                            "responses": ["I'm glad you like it"],
                            "state": ""
+        },
+          {"tag": "reading",
+                           "patterns": ["Give me something to read","I want to improve my reading skills","send me some English texts","send me some good articles to read"],
+                           "responses": ["Sure, what level? Beginner, Intermediate, Advanced?"],
+                           "state": "reading"
+        },
+        {"tag": "listening",
+                                 "patterns": ["Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?"],
+                                 "responses": ["Sure, what level? Beginner, Intermediate, Advanced?"],
+                                 "state": "listening"
+        },
+        {"tag": "oxford_dic",
+                                 "patterns": ["What is","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
+                                 "responses": ["Here is what can I tell you about it, sir:\n","Hopefully, you'll be pleased by this information\n"],
+                                 "state": ""
         }
+
    ]
 }
