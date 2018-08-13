@@ -96,7 +96,7 @@ class StateMachine:
     def oxford_dic_transitions(self, message):
         number_of_intent = 0
         for every in self.intents['intents']:
-            if every['tag'] == 'dictadd':
+            if every['tag'] == 'oxford_dic':
                 break
             number_of_intent += 1
 
