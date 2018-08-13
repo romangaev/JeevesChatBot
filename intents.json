@@ -57,7 +57,7 @@
         },
         {"tag": "oxford_dic",
                                  "patterns": ["What is","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
-                                 "responses": ["Here is what can I tell you about it, sir:\n","Hopefully, you'll be pleased by this information\n"],
+                                 "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
                                  "state": ""
         }
    ]
