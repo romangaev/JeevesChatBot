@@ -34,7 +34,7 @@ class StateMachine:
                 new_state = every['state']
                 break
             number_of_intent+=1
-
+        print(intent)
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
@@ -61,7 +61,7 @@ class StateMachine:
             # elif self.state == 'listening':
                 # response = self.listening_transitions(message, intent, confidence, new_state)
             print(response)
-            print(intent)
+
             print(confidence)
             print('StateMachineState:'+ self.state)
             #dont forget to change the state
