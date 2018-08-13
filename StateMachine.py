@@ -101,7 +101,7 @@ class StateMachine:
             number_of_intent += 1
 
         response = random.choice(self.intents['intents'][11]['responses'])
-        response += OxfordDictionary.oxford_dic_request(word_tokenize(message.lower()[-1]))
+        response += OxfordDictionary.oxford_dic_request(word_tokenize(message)[-1].lower())
         return response
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
