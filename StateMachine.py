@@ -12,14 +12,15 @@ class StateMachine:
     client = MongoClient(MONGODB_URI)
     db = client.chatbot_db
 
-    def __init__(self, state,user_id):
+    def __init__(self, state, user_id):
         self.state = state
         self.data = {}
         self.user_id = user_id
-        with open('intents.json') as json_data:
-            self.intents = json.load(json_data)
+        self.intents=""
 
     def state_respond(self, message):
+        with open('intents.json') as json_data:
+            self.intents = json.load(json_data)
 
 
         # classify the intent and get a new state
@@ -100,7 +101,7 @@ class StateMachine:
                 break
             number_of_intent += 1
 
-        response = random.choice(self.intents['intents'][11]['responses'])
+        response = random.choice(self.intents['intents'][number_of_intent]['responses'])
         response += OxfordDictionary.oxford_dic_request(word_tokenize(message)[-1].lower())
         return response
 
