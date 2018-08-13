@@ -25,7 +25,7 @@ def oxford_dic_request(word_id):
         def_counter = 1
         for j in i["lexicalEntries"]:
             # print(j["lexicalCategory"])
-            response += '\n'
+            response += '\n\n'
             response +=str(def_counter)+"."+ j["lexicalCategory"]
             def_counter += 1
             for k in j["entries"]:
