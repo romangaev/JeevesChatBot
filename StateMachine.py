@@ -100,7 +100,7 @@ class StateMachine:
                 break
             number_of_intent += 1
 
-        response = random.choice(self.intents['intents'][number_of_intent]['responses'])
+        response = random.choice(self.intents['intents'][11]['responses'])
         response += OxfordDictionary.oxford_dic_request(word_tokenize(message.lower()[-1]))
         return response
 
