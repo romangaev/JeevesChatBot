@@ -34,11 +34,11 @@ def oxford_dic_request(word_id):
                     for w in v["definitions"]:
                         # print("\t "+str(def_counter)+": "+w)
                         response += '\n'
-                        response += "\t - "+w
+                        response += "- "+w
 
                         if "examples" in v:
                             for s in v["examples"]:
                             #    print('\t\tExample: '+str(w["text"]))
                                 response += '\n'
-                                response+= '\t\tExample: '+str(s["text"])
+                                response+= 'Example: '+str(s["text"])
     return response
