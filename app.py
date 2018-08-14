@@ -39,8 +39,10 @@ def receive_message():
                         send_message(recipient_id, response_sent_text)
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
-                        response_sent_nontext = get_message()
-                        send_message(recipient_id, response_sent_nontext)
+                        #response_sent_nontext = get_message()
+                        #send_message(recipient_id, response_sent_nontext)
+                        #bot.send_audio_url(recipient_id,)
+                        bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
     return "Message Processed"
 
 
