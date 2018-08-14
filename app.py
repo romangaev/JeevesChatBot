@@ -39,9 +39,11 @@ def receive_message():
                         response_dic = get_message(recipient_id, message['message'].get('text'))
 
                         if response_dic["attachment"] is not None:
+                            send_message(recipient_id, "First message")
                             send_message(recipient_id, response_dic["text"])
-                            bot.send_audio_url(recipient_id, response_dic["attachment"])
+                            bot.send_audio_url(recipient_id, "http://audio.oxforddictionaries.com/en/mp3/pronunciation_gb_1_8.mp3")
                         else:
+                            send_message(recipient_id, "First message")
                             send_message(recipient_id, response_dic["text"])
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
