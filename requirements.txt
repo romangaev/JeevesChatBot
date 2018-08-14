@@ -1,6 +1,7 @@
 nltk==3.3
 numpy==1.15.0
 pymessenger==0.0.7.0
+fbmq==2.5.0
 tensorboard==1.9.0
 tensorflow==1.9.0
 termcolor==1.1.0
