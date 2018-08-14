@@ -1,29 +1,9 @@
-import testclass
-import pickle
-import StateMachine
-from bson.binary import Binary
-from pymongo import MongoClient
-MONGODB_URI = 'mongodb://rgaev:iha492081@ds115592.mlab.com:15592/chatbot_db'
-client = MongoClient(MONGODB_URI)
-db = client.chatbot_db
-user_state_collection=db.user_state_collection
-user_id = 'test'
-
-newinstace = StateMachine.StateMachine("")
-newinstace.printing_state()
-
-
-newinstace.change_state("")
-s_m_bytes = pickle.dumps(newinstace)
-
-post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
-#user_state_collection.posts.update_one({'user_id': user_id},{"$set": post}, upsert=False)
-#user_state_collection.posts.insert_one(post)
-s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
-loaded = pickle.loads(s_m_bytes['state_machine'])
-loaded.printing_state()
-print(loaded.state_respond("I want to add lemma in my dictionary"))
-s_m_bytes = pickle.dumps(loaded)
-post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
-
-user_state_collection.posts.update_one({'user_id': user_id},{"$set": post}, upsert=False)
+fb_url = 'https://graph.facebook.com/v2.6/me/messages'
+data = {
+    'recipient': '{"id":1336677726453307}',
+    'message': '{"attachment":{"type":"audio", "payload":{}}}'
+}
+files = {
+    'filedata': ('mymp3.mp3', open("mymp3.mp3", "rb"), 'audio/mp3')}
+params = {'access_token': ACCESS_TOKEN}
+resp = requests.post(fb_url, params=params, data=data, files=files)
