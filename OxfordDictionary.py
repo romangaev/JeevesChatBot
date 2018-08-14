@@ -14,8 +14,9 @@ def oxford_dic_request(word_id):
     # print("code {}\n".format(r.status_code))
     print("text \n" + r.text)
     # print("json \n" + json.dumps(r.json()))
-    oxford_dict=r.json()
-    response=""
+    oxford_dict = r.json()
+    response = ""
+    audio_url = ""
     for i in oxford_dict["results"]:
         # print(word_id)
         # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
@@ -28,6 +29,8 @@ def oxford_dic_request(word_id):
             response += '\n\n'
             response +=str(def_counter)+"."+ j["lexicalCategory"]
             def_counter += 1
+            if "audioFile" in j["pronunciations"][0]:
+                audio_url = j["pronunciations"][0]["audioFile"]
             for k in j["entries"]:
 
                 for v in k["senses"]:
@@ -40,5 +43,5 @@ def oxford_dic_request(word_id):
                             for s in v["examples"]:
                             #    print('\t\tExample: '+str(w["text"]))
                                 response += '\n'
-                                response+= 'Example: '+str(s["text"])
-    return response
+                                response += 'Example: '+str(s["text"])
+    return {"text": response, "attachment": audio_url}

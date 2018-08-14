@@ -35,8 +35,14 @@ def receive_message():
                     # Facebook Messenger ID for user so we know where to send response back to
                     recipient_id = message['sender']['id']
                     if message['message'].get('text'):
-                        response_sent_text = get_message(recipient_id, message['message'].get('text'))
-                        send_message(recipient_id, response_sent_text)
+
+                        response_dic = get_message(recipient_id, message['message'].get('text'))
+
+                        if response_dic["attachment"] is not None:
+                            send_message(recipient_id, response_dic["text"])
+                            bot.send_audio_url(recipient_id, response_dic["attachment"])
+                        else:
+                            send_message(recipient_id, response_dic["text"])
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
                         #response_sent_nontext = get_message()
@@ -80,15 +86,15 @@ def get_message(user_id, message):
         print(states)
     print("state before")
     user_state_machine.printing_state()
-    respond_text = user_state_machine.state_respond(message)
+    respose_dic = user_state_machine.state_respond(message)
     print("State after")
     user_state_machine.printing_state()
-    print(type(respond_text))
+    print(type(respose_dic))
     # save it back to db
     s_m_bytes = pickle.dumps(user_state_machine)
     post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
     user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
-    return respond_text
+    return respose_dic
 
 
 # uses PyMessenger to send response to user
