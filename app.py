@@ -147,6 +147,7 @@ def post_attachment(fbid, media_url, file_type,
     """
     MESSAGES_URL = ("https://graph.facebook.com/v2.6/me/"
                     "messages?access_token={access_token}")
+    HEADER = {"Content-Type": "application/json"}
     url = MESSAGES_URL.format(access_token=ACCESS_TOKEN)
     payload = dict()
     payload['recipient'] = {'id': fbid}
