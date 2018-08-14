@@ -53,11 +53,12 @@ def receive_message():
                         bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
                         fb_url = 'https://graph.facebook.com/v2.6/me/messages'
                         data = {
-                            'recipient': '{"id":'+recipient_id+'}',
+                            'recipient': '{"id":' + recipient_id + '}',
                             'message': '{"attachment":{"type":"audio", "payload":{}}}'
                         }
                         files = {
-                            'filedata': ('pronunciation_gb_1_8.mp3', open("pronunciation_gb_1_8.mp3", "rb"), 'audio/mp3')}
+                            'filedata': (
+                            'http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3', open("http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3", "rb"), 'audio/mp3')}
                         params = {'access_token': ACCESS_TOKEN}
                         requests.post(fb_url, params=params, data=data, files=files)
                         # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
@@ -115,6 +116,16 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 
-
+'''def send_pronunciation(recipient_id,url):
+    fb_url = 'https://graph.facebook.com/v2.6/me/messages'
+    data = {
+        'recipient': '{"id":' + recipient_id + '}',
+        'message': '{"attachment":{"type":"audio", "payload":{}}}'
+    }
+    files = {
+        'filedata': ('pronunciation_gb_1_8.mp3', open("pronunciation_gb_1_8.mp3", "rb"), 'audio/mp3')}
+    params = {'access_token': ACCESS_TOKEN}
+    requests.post(fb_url, params=params, data=data, files=files)
+'''
 if __name__ == "__main__":
     app.run()
