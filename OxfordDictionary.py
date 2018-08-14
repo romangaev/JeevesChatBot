@@ -2,7 +2,6 @@
 # http://docs.python-requests.org/en/master/user/install/#install
 import requests
 import os
-import json
 # TODO: replace with your own app_id and app_key
 app_id = os.environ['OXXX_ID']
 app_key = os.environ['OXXX_KEY']
@@ -12,40 +11,40 @@ language = 'en'
 def oxford_dic_request(word_id):
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/'  + language + '/'  + word_id.lower()
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
-    # print("code {}\n".format(r.status_code))
-    print("text \n" + r.text)
-    print("json \n" + json.dumps(r.json()))
-    if r is not None:
-        oxford_dict = r.json()
-        response = ""
-        audio_url = ""
-        for i in oxford_dict["results"]:
-            # print(word_id)
-            # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
-            response += word_id
-            response += '\n'
-            response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
-            def_counter = 1
-            for j in i["lexicalEntries"]:
-                # print(j["lexicalCategory"])
-                response += '\n\n'
-                response +=str(def_counter)+"."+ j["lexicalCategory"]
-                def_counter += 1
-                if "audioFile" in j["pronunciations"][0]:
-                    audio_url = j["pronunciations"][0]["audioFile"]
-                for k in j["entries"]:
+    if "code {}\n".format(r.status_code) == '200' or "code {}\n".format(r.status_code) == 200:
+        print("text \n" + r.text)
+        # print("json \n" + json.dumps(r.json()))
+        if r is not None:
+            oxford_dict = r.json()
+            response = ""
+            audio_url = ""
+            for i in oxford_dict["results"]:
+                # print(word_id)
+                # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
+                response += word_id
+                response += '\n'
+                response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
+                def_counter = 1
+                for j in i["lexicalEntries"]:
+                    # print(j["lexicalCategory"])
+                    response += '\n\n'
+                    response +=str(def_counter)+"."+ j["lexicalCategory"]
+                    def_counter += 1
+                    if "audioFile" in j["pronunciations"][0]:
+                        audio_url = j["pronunciations"][0]["audioFile"]
+                    for k in j["entries"]:
 
-                    for v in k["senses"]:
-                        for w in v["definitions"]:
-                            # print("\t "+str(def_counter)+": "+w)
-                            response += '\n'
-                            response += "- "+w
+                        for v in k["senses"]:
+                            for w in v["definitions"]:
+                                # print("\t "+str(def_counter)+": "+w)
+                                response += '\n'
+                                response += "- "+w
 
-                            if "examples" in v:
-                                for s in v["examples"]:
-                                #    print('\t\tExample: '+str(w["text"]))
-                                    response += '\n'
-                                    response += 'Example: '+str(s["text"])
+                                if "examples" in v:
+                                    for s in v["examples"]:
+                                    #    print('\t\tExample: '+str(w["text"]))
+                                        response += '\n'
+                                        response += 'Example: '+str(s["text"])
         return {"text": response, "attachment": audio_url}
     else:
         return {"text": "I don't know this word", "attachment": None}
