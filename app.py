@@ -49,7 +49,7 @@ def receive_message():
                         #send_message(recipient_id, response_sent_nontext)
                         #bot.send_audio_url(recipient_id,)
                         bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
-                        bot.send_file_url(recipient_id, "http://audio.oxforddictionaries.com/en/mp3/pronunciation_gb_1_8.mp3")
+                        bot.send_file(recipient_id, "/pronunciation_gb_1_8.mp3")
     return "Message Processed"
 
 
