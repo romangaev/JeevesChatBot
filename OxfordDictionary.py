@@ -2,6 +2,7 @@
 # http://docs.python-requests.org/en/master/user/install/#install
 import requests
 import os
+import json
 # TODO: replace with your own app_id and app_key
 app_id = os.environ['OXXX_ID']
 app_key = os.environ['OXXX_KEY']
@@ -13,7 +14,7 @@ def oxford_dic_request(word_id):
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
     # print("code {}\n".format(r.status_code))
     print("text \n" + r.text)
-    # print("json \n" + json.dumps(r.json()))
+    print("json \n" + json.dumps(r.json()))
     if r is not None:
         oxford_dict = r.json()
         response = ""
