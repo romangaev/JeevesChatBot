@@ -41,7 +41,7 @@ def receive_message():
                         if response_dic["attachment"] is not None:
                             send_message(recipient_id, "First message")
                             send_message(recipient_id, response_dic["text"])
-                            send_attachment_url(recipient_id,"audio",response_dic["attachment"])
+
                         else:
                             send_message(recipient_id, "First message")
                             send_message(recipient_id, response_dic["text"])
@@ -104,26 +104,6 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
-
-
-def send_attachment_url(recipient_id, attachment_type, attachment_url,
-                            notification_type='REGULAR'):
-        """Send an attachment to the specified recipient using URL.
-        Input:
-            recipient_id: recipient id to send to
-            attachment_type: type of attachment (image, video, audio, file)
-            attachment_url: URL of attachment
-        Output:
-            Response from API as <dict>
-        """
-        return bot.send_message(recipient_id, {
-            'attachment': {
-                'type': attachment_type,
-                'payload': {
-                    'url': attachment_url
-                }
-            }
-        }, notification_type)
 
 
 if __name__ == "__main__":
