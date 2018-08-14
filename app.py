@@ -2,7 +2,7 @@
 import random
 import os
 from flask import Flask, request
-import pymessenger
+from pymessenger.bot import Bot
 import StateMachine
 from pymongo import MongoClient
 
@@ -14,7 +14,7 @@ MONGODB_URI = os.environ['MONGODB_URI']
 client = MongoClient(MONGODB_URI)
 db = client.chatbot_db
 user_state_collection=db.user_state_collection
-bot = pymessenger.Bot(ACCESS_TOKEN)
+bot = Bot(ACCESS_TOKEN)
 states = {}
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route("/", methods=['GET', 'POST'])
@@ -39,8 +39,9 @@ def receive_message():
                         response_dic = get_message(recipient_id, message['message'].get('text'))
 
                         if response_dic["attachment"] is not None:
-                            send_message(recipient_id, response_dic["text"])
 
+                            send_message(recipient_id, response_dic["text"])
+                            bot.send_audio_url(recipient_id, response_dic["attachment"])
                         else:
                             send_message(recipient_id, response_dic["text"])
                     # if user sends us a GIF, photo,video, or any other non-text item
@@ -49,7 +50,6 @@ def receive_message():
                         #send_message(recipient_id, response_sent_nontext)
                         #bot.send_audio_url(recipient_id,)
                         bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
-                        bot.send_audio(recipient_id, "/pronunciation_gb_1_8.mp3")
     return "Message Processed"
 
 
