@@ -106,6 +106,8 @@ class StateMachine:
         query_result = OxfordDictionary.oxford_dic_request(word_tokenize(message)[-1].lower())
         response["text"] += query_result["text"]
         response["attachment"] = query_result["attachment"]
+        print("Attachment url:")
+        print(response["attachment"])
         return response
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
