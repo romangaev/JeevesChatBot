@@ -6,6 +6,7 @@ from pymessenger.bot import Bot
 import StateMachine
 from pymongo import MongoClient
 import requests
+import json
 
 
 app = Flask(__name__)
@@ -50,7 +51,14 @@ def receive_message():
                         #response_sent_nontext = get_message()
                         #send_message(recipient_id, response_sent_nontext)
                         #bot.send_audio_url(recipient_id,)
-                        bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
+                        post_attachment(recipient_id,"http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3",'audio')
+
+
+
+
+
+
+                        '''bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
                         fb_url = 'https://graph.facebook.com/v2.6/me/messages'
                         data = {
                             'recipient': '{"id":' + recipient_id + '}',
@@ -60,7 +68,7 @@ def receive_message():
                             'filedata': (
                             'http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3', open("http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3", "rb"), 'audio/mp3')}
                         params = {'access_token': ACCESS_TOKEN}
-                        requests.post(fb_url, params=params, data=data, files=files)
+                        requests.post(fb_url, params=params, data=data, files=files)'''
                         # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
 
@@ -116,16 +124,49 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 
-'''def send_pronunciation(recipient_id,url):
-    fb_url = 'https://graph.facebook.com/v2.6/me/messages'
-    data = {
-        'recipient': '{"id":' + recipient_id + '}',
-        'message': '{"attachment":{"type":"audio", "payload":{}}}'
-    }
-    files = {
-        'filedata': ('pronunciation_gb_1_8.mp3', open("pronunciation_gb_1_8.mp3", "rb"), 'audio/mp3')}
-    params = {'access_token': ACCESS_TOKEN}
-    requests.post(fb_url, params=params, data=data, files=files)
-'''
+def post_attachment(fbid, media_url, file_type,
+                    is_reusable=False, messaging_type="RESPONSE", tag=None):
+    """ Sends a media attachment to the specified user
+    :param str fbid: User id to send the audio.
+    :param str media_url: Url of a hosted media.
+    :param str file_type: 'image'/'audio'/'video'/'file'.
+    :param bool is_reusable: Defines the attachment to be resusable, \
+    the response will have an attachment_id that can be used to \
+    re-send the attachment without need to upload it again. (You can \
+    use the post_reusable_attachment method to upload using the id).
+    :param str messaging_type: Identifies the message type from: RESPONSE,\
+    UPDATE AND MESSAGE_TAG (Default: RESPONSE, if MESSAGE_TAG, tag param \
+    is required)
+    :param str tag: Tag classifying the message, must be one of the \
+    following `tags <https://developers.facebook.com/docs/messenger-\
+    platform/send-messages/message-tags#supported_tags>`_
+    :return: `Response object <http://docs.python-requests.org/en/\
+    master/api/#requests.Response>`_
+    :facebook docs: `/contenttypes <https://developers.facebook.\
+    com/docs/messenger-platform/send-api-reference/contenttypes>`_
+    """
+    MESSAGES_URL = ("https://graph.facebook.com/v2.6/me/"
+                    "messages?access_token={access_token}")
+    url = MESSAGES_URL.format(access_token=ACCESS_TOKEN)
+    payload = dict()
+    payload['recipient'] = {'id': fbid}
+    payload['messaging_type'] = messaging_type
+    if bool(tag) or messaging_type == "MESSAGE_TAG":
+        payload['tag'] = tag
+    attachment_payload = dict()
+    attachment_payload['url'] = media_url
+    if is_reusable:
+        attachment_payload['is_reusable'] = is_reusable
+    attachment = {"type": file_type, "payload": attachment_payload}
+    payload['message'] = {"attachment": attachment}
+    data = json.dumps(payload)
+    status = requests.post(url, headers=HEADER, data=data)
+    return status
+
+
+
+
+
+
 if __name__ == "__main__":
     app.run()
