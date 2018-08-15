@@ -5,7 +5,7 @@
          "state": ""
         },
         {"tag": "info",
-          "patterns": ["Help!", "Tell me about what can you do"],
+          "patterns": ["Help!"],
           "responses": ["Well. I'm English learning bot. You can check level of your English with me, ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn. Hopefully you'll learn something more than just offensive language"],
           "state": ""
         },
