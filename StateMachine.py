@@ -98,7 +98,7 @@ class StateMachine:
             else:
                 return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"'''
     def oxford_dic_transitions(self, message):
-        self.data["word_id"] = word_tokenize(message)[-1].lower().replace("\"", "").replace("\'", "")
+        self.data["word_id"] = word_tokenize(message)[-1].lower()
 
         number_of_intent = 0
         for every in self.intents['intents']:
@@ -165,7 +165,7 @@ class StateMachine:
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
-            if intent == 'confirmation' or sentence.lower=="yes":
+            if intent == 'confirmation' or sentence.lower == "yes":
                 # DBQUERY
                 user_vocab_collection = StateMachine.db.user_vocab_collection
                 user_vocab_collection.posts.update_one({'user_id': self.user_id}, {"$push": {'vocabulary': self.data['dictadd']}}, upsert=True)
@@ -173,7 +173,7 @@ class StateMachine:
                 respond = self.data['dictadd']+' added!'
                 self.data = {}
                 self.state = ''
-            elif intent == 'rejection' or sentence.lower=="no":
+            elif intent == 'rejection' or sentence.lower == "no":
                 # user wants some other word
                 self.data = {}
                 respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])

@@ -20,7 +20,7 @@
           "state": ""
         },
         {"tag": "dictopen",
-         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary"],
+         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary", "I wanna get my word list"],
           "responses": ["Sure. Here is your list: "],
           "state": ""
         },

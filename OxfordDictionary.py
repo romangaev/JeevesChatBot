@@ -77,34 +77,36 @@ def oxford_dic_syn_ant(word_id):
     synonyms = ""
     antonyms = ""
     r = requests.get(url, headers={'app_id': app_id, 'app_key': app_key})
-    oxford_dict = r.json()
 
-    for i in oxford_dict["results"]:
-        # print(word_id)
-        # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
-        syn_counter = 1
-        ant_counter = 1
-        for j in i["lexicalEntries"]:
-            # print(j["lexicalCategory"])
+    if r.status_code == '200' or r.status_code == 200:
+        oxford_dict = r.json()
 
-            for k in j["entries"]:
-                for v in k["senses"]:
-                    if "antonyms" in v:
-                        for w in v["antonyms"]:
-                            if ant_counter>10:
-                                break
-                            antonyms += str(ant_counter)+". "+w["id"]+"\n"
-                            ant_counter +=1
+        for i in oxford_dict["results"]:
+            # print(word_id)
+            # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
+            syn_counter = 1
+            ant_counter = 1
+            for j in i["lexicalEntries"]:
+                # print(j["lexicalCategory"])
 
-                    if "synonyms" in v:
-                        for x in v["synonyms"]:
-                            if syn_counter>10:
-                                break
-                            synonyms += str(syn_counter) + ". " + x["id"]+"\n"
-                            syn_counter += 1
+                for k in j["entries"]:
+                    for v in k["senses"]:
+                        if "antonyms" in v:
+                            for w in v["antonyms"]:
+                                if ant_counter>10:
+                                    break
+                                antonyms += str(ant_counter)+". "+w["id"]+"\n"
+                                ant_counter +=1
+
+                        if "synonyms" in v:
+                            for x in v["synonyms"]:
+                                if syn_counter>10:
+                                    break
+                                synonyms += str(syn_counter) + ". " + x["id"]+"\n"
+                                syn_counter += 1
 
     if antonyms=="":
-        antonyms = "Antonyms for this? Crazy..."
+         antonyms = "Antonyms for this? Crazy..."
     if synonyms=="":
         synonyms="Sorry, I haven't find anything related..."
 
