@@ -54,6 +54,8 @@ class StateMachine:
 
             elif intent == 'info':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
+            elif intent == 'thanks':
+                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'greeting':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'oxford_dic':
