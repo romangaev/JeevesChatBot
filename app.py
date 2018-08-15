@@ -60,7 +60,8 @@ def receive_message():
                             'message': '{"attachment":{"type":"audio", "payload":{"url": "https: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3", "is_reusable": true}}}'
                         }
                         params = {'access_token': ACCESS_TOKEN}
-                        requests.post(fb_url, params=params, data=data)
+                        print("AUDIO REQUEST RESULT:")
+                        print(requests.post(fb_url, params=params, data=data))
                         # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
 
