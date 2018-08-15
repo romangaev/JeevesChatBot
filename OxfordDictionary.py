@@ -63,7 +63,7 @@ def oxford_dic_request(word_id):
 def oxford_dic_syn_ant(word_id):
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
     synonyms = "Sorry, I haven't find anything related..."
-    antonyms = "Sorry, I haven't find anything related..."
+    antonyms = "Antonyms to this? Crazy..."
     r = requests.get(url, headers={'app_id': app_id, 'app_key': app_key})
     oxford_dict = r.json()
 
