@@ -39,17 +39,18 @@ def oxford_dic_request(word_id):
                     for k in j["entries"]:
 
                         for v in k["senses"]:
-                            for w in v["definitions"]:
-                                # print("\t "+str(def_counter)+": "+w)
-                                response += '\n'
-                                response += "- "+w
+                            if "definitions" in v:
+                                for w in v["definitions"]:
+                                    # print("\t "+str(def_counter)+": "+w)
+                                    response += '\n'
+                                    response += "- "+w
 
-                                if "examples" in v:
-                                    for s in v["examples"]:
-                                    #    print('\t\tExample: '+str(w["text"]))
+                            if "examples" in v:
+                                for s in v["examples"]:
+                                #    print('\t\tExample: '+str(w["text"]))
 
-                                        examples += 'Example: '+str(s["text"])
-                                        examples += '\n'
+                                 examples += 'Example: '+str(s["text"])
+                                 examples += '\n'
 
 
         return {"text": response, "attachment": audio_url, "examples": examples}
