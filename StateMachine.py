@@ -39,7 +39,7 @@ class StateMachine:
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
-
+            self.data={}
             if confidence < 0.5:
                 response["text"] = "Not sure what you mean"
             elif intent == 'dictopen':
@@ -96,6 +96,8 @@ class StateMachine:
             else:
                 return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"'''
     def oxford_dic_transitions(self, message):
+        self.data["word_id"]=word_tokenize(message)[-1].lower()
+
         number_of_intent = 0
         for every in self.intents['intents']:
             if every['tag'] == 'oxford_dic':
@@ -103,10 +105,11 @@ class StateMachine:
             number_of_intent += 1
         response = {}
         response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
-        query_result = OxfordDictionary.oxford_dic_request(word_tokenize(message)[-1].lower())
+        query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
         response["text"] += query_result["text"]
         response["attachment"] = query_result["attachment"]
         response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
+        self.data["examples"] = query_result["examples"]
 
         print("Attachment url:")
         print(response["attachment"])

@@ -7,6 +7,8 @@ from pymessenger.bot import Bot
 import StateMachine
 from pymongo import MongoClient
 import OxfordDictionary
+from bson.binary import Binary
+import pickle
 
 
 app = Flask(__name__)
@@ -75,9 +77,20 @@ def receive_message():
                     elif message_text == "BYE":
                         send_message(sender_id, "bye!!!")
                     elif message_text == "OXFORD_DIC_SYNONYMS":
-                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant()["synonyms"])
+                        s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
+                        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+
+                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["synonyms"])
                     elif message_text == "OXFORD_DIC_ANTONYMS":
-                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant()["antonyms"])
+                        s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
+                        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+
+                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["antonyms"])
+                    elif message_text == "OXFORD_DIC_EXAMPLES":
+                        s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
+                        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+
+                        send_message(sender_id, user_state_machine.data["examples"])
 
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
@@ -98,8 +111,7 @@ def get_message(user_id, message):
     # return selected item to the user
     #return random.choice(sample_responses)
 
-    from bson.binary import Binary
-    import pickle
+
 
     print(user_id)
     print(user_state_collection.posts.find_one({'user_id': user_id}) is not None)
