@@ -45,7 +45,6 @@ def receive_message():
                             send_message(recipient_id, response_dic["text"])
 
                         if "attachment" in response_dic:
-                            send_message(recipient_id, response_dic["text"])
                             bot.send_audio_url(recipient_id, response_dic["attachment"])
 
                     # if user sends us a GIF, photo,video, or any other non-text item

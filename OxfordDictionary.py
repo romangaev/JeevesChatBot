@@ -13,9 +13,10 @@ def oxford_dic_request(word_id):
     audio_url = ""
     examples = ""
 
-
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/'  + language + '/'  + word_id.lower()
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
+    print("Oxford status code:")
+    print("code {}\n".format(r.status_code))
     if "code {}\n".format(r.status_code) == '200' or "code {}\n".format(r.status_code) == 200:
         print("text \n" + r.text)
         # print("json \n" + json.dumps(r.json()))
@@ -53,7 +54,8 @@ def oxford_dic_request(word_id):
 
         return {"text": response, "attachment": audio_url, "examples": examples}
     else:
-        return {"text": "I don't know this word", "attachment": None, "examples":None}
+        return {"text": "I don't know this word", "attachment": None, "examples": None}
+
 
 def oxford_dic_syn_ant(word_id):
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
