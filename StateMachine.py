@@ -49,6 +49,7 @@ class StateMachine:
 
                 if result is not None:
                     response["text"] += '\n'
+                    response["text"] += '\n'
                     for every in result['vocabulary']:
                         response["text"] += every
                         response["text"] += '\n'
