@@ -57,7 +57,7 @@ def receive_message():
                         fb_url = 'https://graph.facebook.com/v2.6/me/messages'
                         data = {
                             'recipient': '{"id":' + recipient_id + '}',
-                            'message': '{"attachment":{"type":"audio", "payload":{"url": "http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3", "is_reusable": true}}}'
+                            'message': '{"attachment":{"type":"audio", "payload":{"url": "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3", "is_reusable": true}}}'
                         }
                         params = {'access_token': ACCESS_TOKEN}
                         print("AUDIO REQUEST RESULT:")
