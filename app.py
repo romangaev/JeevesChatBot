@@ -54,14 +54,27 @@ def receive_message():
                         bot.send_audio_url(recipient_id, "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3")
                         buttons=[{"type":"postback",
                                 "title":"Say hi to me",
-                                "payload":"Hi!"},
+                                "payload":"HELLO"},
                                  {"type": "postback",
-                                  "title": "Add some word in your dictionary",
-                                  "payload": "I want to add a word in my vocab"}
+                                  "title": "say goodbye",
+                                  "payload": "BYE"}
                                  ]
-                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)
+                        print(bot.send_button_message(recipient_id,"Here is a test for buttons",buttons))
 
-                        # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
+                # postback webhook
+                if message.get("postback"):
+                    # user clicked/tapped "postback" button in earlier message
+
+                    message_text = message["postback"]["payload"]
+                    # the button's payload
+                    sender_id = message["sender"]["id"]
+                    if message_text == "HELLO":
+                        send_message(sender_id, "hello world!")
+                    elif message_text == "BYE":
+                        send_message(sender_id,"bye!!!")
+
+
+    # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
 
 
