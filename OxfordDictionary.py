@@ -74,11 +74,13 @@ def oxford_dic_syn_ant(word_id):
             # print(j["lexicalCategory"])
             for k in j["entries"]:
                 for v in k["senses"]:
-                    for w in v["antonyms"]:
-                        antonyms += str(ant_counter)+"."+w["id"]+"\n"
-                        ant_counter +=1
-                    for x in v["synonyms"]:
-                        synonyms += str(syn_counter) + "." + x["id"]+"\n"
-                        syn_counter += 1
+                    if "antonyms" in v:
+                        for w in v["antonyms"]:
+                            antonyms += str(ant_counter)+"."+w["id"]+"\n"
+                            ant_counter +=1
+                    if "synonyms" in v:
+                        for x in v["synonyms"]:
+                            synonyms += str(syn_counter) + "." + x["id"]+"\n"
+                            syn_counter += 1
 
     return {"synonyms":synonyms,"antonyms":antonyms}
