@@ -102,7 +102,7 @@ class StateMachine:
             else:
                 return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"'''
     def oxford_dic_transitions(self, message):
-        self.data["word_id"] = word_tokenize(message)[-1].lower().replace('"', '').replace("'", '')
+        self.data["word_id"] = word_tokenize(message.replace("'","").replace('"',""))[-1].lower()
         print("word_id")
         print(self.data["word_id"])
         number_of_intent = 0
