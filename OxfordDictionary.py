@@ -17,7 +17,7 @@ def oxford_dic_request(word_id):
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
     print("Oxford status code:")
     print("code {}\n".format(r.status_code))
-    if "code {}\n".format(r.status_code) == '200' or "code {}\n".format(r.status_code) == 200:
+    if r.status_code == '200' or r.status_code == 200:
         print("text \n" + r.text)
         # print("json \n" + json.dumps(r.json()))
         oxford_dict = r.json()
