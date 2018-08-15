@@ -53,15 +53,15 @@ def receive_message():
                         #send_message(recipient_id, response_sent_nontext)
                         #bot.send_audio_url(recipient_id,)
                         bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
-
-                        fb_url = 'https://graph.facebook.com/v2.6/me/messages'
+                        bot.send_audio_url(recipient_id, "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3")
+                        '''fb_url = 'https://graph.facebook.com/v2.6/me/messages'
                         data = {
                             'recipient': '{"id":' + recipient_id + '}',
                             'message': '{"attachment":{"type":"audio", "payload":{"url": "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3", "is_reusable": true}}}'
                         }
                         params = {'access_token': ACCESS_TOKEN}
                         print("AUDIO REQUEST RESULT:")
-                        print(requests.post(fb_url, params=params, data=data))
+                        print(requests.post(fb_url, params=params, data=data))'''
                         # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
 
