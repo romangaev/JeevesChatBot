@@ -34,7 +34,8 @@ def oxford_dic_request(word_id):
                 for j in i["lexicalEntries"]:
                     # print(j["lexicalCategory"])
                     response += '\n\n'
-                    response +=str(def_counter)+". "+ j["lexicalCategory"]
+                    response += str(def_counter)+". "+ j["lexicalCategory"]
+                    examples += str(def_counter) + ". " + j["lexicalCategory"]
                     def_counter += 1
                     def_stopper = 1
                     examples_counter = 1
@@ -80,11 +81,11 @@ def oxford_dic_syn_ant(word_id):
     for i in oxford_dict["results"]:
         # print(word_id)
         # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
-
+        syn_counter = 1
+        ant_counter = 1
         for j in i["lexicalEntries"]:
             # print(j["lexicalCategory"])
-            syn_counter = 1
-            ant_counter = 1
+
             for k in j["entries"]:
                 for v in k["senses"]:
                     if "antonyms" in v:

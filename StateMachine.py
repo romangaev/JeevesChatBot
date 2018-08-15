@@ -108,7 +108,8 @@ class StateMachine:
         query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
         response["text"] = query_result["text"]
         response["attachment"] = query_result["attachment"]
-        response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
+        if not response["text"]=="I don't know this word":
+            response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
         self.data["examples"] = query_result["examples"]
 
         print("Attachment url:")
