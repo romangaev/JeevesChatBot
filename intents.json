@@ -1,16 +1,16 @@
 {"intents": [
         {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey"],
+         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey", "Hi mate"],
          "responses": ["Hi", "Good to see you again", "Hi there, how can I help?"],
          "state": ""
         },
         {"tag": "info",
-          "patterns": ["Help!"],
+          "patterns": ["Help!", "Tell me about what can you do"],
           "responses": ["Well. I'm English learning bot. You can check level of your English with me, ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn. Hopefully you'll learn something more than just offensive language"],
           "state": ""
         },
         {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye"],
+         "patterns": ["Bye", "See you later", "Goodbye", "see you in a bit"],
          "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."],
           "state": ""
         },
@@ -56,7 +56,7 @@
                                  "state": "listening"
         },
         {"tag": "oxford_dic",
-                                 "patterns": ["What is","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
+                                 "patterns": ["What is it","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
                                  "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
                                  "state": "",
                                 "buttons":[{"type":"postback",
