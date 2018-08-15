@@ -6,8 +6,6 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 import StateMachine
 from pymongo import MongoClient
-import requests
-from fbmq import Attachment, Template, QuickReply, Page
 
 
 app = Flask(__name__)
@@ -54,14 +52,15 @@ def receive_message():
                         #bot.send_audio_url(recipient_id,)
                         bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
                         bot.send_audio_url(recipient_id, "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3")
-                        '''fb_url = 'https://graph.facebook.com/v2.6/me/messages'
-                        data = {
-                            'recipient': '{"id":' + recipient_id + '}',
-                            'message': '{"attachment":{"type":"audio", "payload":{"url": "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3", "is_reusable": true}}}'
-                        }
-                        params = {'access_token': ACCESS_TOKEN}
-                        print("AUDIO REQUEST RESULT:")
-                        print(requests.post(fb_url, params=params, data=data))'''
+                        buttons=[{"type":"postback",
+                                "title":"Say hi to me",
+                                "payload":"Hi!"},
+                                 {"type": "postback",
+                                  "title": "Add some word in your dictionary",
+                                  "payload": "I want to add a word in my vocab"}
+                                 ]
+                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)
+
                         # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
 
@@ -116,13 +115,6 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run()
