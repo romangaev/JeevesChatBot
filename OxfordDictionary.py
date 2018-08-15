@@ -29,7 +29,8 @@ def oxford_dic_request(word_id):
                 response += '\n'
                 response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
                 def_counter = 1
-                examples_counter=1
+                examples_counter = 1
+                def_stopper=1
                 for j in i["lexicalEntries"]:
                     # print(j["lexicalCategory"])
                     response += '\n\n'
@@ -45,6 +46,10 @@ def oxford_dic_request(word_id):
                                     # print("\t "+str(def_counter)+": "+w)
                                     response += '\n'
                                     response += "- "+w
+                                    def_stopper += 1
+                                    if def_stopper >3:
+                                        break
+
 
                             if "examples" in v:
                                 for s in v["examples"]:
@@ -53,6 +58,9 @@ def oxford_dic_request(word_id):
                                  examples += str(examples_counter)+'. '+str(s["text"])
                                  examples += '\n'
                                  examples_counter +=1
+                                if examples_counter>10:
+                                    break
+
 
 
         return {"text": response, "attachment": audio_url, "examples": examples}
@@ -80,13 +88,17 @@ def oxford_dic_syn_ant(word_id):
                         for w in v["antonyms"]:
                             antonyms += str(ant_counter)+". "+w["id"]+"\n"
                             ant_counter +=1
+                            if ant_counter>10:
+                                break
                     if "synonyms" in v:
                         for x in v["synonyms"]:
                             synonyms += str(syn_counter) + ". " + x["id"]+"\n"
                             syn_counter += 1
+                            if syn_counter>10:
+                                break
     if antonyms=="":
         antonyms = "Antonyms for this? Crazy..."
     if synonyms=="":
         synonyms="Sorry, I haven't find anything related..."
 
-    return {"synonyms":synonyms,"antonyms":antonyms}
+    return {"synonyms": synonyms,"antonyms": antonyms}

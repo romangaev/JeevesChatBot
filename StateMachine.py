@@ -104,9 +104,9 @@ class StateMachine:
                 break
             number_of_intent += 1
         response = {}
-        response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
+        #response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
         query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
-        response["text"] += query_result["text"]
+        response["text"] = query_result["text"]
         response["attachment"] = query_result["attachment"]
         response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
         self.data["examples"] = query_result["examples"]
