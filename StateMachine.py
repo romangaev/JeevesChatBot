@@ -29,7 +29,7 @@ class StateMachine:
         confidence = intent_matrix[0][1]
         new_state = ''
         number_of_intent = 0
-        response = {"text": "default", "attachment": None}
+        response = {}
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 new_state = every['state']
@@ -101,11 +101,13 @@ class StateMachine:
             if every['tag'] == 'oxford_dic':
                 break
             number_of_intent += 1
-        response = {"text": "default", "attachment": None}
+        response = {}
         response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
         query_result = OxfordDictionary.oxford_dic_request(word_tokenize(message)[-1].lower())
         response["text"] += query_result["text"]
         response["attachment"] = query_result["attachment"]
+        response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
+
         print("Attachment url:")
         print(response["attachment"])
         return response

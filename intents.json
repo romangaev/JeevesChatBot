@@ -58,7 +58,17 @@
         {"tag": "oxford_dic",
                                  "patterns": ["What is","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
                                  "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
-                                 "state": ""
+                                 "state": "",
+                                "buttons":[{"type":"postback",
+                                            "title":"Examples",
+                                            "payload":"OXFORD_DIC_EXAMPLES"},
+                                          {"type": "postback",
+                                            "title": "Words like this",
+                                            "payload": "OXFORD_DIC_SYNONYMS"},
+                                          {"type": "postback",
+                                            "title": "Opposite words",
+                                            "payload": "OXFORD_DIC_ANTONYMS"}
+                                          ]
         }
    ]
 }

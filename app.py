@@ -6,6 +6,7 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 import StateMachine
 from pymongo import MongoClient
+import OxfordDictionary
 
 
 app = Flask(__name__)
@@ -38,13 +39,15 @@ def receive_message():
                     if message['message'].get('text'):
 
                         response_dic = get_message(recipient_id, message['message'].get('text'))
-
-                        if response_dic["attachment"] is not None:
-
-                            send_message(recipient_id, response_dic["text"])
-                            bot.send_audio_url(recipient_id, response_dic["attachment"])
+                        if "buttons" in response_dic:
+                            bot.send_button_message(recipient_id, response_dic["text"], response_dic["buttons"])
                         else:
                             send_message(recipient_id, response_dic["text"])
+
+                        if "attachment" in response_dic:
+                            send_message(recipient_id, response_dic["text"])
+                            bot.send_audio_url(recipient_id, response_dic["attachment"])
+
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
                         #response_sent_nontext = get_message()
@@ -59,7 +62,7 @@ def receive_message():
                                   "title": "say goodbye",
                                   "payload": "BYE"}
                                  ]
-                        print(bot.send_button_message(recipient_id,"Here is a test for buttons",buttons))
+                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)
 
                 # postback webhook
                 if message.get("postback"):
@@ -71,7 +74,11 @@ def receive_message():
                     if message_text == "HELLO":
                         send_message(sender_id, "hello world!")
                     elif message_text == "BYE":
-                        send_message(sender_id,"bye!!!")
+                        send_message(sender_id, "bye!!!")
+                    elif message_text == "OXFORD_DIC_SYNONYMS":
+                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant()["synonyms"])
+                    elif message_text == "OXFORD_DIC_ANTONYMS":
+                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant()["antonyms"])
 
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3

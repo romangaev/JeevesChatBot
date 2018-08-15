@@ -9,16 +9,19 @@ language = 'en'
 
 
 def oxford_dic_request(word_id):
+    response = ""
+    audio_url = ""
+    examples = ""
+
+
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/'  + language + '/'  + word_id.lower()
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
     if "code {}\n".format(r.status_code) == '200' or "code {}\n".format(r.status_code) == 200:
         print("text \n" + r.text)
         # print("json \n" + json.dumps(r.json()))
-        if r is not None:
-            oxford_dict = r.json()
-            response = ""
-            audio_url = ""
-            for i in oxford_dict["results"]:
+        oxford_dict = r.json()
+
+        for i in oxford_dict["results"]:
                 # print(word_id)
                 # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
                 response += word_id
@@ -43,8 +46,36 @@ def oxford_dic_request(word_id):
                                 if "examples" in v:
                                     for s in v["examples"]:
                                     #    print('\t\tExample: '+str(w["text"]))
-                                        response += '\n'
-                                        response += 'Example: '+str(s["text"])
-        return {"text": response, "attachment": audio_url}
+
+                                        examples += 'Example: '+str(s["text"])
+                                        examples += '\n'
+
+
+        return {"text": response, "attachment": audio_url, "examples": examples}
     else:
-        return {"text": "I don't know this word", "attachment": None}
+        return {"text": "I don't know this word", "attachment": None, "examples":None}
+
+def oxford_dic_syn_ant(word_id):
+    url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
+    synonyms = ""
+    antonyms = ""
+    r = requests.get(url, headers={'app_id': app_id, 'app_key': app_key})
+    oxford_dict = r.json()
+
+    for i in oxford_dict["results"]:
+        # print(word_id)
+        # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
+        syn_counter = 1
+        ant_counter = 1
+        for j in i["lexicalEntries"]:
+            # print(j["lexicalCategory"])
+            for k in j["entries"]:
+                for v in k["senses"]:
+                    for w in v["antonyms"]:
+                        antonyms += str(ant_counter)+"."+w["id"]+"\n"
+                        ant_counter +=1
+                    for x in v["synonyms"]:
+                        synonyms += str(syn_counter) + "." + x["id"]+"\n"
+                        syn_counter += 1
+
+    return {"synonyms":synonyms,"antonyms":antonyms}
