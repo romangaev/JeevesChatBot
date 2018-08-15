@@ -46,8 +46,12 @@ class StateMachine:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
                 user_vocab_collection = StateMachine.db.user_vocab_collection
                 result = user_vocab_collection.posts.find_one({'user_id': self.user_id})
+
                 if result is not None:
-                    response["text"] += str(result['vocabulary'])
+                    response["text"] += '\n'
+                    for every in result['vocabulary']:
+                        response["text"] += every
+                        response["text"] += '\n'
             elif intent == 'dictadd':
 
                 response["text"] = self.dict_add_transitions(message,intent,confidence,new_state)
