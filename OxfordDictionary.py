@@ -33,7 +33,7 @@ def oxford_dic_request(word_id):
                 for j in i["lexicalEntries"]:
                     # print(j["lexicalCategory"])
                     response += '\n\n'
-                    response +=str(def_counter)+"."+ j["lexicalCategory"]
+                    response +=str(def_counter)+". "+ j["lexicalCategory"]
                     def_counter += 1
                     if "audioFile" in j["pronunciations"][0]:
                         audio_url = j["pronunciations"][0]["audioFile"]
@@ -50,7 +50,7 @@ def oxford_dic_request(word_id):
                                 for s in v["examples"]:
                                 #    print('\t\tExample: '+str(w["text"]))
 
-                                 examples += str(examples_counter)+'.'+str(s["text"])
+                                 examples += str(examples_counter)+'. '+str(s["text"])
                                  examples += '\n'
                                  examples_counter +=1
 
@@ -78,11 +78,11 @@ def oxford_dic_syn_ant(word_id):
                 for v in k["senses"]:
                     if "antonyms" in v:
                         for w in v["antonyms"]:
-                            antonyms += str(ant_counter)+"."+w["id"]+"\n"
+                            antonyms += str(ant_counter)+". "+w["id"]+"\n"
                             ant_counter +=1
                     if "synonyms" in v:
                         for x in v["synonyms"]:
-                            synonyms += str(syn_counter) + "." + x["id"]+"\n"
+                            synonyms += str(syn_counter) + ". " + x["id"]+"\n"
                             syn_counter += 1
 
     return {"synonyms":synonyms,"antonyms":antonyms}
