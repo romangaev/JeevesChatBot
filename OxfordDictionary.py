@@ -35,7 +35,8 @@ def oxford_dic_request(word_id):
                     # print(j["lexicalCategory"])
                     response += '\n\n'
                     response += str(def_counter)+". "+ j["lexicalCategory"]
-                    examples += str(def_counter) + ". " + j["lexicalCategory"]
+                    examples += j["lexicalCategory"]
+                    examples += '\n'
                     def_counter += 1
                     def_stopper = 1
                     examples_counter = 1
