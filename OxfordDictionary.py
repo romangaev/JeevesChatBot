@@ -29,6 +29,7 @@ def oxford_dic_request(word_id):
                 response += '\n'
                 response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
                 def_counter = 1
+                examples_counter=1
                 for j in i["lexicalEntries"]:
                     # print(j["lexicalCategory"])
                     response += '\n\n'
@@ -49,8 +50,9 @@ def oxford_dic_request(word_id):
                                 for s in v["examples"]:
                                 #    print('\t\tExample: '+str(w["text"]))
 
-                                 examples += 'Example: '+str(s["text"])
+                                 examples += str(examples_counter)+'.'+str(s["text"])
                                  examples += '\n'
+                                 examples_counter +=1
 
 
         return {"text": response, "attachment": audio_url, "examples": examples}
@@ -60,8 +62,8 @@ def oxford_dic_request(word_id):
 
 def oxford_dic_syn_ant(word_id):
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
-    synonyms = ""
-    antonyms = ""
+    synonyms = "Sorry, I haven't find anything related..."
+    antonyms = "Sorry, I haven't find anything related..."
     r = requests.get(url, headers={'app_id': app_id, 'app_key': app_key})
     oxford_dict = r.json()
 
