@@ -56,7 +56,7 @@
                                  "state": "listening"
         },
         {"tag": "oxford_dic",
-                                 "patterns": ["What is it","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of"],
+                                 "patterns": ["What is it","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of","Could you explain to me"],
                                  "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
                                  "state": "",
                                 "buttons":[{"type":"postback",

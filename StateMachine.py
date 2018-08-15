@@ -40,7 +40,7 @@ class StateMachine:
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
             self.data={}
-            if confidence < 0.5:
+            if confidence < 0.4:
                 response["text"] = "Not sure what you mean"
             elif intent == 'dictopen':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
