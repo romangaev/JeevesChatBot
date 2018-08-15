@@ -54,11 +54,11 @@ def oxford_dic_request(word_id):
                             if "examples" in v:
                                 for s in v["examples"]:
                                 #    print('\t\tExample: '+str(w["text"]))
-                                if examples_counter>10:
-                                    break
-                                examples += str(examples_counter)+'. '+str(s["text"])
-                                examples += '\n'
-                                examples_counter +=1
+                                    if examples_counter>10:
+                                        break
+                                    examples += str(examples_counter)+'. '+str(s["text"])
+                                    examples += '\n'
+                                    examples_counter +=1
 
 
 
