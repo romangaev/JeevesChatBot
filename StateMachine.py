@@ -97,19 +97,19 @@ class StateMachine:
             response["text"]=random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
             podcasts = []
-            if sentence.lower.contains("sports") or sentence.lower.contains("football"):
+            if sentence.lower().contains("sports") or sentence.lower().contains("football"):
                 podcasts = subscriptions.get_podcasts('football')
-            elif sentence.lower.contains("english") or sentence.lower.contains("learning"):
+            elif sentence.lower().contains("english") or sentence.lower().contains("learning"):
                 podcasts = subscriptions.get_podcasts('english')
-            elif sentence.lower.contains("politics") or sentence.lower.contains("government"):
+            elif sentence.lower().contains("politics") or sentence.lower().contains("government"):
                 podcasts = subscriptions.get_podcasts('politics')
-            elif sentence.lower.contains("science") or sentence.lower.contains("research"):
+            elif sentence.lower().contains("science") or sentence.lower().contains("research"):
                 podcasts = subscriptions.get_podcasts('politics')
-            elif sentence.lower.contains("analytics") or sentence.lower.contains("longreads"):
+            elif sentence.lower().contains("analytics") or sentence.lower().contains("longreads"):
                 podcasts = subscriptions.get_podcasts('longreads')
-            elif sentence.lower.contains("technology") or sentence.lower.contains("Tech"):
+            elif sentence.lower().contains("technology") or sentence.lower().contains("Tech"):
                 podcasts = subscriptions.get_podcasts('technology')
-            elif sentence.lower.contains("global") or sentence.lower.contains("society") or sentence.lower.contains(
+            elif sentence.lower().contains("global") or sentence.lower().contains("society") or sentence.lower().contains(
                     "environment"):
                 podcasts = subscriptions.get_podcasts('global')
             else:
