@@ -3,8 +3,11 @@ import os
 import random
 from pymongo import MongoClient
 from nltk import word_tokenize, pos_tag
+
+import subscriptions
 from tensorBot import classify
 import OxfordDictionary
+
 MONGODB_URI = os.environ['MONGODB_URI']
 
 
@@ -16,12 +19,11 @@ class StateMachine:
         self.state = state
         self.data = {}
         self.user_id = user_id
-        self.intents=""
+        self.intents = ""
 
     def state_respond(self, message):
         with open('intents.json') as json_data:
             self.intents = json.load(json_data)
-
 
         # classify the intent and get a new state
         intent_matrix = classify(message)
@@ -39,7 +41,7 @@ class StateMachine:
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
-            self.data={}
+            self.data = {}
             if confidence < 0.4:
                 response["text"] = "Not sure what you mean"
             elif intent == 'dictopen':
@@ -55,7 +57,7 @@ class StateMachine:
                         response["text"] += '\n'
             elif intent == 'dictadd':
 
-                response["text"] = self.dict_add_transitions(message,intent,confidence,new_state)
+                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
 
             elif intent == 'info':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
@@ -70,45 +72,83 @@ class StateMachine:
             print(response["text"])
 
             print(confidence)
-            print('StateMachineState:'+ self.state)
-            #dont forget to change the state
+            print('StateMachineState:' + self.state)
+            # dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)
         elif self.state == 'dictadd':
-            response["text"] = self.dict_add_transitions(message,intent,confidence,new_state)
-
+            response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
+        elif self.state == 'listening':
+            response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
         # elif self.state == 'listening':
-            # response = self.listening_transitions(message, intent, confidence, new_state)
+        # response = self.listening_transitions(message, intent, confidence, new_state)
 
         return response
 
     def listening_transitions(self, sentence, intent, confidence, new_state):
-        response={}
+        response = {}
         number_of_intent = 0
         for every in self.intents['intents']:
             if every['tag'] == 'listening':
                 break
             number_of_intent += 1
 
-
-        if self.state=='':
-            return random.choice(self.intents['intents'][number_of_intent]['responses'])
+        if self.state == '':
+            response["text"]=random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
-            if sentence.lower.__contains__('beginner'):
-                response["text"]="here is you lesson"
-                #response["attachment"]=
-
-            # elif sentence.lower.__contains__('intermediate'):
-            # elif sentence.lower.__contains__('advanced'):
+            podcasts = []
+            if sentence.lower.contains("sports") or sentence.lower.contains("football"):
+                podcasts = subscriptions.get_podcasts('football')
+            elif sentence.lower.contains("english") or sentence.lower.contains("learning"):
+                podcasts = subscriptions.get_podcasts('english')
+            elif sentence.lower.contains("politics") or sentence.lower.contains("government"):
+                podcasts = subscriptions.get_podcasts('politics')
+            elif sentence.lower.contains("science") or sentence.lower.contains("research"):
+                podcasts = subscriptions.get_podcasts('politics')
+            elif sentence.lower.contains("analytics") or sentence.lower.contains("longreads"):
+                podcasts = subscriptions.get_podcasts('longreads')
+            elif sentence.lower.contains("technology") or sentence.lower.contains("Tech"):
+                podcasts = subscriptions.get_podcasts('technology')
+            elif sentence.lower.contains("global") or sentence.lower.contains("society") or sentence.lower.contains(
+                    "environment"):
+                podcasts = subscriptions.get_podcasts('global')
             else:
-                return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"
+                response["text"] = "Hm...Sorry, I don't have anything about it"
+                return response
+
+            elements = []
+            for x in range(0, 5):
+                elements.append({
+                    "title": podcasts[x]['title'],
+                    "image_url": podcasts[x]['img'],
+                    "subtitle": podcasts[x]['description'],
+                    "default_action": {
+                        "type": "web_url",
+                        "url": podcasts[x]['link'],
+                        "webview_height_ratio": "tall",
+                    },
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": podcasts[x]['link'],
+                            "title": "Listen!"
+                        }, {
+                            # TODO implement subscription
+                            "type": "postback",
+                            "title": "Subscribe",
+                            "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                        }
+                    ]
+                })
+                response["elements"]=elements
+        return response
 
 
     def oxford_dic_transitions(self, message):
-        self.data["word_id"] = word_tokenize(message.replace("'","").replace('"',""))[-1].lower()
+        self.data["word_id"] = word_tokenize(message.replace("'", "").replace('"', ""))[-1].lower()
         print("word_id")
         print(self.data["word_id"])
-        response = {"text":"no_text"}
+        response = {"text": "no_text"}
         if (self.data["word_id"].isalpha()):
             number_of_intent = 0
             for every in self.intents['intents']:
@@ -116,11 +156,11 @@ class StateMachine:
                     break
                 number_of_intent += 1
 
-            #response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
+            # response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
             response["text"] = query_result["text"]
             response["attachment"] = query_result["attachment"]
-            if not response["text"]=="I don't know this word":
+            if not response["text"] == "I don't know this word":
                 response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
             self.data["examples"] = query_result["examples"]
 
@@ -135,10 +175,9 @@ class StateMachine:
         for every in self.intents['intents']:
             if every['tag'] == 'dictadd':
                 break
-            number_of_intent+=1
+            number_of_intent += 1
         respond = 'I didn\'t get you'
         # if we are entering dictadd context
-
 
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')
@@ -160,27 +199,30 @@ class StateMachine:
             word_to_add = ''
             for i in range(index_begin, index_prep):
                 word_to_add = word_to_add + pos_results[i][0] + ' '
-            if word_to_add.__contains__('something') or word_to_add.__contains__('a word') or word_to_add.__contains__('word'):
+            if word_to_add.__contains__('something') or word_to_add.__contains__('a word') or word_to_add.__contains__(
+                    'word'):
                 word_to_add = ''
 
             # change the state
             self.state = 'dictadd'
-            print("word to add:"+word_to_add)
+            print("word to add:" + word_to_add)
             # if we didnt find the word then ask for the word
             if word_to_add == '':
                 respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
             else:
                 self.data['dictadd'] = word_to_add
-                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_word_given']) + " Add to your dictionary:" + word_to_add +". Right?"
+                respond = random.choice(self.intents['intents'][number_of_intent][
+                                            'responses_if_word_given']) + " Add to your dictionary:" + word_to_add + ". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
             if intent == 'confirmation' or sentence.lower == "yes":
                 # DBQUERY
                 user_vocab_collection = StateMachine.db.user_vocab_collection
-                user_vocab_collection.posts.update_one({'user_id': self.user_id}, {"$push": {'vocabulary': self.data['dictadd']}}, upsert=True)
+                user_vocab_collection.posts.update_one({'user_id': self.user_id},
+                                                       {"$push": {'vocabulary': self.data['dictadd']}}, upsert=True)
 
-                respond = self.data['dictadd']+' added!'
+                respond = self.data['dictadd'] + ' added!'
                 self.data = {}
                 self.state = ''
             elif intent == 'rejection' or sentence.lower == "no":
@@ -192,7 +234,8 @@ class StateMachine:
             # adding a word
             # DBQUERY
             user_vocab_collection = StateMachine.db.user_vocab_collection
-            user_vocab_collection.posts.update_one({'user_id': self.user_id},{"$push":{'vocabulary': sentence}}, upsert=True)
+            user_vocab_collection.posts.update_one({'user_id': self.user_id}, {"$push": {'vocabulary': sentence}},
+                                                   upsert=True)
             self.data = {}
             self.state = ''
             print('almost added...' + sentence)
@@ -204,13 +247,6 @@ class StateMachine:
 
     def printing_state(self):
         print(self.state)
-    def change_state(self,state):
+
+    def change_state(self, state):
         self.state = state
-
-
-
-
-
-
-
-

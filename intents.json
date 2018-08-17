@@ -57,7 +57,7 @@
         },
         {"tag": "listening",
                                  "patterns": ["Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?"],
-                                 "responses": ["Sure, what level? Beginner, Intermediate, Advanced?"],
+                                 "responses": ["Sure, what do you wanna listen? BBC,sports, politics, longreads?"],
                                  "state": "listening"
         },
         {"tag": "oxford_dic",

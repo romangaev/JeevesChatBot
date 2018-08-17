@@ -1,6 +1,6 @@
 # Python libraries that we need to import for our bot
 # LATEST WORKING VERSION
-import random
+
 import os
 from flask import Flask, request
 from pymessenger.bot import Bot
@@ -9,7 +9,7 @@ from pymongo import MongoClient
 import OxfordDictionary
 from bson.binary import Binary
 import pickle
-import subscriptions
+
 
 
 app = Flask(__name__)
@@ -44,54 +44,17 @@ def receive_message():
                         response_dic = get_message(recipient_id, message['message'].get('text'))
                         if "buttons" in response_dic:
                             bot.send_button_message(recipient_id, response_dic["text"], response_dic["buttons"])
+                        elif "elements" in response_dic:
+                            bot.send_generic_message(recipient_id, response_dic["elements"])
                         else:
                             send_message(recipient_id, response_dic["text"])
 
                         if "attachment" in response_dic:
                             bot.send_audio_url(recipient_id, response_dic["attachment"])
-
                     # if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
-                        #response_sent_nontext = get_message()
-                        #send_message(recipient_id, response_sent_nontext)
-                        #bot.send_audio_url(recipient_id,)
-                        '''bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
+                        bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
                         bot.send_audio_url(recipient_id, "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3")
-                        buttons=[{"type":"postback",
-                                "title":"Say hi to me",
-                                "payload":"HELLO"},
-                                 {"type": "postback",
-                                  "title": "say goodbye",
-                                  "payload": "BYE"}
-                                 ]
-                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)'''
-
-                        podcasts = subscriptions.get_podcasts('technology')
-                        elements = []
-                        for x in range(0,5):
-                                      elements.append({
-                                        "title": podcasts[x]['title'],
-                                        "image_url":podcasts[x]['img'],
-                                        "subtitle":podcasts[x]['description'],
-                                        "default_action": {
-                                          "type": "web_url",
-                                          "url": podcasts[x]['link'],
-                                          "webview_height_ratio": "tall",
-                                        },
-                                        "buttons":[
-                                          {
-                                            "type":"web_url",
-                                            "url":podcasts[x]['link'],
-                                            "title":"Listen!"
-                                          },{
-                                            "type":"postback",
-                                            "title":"Subscribe",
-                                            "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                                          }
-                                            ]
-                                      })
-                        print(elements)
-                        bot.send_generic_message(recipient_id, elements)
 
                 # postback webhook
                 if message.get("postback"):
