@@ -107,7 +107,7 @@ class StateMachine:
                 podcasts = subscriptions.get_podcasts('politics')
             elif "analytics" in sentence.lower() or "longreads" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('longreads')
-            elif "technology" in sentence.lower().contains() or "tech" in sentence.lower():
+            elif "technology" in sentence.lower() or "tech" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('technology')
             elif "global" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('global')
