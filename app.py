@@ -66,7 +66,7 @@ def receive_message():
                                  ]
                         bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)'''
 
-                        podcasts = subscriptions.get_podcasts('football')
+                        podcasts = subscriptions.get_podcasts('politics')
                         elements = []
                         for x in range(0,5):
                                       elements.append({
