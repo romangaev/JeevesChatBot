@@ -9,6 +9,7 @@ from pymongo import MongoClient
 import OxfordDictionary
 from bson.binary import Binary
 import pickle
+import subscriptions
 
 
 app = Flask(__name__)
@@ -54,7 +55,7 @@ def receive_message():
                         #response_sent_nontext = get_message()
                         #send_message(recipient_id, response_sent_nontext)
                         #bot.send_audio_url(recipient_id,)
-                        bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
+                        '''bot.send_image_url(recipient_id, 'https://i.ytimg.com/vi/aEtm69mLK6w/hqdefault.jpg')
                         bot.send_audio_url(recipient_id, "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3")
                         buttons=[{"type":"postback",
                                 "title":"Say hi to me",
@@ -63,7 +64,33 @@ def receive_message():
                                   "title": "say goodbye",
                                   "payload": "BYE"}
                                  ]
-                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)
+                        bot.send_button_message(recipient_id,"Here is a test for buttons",buttons)'''
+
+                        podcasts = subscriptions.get_podcasts(subscriptions.BBC)
+                        elements = []
+                        for x in range(0,3)
+                                      elements.append({
+                                        "title": podcasts[x]['title'],
+                                        "image_url":podcasts[x]['img'],
+                                        "subtitle":podcasts[x]['description'],
+                                        "default_action": {
+                                          "type": "web_url",
+                                          "url": podcasts[x]['link'],
+                                          "webview_height_ratio": "tall",
+                                        },
+                                        "buttons":[
+                                          '''{
+                                            "type":"web_url",
+                                            "url":"https://petersfancybrownhats.com",
+                                            "title":"View Website"
+                                          },{
+                                            "type":"postback",
+                                            "title":"Start Chatting",
+                                            "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                          }'''
+                                            ]
+                                      })
+                        bot.send_generic_message(recipient_id,elements)
 
                 # postback webhook
                 if message.get("postback"):

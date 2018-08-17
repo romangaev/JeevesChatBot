@@ -65,10 +65,8 @@ class StateMachine:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'oxford_dic':
                 response = self.oxford_dic_transitions(message)
-
-
-            # elif self.state == 'listening':
-                # response = self.listening_transitions(message, intent, confidence, new_state)
+            elif self.state == 'listening':
+                response = self.listening_transitions(message, intent, confidence, new_state)
             print(response["text"])
 
             print(confidence)
@@ -84,7 +82,8 @@ class StateMachine:
 
         return response
 
-    '''def listening_transitions(self, sentence, intent, confidence, new_state):
+    def listening_transitions(self, sentence, intent, confidence, new_state):
+        response={}
         number_of_intent = 0
         for every in self.intents['intents']:
             if every['tag'] == 'listening':
@@ -96,12 +95,15 @@ class StateMachine:
             return random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
             if sentence.lower.__contains__('beginner'):
-                
+                response["text"]="here is you lesson"
+                #response["attachment"]=
 
             # elif sentence.lower.__contains__('intermediate'):
             # elif sentence.lower.__contains__('advanced'):
             else:
-                return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"'''
+                return "Hm...I have only Beginner, Intermediate and Advanced. Try something from that"
+
+
     def oxford_dic_transitions(self, message):
         self.data["word_id"] = word_tokenize(message.replace("'","").replace('"',""))[-1].lower()
         print("word_id")
