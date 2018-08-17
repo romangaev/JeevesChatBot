@@ -88,13 +88,13 @@ class StateMachine:
                                                    {"$set": {'vocabulary': []}})
 
             response["text"]='Done. Those words were cleared...Literally...And no one will ever find their grave...'
-            response["attachment"]="http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
+            response["attachment"] = "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
 
         elif intent == 'rejection' or "no" in sentence.lower():
             response["text"] = 'Okay. Let\'s have a spare on these words and keep them until we need... For a while.'
 
         self.state = ''
-
+        return response
 
 
 
