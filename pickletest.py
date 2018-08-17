@@ -1,15 +1,19 @@
+import re
+
 import requests
 from bs4 import BeautifulSoup
 
-url = "http://feeds.bbci.co.uk/learningenglish/english/features/6-minute-english/rss"
+url = "https://www.theguardian.com/podcasts/rss"
 
 resp = requests.get(url)
 
 soup = BeautifulSoup(resp.content, features="xml")
 
 #print(soup)
-items = soup.findAll('item')
-print(items[0])
+tag=''
+items = soup.findAll('category', text=re.compile('.*%s.*' % tag, re.IGNORECASE))
+print(items[0].parent)
+
 '''
 news_items = []
 
