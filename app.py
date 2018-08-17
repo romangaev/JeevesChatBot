@@ -68,7 +68,7 @@ def receive_message():
 
                         podcasts = subscriptions.get_podcasts(subscriptions.BBC)
                         elements = []
-                        for x in range(0,3):
+                        for x in range(0,5):
                                       elements.append({
                                         "title": podcasts[x]['title'],
                                         "image_url":podcasts[x]['img'],
@@ -81,11 +81,11 @@ def receive_message():
                                         "buttons":[
                                           {
                                             "type":"web_url",
-                                            "url":"https://petersfancybrownhats.com",
-                                            "title":"View Website"
+                                            "url":podcasts[x]['link'],
+                                            "title":"Listen!"
                                           },{
                                             "type":"postback",
-                                            "title":"Start Chatting",
+                                            "title":"Subscribe",
                                             "payload":"DEVELOPER_DEFINED_PAYLOAD"
                                           }
                                             ]
