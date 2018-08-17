@@ -10,3 +10,4 @@ Flask==0.12.2
 pymessenger==0.0.7.0
 gunicorn==19.6.0
 pymongo==3.7.1
+bs4==4.4.0
