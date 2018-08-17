@@ -68,7 +68,7 @@ def receive_message():
 
                         podcasts = subscriptions.get_podcasts(subscriptions.BBC)
                         elements = []
-                        for x in range(0,3)
+                        for x in range(0,3):
                                       elements.append({
                                         "title": podcasts[x]['title'],
                                         "image_url":podcasts[x]['img'],
