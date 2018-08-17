@@ -55,21 +55,12 @@ class StateMachine:
                     for every in result['vocabulary']:
                         response["text"] += every
                         response["text"] += '\n'
-            elif intent == 'dictadd':
-
-                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
-
-            elif intent == 'info':
-                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
-            elif intent == 'thanks':
-                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
-            elif intent == 'greeting':
-                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'oxford_dic':
                 response = self.oxford_dic_transitions(message)
             elif intent == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
-
+            else:
+                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
 
             print(confidence)
             print('StateMachineState:' + self.state)
