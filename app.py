@@ -79,7 +79,7 @@ def receive_message():
                                           "webview_height_ratio": "tall",
                                         },
                                         "buttons":[
-                                          '''{
+                                          {
                                             "type":"web_url",
                                             "url":"https://petersfancybrownhats.com",
                                             "title":"View Website"
@@ -87,10 +87,11 @@ def receive_message():
                                             "type":"postback",
                                             "title":"Start Chatting",
                                             "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                                          }'''
+                                          }
                                             ]
                                       })
-                        bot.send_generic_message(recipient_id,elements)
+                        print(elements)
+                        bot.send_generic_message(recipient_id, elements)
 
                 # postback webhook
                 if message.get("postback"):
