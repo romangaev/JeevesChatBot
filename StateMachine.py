@@ -108,22 +108,24 @@ class StateMachine:
         self.data["word_id"] = word_tokenize(message.replace("'","").replace('"',""))[-1].lower()
         print("word_id")
         print(self.data["word_id"])
-        number_of_intent = 0
-        for every in self.intents['intents']:
-            if every['tag'] == 'oxford_dic':
-                break
-            number_of_intent += 1
-        response = {}
-        #response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
-        query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
-        response["text"] = query_result["text"]
-        response["attachment"] = query_result["attachment"]
-        if not response["text"]=="I don't know this word":
-            response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
-        self.data["examples"] = query_result["examples"]
+        response = {"text":"no_text"}
+        if (self.data["word_id"].isalpha()):
+            number_of_intent = 0
+            for every in self.intents['intents']:
+                if every['tag'] == 'oxford_dic':
+                    break
+                number_of_intent += 1
 
-        print("Attachment url:")
-        print(response["attachment"])
+            #response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
+            query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
+            response["text"] = query_result["text"]
+            response["attachment"] = query_result["attachment"]
+            if not response["text"]=="I don't know this word":
+                response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
+            self.data["examples"] = query_result["examples"]
+
+            print("Attachment url:")
+            print(response["attachment"])
         return response
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
