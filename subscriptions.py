@@ -7,6 +7,8 @@ BBC = {'rss_url':"http://feeds.bbci.co.uk/learningenglish/english/features/6-min
 'img_url':'https://pbs.twimg.com/profile_images/540543625071820800/9Pdrd-66.png'}
 THEGUARDIAN_FOOTBALL ={'rss_url':"https://audioboom.com/channels/4746648.rss",
 'img_url':'https://i.guim.co.uk/img/media/fb35ddef61264c6c9fe193bcae0019049e9362a5/0_0_1400_1400/master/1400.jpg?w=1920&q=55&auto=format&usm=12&fit=max&s=2546f4326244c3099ae402cd43cf66ff'}
+THEGUARDIAN_POLITICS ={'rss_url':"https://audioboom.com/channels/1215206.rss",
+'img_url':'https://i.guim.co.uk/img/media/e065c92a043d28bd723abf13302ea7794c507b26/0_0_7320_2798/master/7320.jpg?w=620&q=20&auto=format&usm=12&fit=max&dpr=2&s=519898f1f7ea2a864d40570cc65fc6c6'}
 
 def get_podcasts(tag):
 
@@ -14,6 +16,8 @@ def get_podcasts(tag):
             src=BBC
         elif(tag=='football'):
             src=THEGUARDIAN_FOOTBALL
+        elif (tag == 'politics'):
+            src = THEGUARDIAN_POLITICS
         else:
             src = THEGUARDIAN_FOOTBALL
 
