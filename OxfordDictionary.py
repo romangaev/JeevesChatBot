@@ -27,7 +27,8 @@ def oxford_dic_request(word_id):
                 # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
                 response += word_id
                 response += '\n'
-                response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
+                if "pronunciations" in i["lexicalEntries"][0]:
+                    response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
                 def_counter = 1
 
 
@@ -40,8 +41,9 @@ def oxford_dic_request(word_id):
                     def_counter += 1
                     def_stopper = 1
                     examples_counter = 1
-                    if "audioFile" in j["pronunciations"][0]:
-                        audio_url = j["pronunciations"][0]["audioFile"]
+                    if "pronunciations" in j:
+                        if "audioFile" in j["pronunciations"][0]:
+                            audio_url = j["pronunciations"][0]["audioFile"]
                     for k in j["entries"]:
 
                         for v in k["senses"]:
