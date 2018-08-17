@@ -67,7 +67,7 @@ class StateMachine:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif intent == 'oxford_dic':
                 response = self.oxford_dic_transitions(message)
-            elif self.state == 'listening':
+            elif intent == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
 
 
@@ -95,7 +95,7 @@ class StateMachine:
             number_of_intent += 1
 
         if self.state == '':
-            response["text"]=random.choice(self.intents['intents'][number_of_intent]['responses'])
+            response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
 
             podcasts = []
