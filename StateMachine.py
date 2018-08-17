@@ -69,7 +69,7 @@ class StateMachine:
                 response = self.oxford_dic_transitions(message)
             elif self.state == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
-            print(response["text"])
+
 
             print(confidence)
             print('StateMachineState:' + self.state)
