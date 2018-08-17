@@ -97,20 +97,19 @@ class StateMachine:
             response["text"]=random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
             podcasts = []
-            if sentence.lower().contains("sports") or sentence.lower().contains("football"):
+            if "sports" in sentence.lower() or "football" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('football')
-            elif sentence.lower().contains("english") or sentence.lower().contains("learning"):
+            elif "english" in sentence.lower() or "learning" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('english')
-            elif sentence.lower().contains("politics") or sentence.lower().contains("government"):
+            elif "politics" in sentence.lower() or "government" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('politics')
-            elif sentence.lower().contains("science") or sentence.lower().contains("research"):
+            elif "science" in sentence.lower() or "research" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('politics')
-            elif sentence.lower().contains("analytics") or sentence.lower().contains("longreads"):
+            elif "analytics" in sentence.lower() or "longreads" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('longreads')
-            elif sentence.lower().contains("technology") or sentence.lower().contains("Tech"):
+            elif "technology" in sentence.lower().contains() or "tech" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('technology')
-            elif sentence.lower().contains("global") or sentence.lower().contains("society") or sentence.lower().contains(
-                    "environment"):
+            elif "global" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('global')
             else:
                 response["text"] = "Hm...Sorry, I don't have anything about it"
