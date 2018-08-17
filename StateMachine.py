@@ -76,6 +76,7 @@ class StateMachine:
             # dont forget to change the state
             self.state = new_state
             print('StateMachineState:' + self.state)
+
         elif self.state == 'dictadd':
             response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
         elif self.state == 'listening':
@@ -96,6 +97,7 @@ class StateMachine:
         if self.state == '':
             response["text"]=random.choice(self.intents['intents'][number_of_intent]['responses'])
         else:
+
             podcasts = []
             if "sports" in sentence.lower() or "football" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('football')
@@ -140,6 +142,7 @@ class StateMachine:
                     ]
                 })
                 response["elements"]=elements
+                self.state=""
         return response
 
 
