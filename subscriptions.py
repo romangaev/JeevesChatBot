@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 BBC = {'rss_url':"http://feeds.bbci.co.uk/learningenglish/english/features/6-minute-english/rss",
 'img_url':'https://pbs.twimg.com/profile_images/540543625071820800/9Pdrd-66.png'}
-THEGUARDIAN_FOOTBALL ={'rss_url':"https://www.theguardian.com/football/series/footballweekly/podcast.xml",
+THEGUARDIAN_FOOTBALL ={'rss_url':"https://audioboom.com/channels/4746648.rss",
 'img_url':'https://i.guim.co.uk/img/media/fb35ddef61264c6c9fe193bcae0019049e9362a5/0_0_1400_1400/master/1400.jpg?w=1920&q=55&auto=format&usm=12&fit=max&s=2546f4326244c3099ae402cd43cf66ff'}
 
 def get_podcasts(tag):
