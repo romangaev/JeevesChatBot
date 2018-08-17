@@ -60,7 +60,7 @@ class StateMachine:
             elif intent == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
             else:
-                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
+                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
 
             print(confidence)
             print('StateMachineState:' + self.state)
