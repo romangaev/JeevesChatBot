@@ -72,10 +72,32 @@ class StateMachine:
             response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
         elif self.state == 'listening':
             response = self.listening_transitions(message, intent, confidence, new_state)
+        elif self.state == 'dictclean':
+            response = self.dictclean_transitions(message, intent, confidence, new_state)
         # elif self.state == 'listening':
         # response = self.listening_transitions(message, intent, confidence, new_state)
 
         return response
+
+    def dictclean_transitions(self, sentence, intent, confidence, new_state):
+        response ={}
+        if intent == 'confirmation' or "yes" in sentence.lower():
+            # DBQUERY
+            user_vocab_collection = StateMachine.db.user_vocab_collection
+            user_vocab_collection.posts.update_one({'user_id': self.user_id},
+                                                   {"$set": {'vocabulary': []}})
+
+            response["text"]='Done. Those words were cleared...Literally...And no one will ever find their grave...'
+            response["audio"]="http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
+
+        elif intent == 'rejection' or "no" in sentence.lower():
+            response["text"] = 'Okay. Let\'s have a spare on these words and keep them until we need... For a while.'
+
+        self.state = ''
+
+
+
+
 
     def listening_transitions(self, sentence, intent, confidence, new_state):
         response = {}
