@@ -79,7 +79,7 @@ class StateMachine:
         elif self.state == 'dictadd':
             response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
         elif self.state == 'listening':
-            response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
+            response["text"] = self.listening_transitions(message, intent, confidence, new_state)
         # elif self.state == 'listening':
         # response = self.listening_transitions(message, intent, confidence, new_state)
 
