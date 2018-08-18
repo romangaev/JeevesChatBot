@@ -77,14 +77,9 @@ def receive_message():
                     elif message_text == "OXFORD_DIC_SYNONYMS":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-
-                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["synonyms"])
-
-                    elif message_text == "OXFORD_DIC_ANTONYMS":
-                        s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
-                        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-
-                        send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["antonyms"])
+                        syn_ant=OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
+                        send_message(sender_id, syn_ant["synonyms"])
+                        send_message(sender_id,syn_ant["antonyms"])
 
                     elif message_text == "OXFORD_DIC_EXAMPLES":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
@@ -138,7 +133,6 @@ def get_message(user_id, message):
     respose_dic = user_state_machine.state_respond(message)
     print("State after")
     user_state_machine.printing_state()
-    print(type(respose_dic))
     # save it back to db
     s_m_bytes = pickle.dumps(user_state_machine)
     post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}

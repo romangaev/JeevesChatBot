@@ -95,21 +95,21 @@ def oxford_dic_syn_ant(word_id):
                     for v in k["senses"]:
                         if "antonyms" in v:
                             for w in v["antonyms"]:
-                                if ant_counter>10:
+                                if ant_counter>5:
                                     break
                                 antonyms += str(ant_counter)+". "+w["id"]+"\n"
                                 ant_counter +=1
 
                         if "synonyms" in v:
                             for x in v["synonyms"]:
-                                if syn_counter>10:
+                                if syn_counter>5:
                                     break
                                 synonyms += str(syn_counter) + ". " + x["id"]+"\n"
                                 syn_counter += 1
 
-    if antonyms=="":
-         antonyms = "Antonyms for this? Crazy..."
-    if synonyms=="":
-        synonyms="Sorry, I haven't find anything related..."
+    if antonyms == "":
+         antonyms = "...And don't think there are any antonyms"
+    if synonyms == "":
+        synonyms = "Well..As for synonyms, I couldn't find anything related"
 
-    return {"synonyms": synonyms,"antonyms": antonyms}
+    return {"synonyms": synonyms, "antonyms": antonyms}

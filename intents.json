@@ -68,11 +68,8 @@
                                             "title":"Examples",
                                             "payload":"OXFORD_DIC_EXAMPLES"},
                                           {"type": "postback",
-                                            "title": "Words like this",
+                                            "title": "Synonyms-Antonyms",
                                             "payload": "OXFORD_DIC_SYNONYMS"},
-                                          {"type": "postback",
-                                            "title": "Opposite words",
-                                            "payload": "OXFORD_DIC_ANTONYMS"},
                                           {"type": "postback",
                                                     "title": "Pronunciation",
                                                     "payload": "OXFORD_DIC_PRONUNCIATION"}
