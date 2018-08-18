@@ -97,7 +97,7 @@ def receive_message():
                         print(url)
                         r = requests.get(url, allow_redirects=True)
                         open('temp.mp3', 'wb').write(r.content)
-                        bot.send_audio(sender_id, 'temp.mp3')
+                        bot.send_audio(sender_id, '@/temp.mp3')
                         os.remove("temp.mp3")
 
 
