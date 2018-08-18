@@ -191,9 +191,6 @@ class StateMachine:
                 response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
             self.data["examples"] = query_result["examples"]
             self.data["attachment"] = query_result["attachment"]
-
-            print("Attachment url:")
-            print(response["attachment"])
         return response
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
