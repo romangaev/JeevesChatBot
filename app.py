@@ -97,7 +97,7 @@ def receive_message():
                         print(url)
                         r = requests.get(url, allow_redirects=True)
                         open('temp.mp3', 'wb').write(r.content)
-                        bot.send_file_url(url)
+                        bot.send_file_url(sender_id,url)
                         os.remove("temp.mp3")
 
 
