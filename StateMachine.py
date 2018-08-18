@@ -141,6 +141,7 @@ class StateMachine:
             payload='SUBSCRIBE'
             if subscriptions.check_subscription(self.user_id,tag):
                 payload ='UNSUBSCRIBE'
+            print(payload)
 
             elements = []
             for x in range(0, 5):
