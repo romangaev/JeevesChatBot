@@ -57,7 +57,7 @@
         },
         {"tag": "listening",
                                  "patterns": ["Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio"],
-                                 "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-football\n-politics\n-longreads\nscience\ntechnology\n-global"],
+                                 "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"],
                                  "state": "listening"
         },
         {"tag": "oxford_dic",

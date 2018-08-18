@@ -67,5 +67,6 @@ def unsubscribe(user_id,tag):
     user_subscriptions_collection.posts.update_one({'user_id': user_id}, {"$pull": {'tags': tag}}, upsert=True)
 
 def check_subscription(user_id,tag):
-    return tag in user_subscriptions_collection.posts.find_one({'user_id': user_id})
+    query = user_subscriptions_collection.posts.find_one({'user_id': user_id})
+    return query is not None and tag in query
 
