@@ -72,7 +72,10 @@
                                             "payload": "OXFORD_DIC_SYNONYMS"},
                                           {"type": "postback",
                                             "title": "Opposite words",
-                                            "payload": "OXFORD_DIC_ANTONYMS"}
+                                            "payload": "OXFORD_DIC_ANTONYMS"},
+                                          {"type": "postback",
+                                                    "title": "Pronunciation",
+                                                    "payload": "OXFORD_DIC_PRONUNCIATION"}
                                           ]
         }
    ]

@@ -92,6 +92,11 @@ def receive_message():
 
                         send_message(sender_id, user_state_machine.data["examples"])
 
+                    elif message_text == "OXFORD_DIC_PRONUNCIATION":
+                        s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
+                        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+                        bot.send_audio_url(sender_id, user_state_machine.data["attachment"].replace(" ", ""))
+
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
