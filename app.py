@@ -10,7 +10,7 @@ import OxfordDictionary
 from bson.binary import Binary
 import pickle
 
-
+import subscriptions
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
@@ -65,18 +65,27 @@ def receive_message():
                     sender_id = message["sender"]["id"]
                     if message_text == "HELLO":
                         send_message(sender_id, "hello world!")
-                    elif message_text == "BYE":
-                        send_message(sender_id, "bye!!!")
+                    elif "UNSUBSCRIBE" in message_text:
+                        tag = message_text.split('_')[1]
+                        subscriptions.unsubscribe(sender_id, tag)
+                        send_message(sender_id, "Done!")
+                    elif "SUBSCRIBE" in message_text:
+                        tag = message_text.split('_')[1]
+                        subscriptions.subscribe(sender_id, tag)
+                        send_message(sender_id, "Done!")
+
                     elif message_text == "OXFORD_DIC_SYNONYMS":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
 
                         send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["synonyms"])
+
                     elif message_text == "OXFORD_DIC_ANTONYMS":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
 
                         send_message(sender_id, OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])["antonyms"])
+
                     elif message_text == "OXFORD_DIC_EXAMPLES":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])

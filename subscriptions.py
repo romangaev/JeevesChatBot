@@ -1,7 +1,14 @@
+import os
 import re
 
 import requests
 from bs4 import BeautifulSoup
+from pymongo import MongoClient
+
+MONGODB_URI = os.environ['MONGODB_URI']
+client = MongoClient(MONGODB_URI)
+db = client.chatbot_db
+user_subscriptions_collection = db.user_subscriptions_collection
 
 BBC = {'rss_url':"http://feeds.bbci.co.uk/learningenglish/english/features/6-minute-english/rss",
 'img_url':'https://pbs.twimg.com/profile_images/540543625071820800/9Pdrd-66.png'}
@@ -20,7 +27,7 @@ THEGUARDIAN_GLOBAL ={'rss_url':"https://audioboom.com/channels/1215181.rss",
 
 def get_podcasts(tag):
 
-        if(tag=="english"):
+        if(tag=="bbc"):
             src=BBC
         elif(tag=='football'):
             src=THEGUARDIAN_FOOTBALL
@@ -52,3 +59,13 @@ def get_podcasts(tag):
                 news_items.append(news_item)
 
         return news_items
+
+def subscribe(user_id,tag):
+    user_subscriptions_collection.posts.update_one({'user_id': user_id}, {"$push": {'tags': tag}}, upsert=True)
+
+def unsubscribe(user_id,tag):
+    user_subscriptions_collection.posts.update_one({'user_id': user_id}, {"$pull": {'tags': tag}}, upsert=True)
+
+def check_subscription(user_id,tag):
+    return tag in user_subscriptions_collection.posts.find_one({'user_id': user_id})
+

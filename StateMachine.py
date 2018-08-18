@@ -101,6 +101,7 @@ class StateMachine:
 
     def listening_transitions(self, sentence, intent, confidence, new_state):
         response = {}
+        tag=""
         number_of_intent = 0
         for every in self.intents['intents']:
             if every['tag'] == 'listening':
@@ -114,21 +115,32 @@ class StateMachine:
             podcasts = []
             if "sports" in sentence.lower() or "football" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('football')
-            elif "english" in sentence.lower() or "learning" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('english')
+                tag="football"
+            elif "bbc" in sentence.lower() or "learning" in sentence.lower():
+                podcasts = subscriptions.get_podcasts('bbc')
+                tag = "bbc"
             elif "politics" in sentence.lower() or "government" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('politics')
+                tag = "politics"
             elif "science" in sentence.lower() or "research" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('politics')
+                podcasts = subscriptions.get_podcasts('science')
+                tag = "science"
             elif "analytics" in sentence.lower() or "longreads" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('longreads')
+                tag = "longreads"
             elif "technology" in sentence.lower() or "tech" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('technology')
+                tag = "technology"
             elif "global" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('global')
+                tag = "global"
             else:
                 response["text"] = "Hm...Sorry, I don't have anything about it"
                 return response
+
+            payload='SUBSCRIBE'
+            if subscriptions.check_subscription(self.user_id,tag):
+                payload='UNSUBSCRIBE'
 
             elements = []
             for x in range(0, 5):
@@ -149,8 +161,8 @@ class StateMachine:
                         }, {
                             # TODO implement subscription
                             "type": "postback",
-                            "title": "Subscribe",
-                            "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                            "title": payload,
+                            "payload": payload+"_"+tag
                         }
                     ]
                 })
