@@ -76,8 +76,8 @@ def oxford_dic_request(word_id):
 
 def oxford_dic_syn_ant(word_id):
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/' + language + '/' + word_id.lower() + '/synonyms;antonyms'
-    synonyms = ""
-    antonyms = ""
+    synonyms = "Synonyms:\n"
+    antonyms = "Antonyms:\n"
     r = requests.get(url, headers={'app_id': app_id, 'app_key': app_key})
 
     if r.status_code == '200' or r.status_code == 200:
@@ -107,9 +107,9 @@ def oxford_dic_syn_ant(word_id):
                                 synonyms += str(syn_counter) + ". " + x["id"]+"\n"
                                 syn_counter += 1
 
-    if antonyms == "":
+    if antonyms == "Antonyms:\n":
          antonyms = "...And don't think there are any antonyms"
-    if synonyms == "":
+    if synonyms == "Synonyms:\n":
         synonyms = "Well..As for synonyms, I couldn't find anything related"
 
     return {"synonyms": synonyms, "antonyms": antonyms}

@@ -2,6 +2,8 @@
 # LATEST WORKING VERSION
 
 import os
+
+import requests
 from flask import Flask, request
 from pymessenger.bot import Bot
 import StateMachine
@@ -90,7 +92,13 @@ def receive_message():
                     elif message_text == "OXFORD_DIC_PRONUNCIATION":
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-                        bot.send_audio_url(sender_id, user_state_machine.data["attachment"].replace(" ", ""))
+
+                        url = user_state_machine.data["attachment"]
+                        print(url)
+                        r = requests.get(url, allow_redirects=True)
+                        open('temp.mp3', 'wb').write(r.content)
+                        bot.send_audio(sender_id, 'temp.mp3')
+                        os.remove("temp.mp3")
 
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
