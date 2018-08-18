@@ -255,7 +255,9 @@ class StateMachine:
             elif intent == 'rejection' or sentence.lower == "no":
                 # user wants some other word
                 self.data = {}
+                self.state = 'dictadd'
                 respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
+
         elif self.state == 'dictadd' and not self.data:
             print('inside dictadd+no data')
             # adding a word
