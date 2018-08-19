@@ -84,31 +84,23 @@ for document in user_state_collection.posts.find():
         types=['idioms','phrasal_verbs']
         type=random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type})
-        phrase = result["phrase"][result["current_number"]]
+        phrase = result["phrase"][result["current_number"]%len(result["phrase"])]
         # update number
         phrase_of_the_day_collection.posts.update_one({'type': type}, {"$inc": {'current_number': +1}}, upsert=True)
 
         dic = OxfordDictionary.oxford_dic_request(phrase)
     text = dic["text"]
-    elements = []
-    elements.append({
-                    "title": dic["text"],
-                    "image_url": 'https://is1-ssl.mzstatic.com/image/thumb/Purple118/v4/2c/96/13/2c9613fb-cbbf-3910-15fd-92540ff89a16/mzl.ytnapyct.png/246x0w.jpg',
-                    "subtitle": "",
-                    "default_action": {
-                        "type": "web_url",
-                        "url": "",
-                        "webview_height_ratio": "tall",
-                    },
-                    "buttons":[{"type":"postback",
-                                            "title":"Examples",
-                                            "payload":"OXFORD_DIC_EXAMPLES"},
-                                          {"type": "postback",
-                                            "title": "Synonyms-Antonyms",
-                                            "payload": "OXFORD_DIC_SYNONYMS"},
-                                          {"type": "postback",
-                                                    "title": "Pronunciation",
-                                                    "payload": "OXFORD_DIC_PRONUNCIATION"}
-                                          ]
-                })
-    bot.send_generic_message(user_id, elements)
+    print(text)
+    buttons=[{"type":"postback",
+                "title":"Examples",
+                "payload":"OXFORD_DIC_EXAMPLES"},
+            {"type": "postback",
+                "title": "Synonyms-Antonyms",
+                "payload": "OXFORD_DIC_SYNONYMS"},
+            {"type": "postback",
+                "title": "Pronunciation",
+                "payload": "OXFORD_DIC_PRONUNCIATION"}]
+    bot.send_image_url(user_id,'https://is1-ssl.mzstatic.com/image/thumb/Purple118/v4/2c/96/13/2c9613fb-cbbf-3910-15fd-92540ff89a16/mzl.ytnapyct.png/246x0w.jpg')
+    bot.send_button_message(user_id,text,buttons)
+
+
