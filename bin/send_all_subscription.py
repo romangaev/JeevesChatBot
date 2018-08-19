@@ -94,13 +94,13 @@ for document in user_state_collection.posts.find():
     print(text)
     buttons=[{"type":"postback",
                 "title":"Examples",
-                "payload":"OXFORD_DIC_EXAMPLES"},
+                "payload":"OXFORD_DIC_EXAMPLES."+phrase},
             {"type": "postback",
                 "title": "Synonyms-Antonyms",
-                "payload": "OXFORD_DIC_SYNONYMS"},
+                "payload": "OXFORD_DIC_SYNONYMS."+phrase},
             {"type": "postback",
                 "title": "Pronunciation",
-                "payload": "OXFORD_DIC_PRONUNCIATION"}]
+                "payload": "OXFORD_DIC_PRONUNCIATION."+phrase}]
 
 
     bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")

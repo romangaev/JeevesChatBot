@@ -25,7 +25,7 @@ def oxford_dic_request(word_id):
         for i in oxford_dict["results"]:
                 # print(word_id)
                 # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
-                response += word_id
+                response += '*'+word_id.capitalize()+'*'
                 response += '\n'
                 if "pronunciations" in i["lexicalEntries"][0] and "phoneticSpelling" in i["lexicalEntries"][0]["pronunciations"][0]:
                     response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
@@ -56,7 +56,6 @@ def oxford_dic_request(word_id):
                                     response += "- "+w
                                     def_stopper += 1
 
-
                             if "examples" in v:
                                 for s in v["examples"]:
                                 #    print('\t\tExample: '+str(w["text"]))
@@ -66,8 +65,8 @@ def oxford_dic_request(word_id):
                                     examples += '\n'
                                     examples_counter +=1
 
-
-
+        if examples == "":
+            examples = "Couldn't find any examples"
 
         return {"text": response, "attachment": audio_url, "examples": examples}
     else:

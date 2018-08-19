@@ -76,29 +76,45 @@ def receive_message():
                         subscriptions.subscribe(sender_id, tag)
                         send_message(sender_id, "Done!")
 
-                    elif message_text == "OXFORD_DIC_SYNONYMS":
+                    elif "OXFORD_DIC_SYNONYMS" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-                        syn_ant=OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
+                        syn_ant={}
+                        if "word_id" in user_state_machine.data:
+                            syn_ant=OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
+                        else:
+                            syn_ant=OxfordDictionary.oxford_dic_syn_ant(message_text.split(".",1)[1])
                         send_message(sender_id, syn_ant["synonyms"])
                         send_message(sender_id,syn_ant["antonyms"])
 
-                    elif message_text == "OXFORD_DIC_EXAMPLES":
+                    elif "OXFORD_DIC_EXAMPLES" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+                        examples=""
+                        if "examples" in user_state_machine.data:
+                            examples =user_state_machine.data["examples"]
+                        else:
+                            examples=OxfordDictionary.oxford_dic_request(message_text.split(".",1)[1])["examples"]
+                        send_message(sender_id, examples)
 
-                        send_message(sender_id, user_state_machine.data["examples"])
-
-                    elif message_text == "OXFORD_DIC_PRONUNCIATION":
+                    elif "OXFORD_DIC_PRONUNCIATION" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+                        attachment =""
+                        if "attachment" in user_state_machine.data:
+                            attachment =user_state_machine.data["attachment"]
+                        else:
+                            attachment=OxfordDictionary.oxford_dic_request(message_text.split(".",1)[1])["attachment"]
 
-                        url = user_state_machine.data["attachment"]
-                        print(url)
-                        r = requests.get(url, allow_redirects=True)
-                        open('temp.mp3', 'wb').write(r.content)
-                        bot.send_file_url(sender_id,url)
-                        os.remove("temp.mp3")
+                        if attachment == "":
+                            send_message(sender_id, "Couldn't find any pronunciation...")
+                        else:
+                            url = attachment
+                            print(url)
+                            r = requests.get(url, allow_redirects=True)
+                            open('temp.mp3', 'wb').write(r.content)
+                            bot.send_file_url(sender_id,url)
+                            os.remove("temp.mp3")
 
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
