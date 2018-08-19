@@ -102,19 +102,8 @@ for document in user_state_collection.posts.find():
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION"}]
 
-    payload2 = {
-        "recipient": {"id": user_id},
-        "message": {
-            "attachment": {
-                "type": "image",
-                "payload": {}
-            }
-        },
-        'filedata': '@/phrase_of_the_day.png',
-        'type': 'image/png'
 
-    }
-    bot.send_raw(user_id, payload2)
+    bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
     bot.send_button_message(user_id,text,buttons)
 
 
