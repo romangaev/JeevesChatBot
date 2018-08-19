@@ -92,9 +92,9 @@ for document in user_state_collection.posts.find():
     text = dic["text"]
     elements = []
     elements.append({
-                    "title":dic["text"].split("\n",1)[0],
+                    "title": dic["text"],
                     "image_url": 'https://is1-ssl.mzstatic.com/image/thumb/Purple118/v4/2c/96/13/2c9613fb-cbbf-3910-15fd-92540ff89a16/mzl.ytnapyct.png/246x0w.jpg',
-                    "subtitle": dic["text"].split("\n",1)[1],
+                    "subtitle": "",
                     "default_action": {
                         "type": "web_url",
                         "url": "",
