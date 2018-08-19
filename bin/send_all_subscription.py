@@ -74,6 +74,7 @@ for every in all_tags:
                             'notification_type':
                                 'REGULAR'
                         }
+
                         bot.send_raw(payload)
 
 # SEND THE PHRASE OF THE DAY
@@ -100,7 +101,20 @@ for document in user_state_collection.posts.find():
             {"type": "postback",
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION"}]
-    bot.send_image(user_id, "phrase_of_the_day.png")
+
+    payload2 = {
+        "recipient": {"id": user_id},
+        "message": {
+            "attachment": {
+                "type": "image",
+                "payload": {}
+            }
+        },
+        'filedata': '@/phrase_of_the_day.png',
+        'type': 'image/png'
+
+    }
+    bot.send_raw(user_id, payload2)
     bot.send_button_message(user_id,text,buttons)
 
 

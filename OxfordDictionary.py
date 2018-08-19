@@ -27,7 +27,7 @@ def oxford_dic_request(word_id):
                 # print(i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"])
                 response += word_id
                 response += '\n'
-                if "pronunciations" in i["lexicalEntries"][0]:
+                if "pronunciations" in i["lexicalEntries"][0] and "phoneticSpelling" in i["lexicalEntries"][0]["pronunciations"][0]:
                     response += i["lexicalEntries"][0]["pronunciations"][0]["phoneticSpelling"]
                 def_counter = 1
 
