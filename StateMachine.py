@@ -160,7 +160,6 @@ class StateMachine:
                             "url": podcasts[x]['link'],
                             "title": "Listen!"
                         }, {
-                            # TODO implement subscription
                             "type": "postback",
                             "title": payload,
                             "payload": payload+"_"+tag

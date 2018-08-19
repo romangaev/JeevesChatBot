@@ -3,6 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
+from pymessenger import bot
 from pymongo import MongoClient
 
 MONGODB_URI = os.environ['MONGODB_URI']
@@ -69,4 +70,7 @@ def unsubscribe(user_id,tag):
 def check_subscription(user_id,tag):
     query = user_subscriptions_collection.posts.find_one({'user_id': user_id})
     return query is not None and tag in query["tags"]
+
+
+
 
