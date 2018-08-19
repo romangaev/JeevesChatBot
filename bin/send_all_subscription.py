@@ -14,16 +14,17 @@ all_tags=["bbc",'football','politics','science','longreads','technology','global
 
 for every in all_tags:
     latest = get_podcasts(every)[0]['title']
-    if not latest==podcasts_feed_collection.posts.find_one({'tag': 'bbc'}):
-            podcasts_feed_collection.posts.update_one({'tag': 'bbc'},{"$set": {'latest':latest}}, upsert=True)
+    if not latest==podcasts_feed_collection.posts.find_one({'tag': every})['latest']:
+            podcasts_feed_collection.posts.update_one({'tag': every}, {"$set": {'latest':latest}}, upsert=True)
 
             for document in user_subscriptions_collection.posts.find():
                 user_id = document['user_id']
                 tags = document['tags']
-                bot.send_text_message(user_id,
-                                      "Hey! Here are some fresh stuff for you!\nDon't be lazy and improve your english every day!")
+
                 for tag in tags:
                     if tag == every:
+                        bot.send_text_message(user_id,
+                                              "Hey! Here are some fresh stuff for you!\nDon't be lazy and improve your english every day!")
                         podcasts = get_podcasts(tag)
                         elements = []
                         elements.append({
