@@ -1,12 +1,14 @@
 import os
-from pymessenger import bot
+from pymessenger.bot import Bot
 from pymongo import MongoClient
 from subscriptions import get_podcasts
 
 MONGODB_URI = os.environ['MONGODB_URI']
+ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 client = MongoClient(MONGODB_URI)
 db = client.chatbot_db
 user_subscriptions_collection = db.user_subscriptions_collection
+bot = Bot(ACCESS_TOKEN)
 
 for document in user_subscriptions_collection.posts.find():
     user_id = document['user_id']
@@ -46,6 +48,12 @@ for document in user_subscriptions_collection.posts.find():
                     }
                 }
             },
-            "tag": "NON_PROMOTIONAL_SUBSCRIPTION"
+            "tag":
+                "NON_PROMOTIONAL_SUBSCRIPTION",
+            'recipient':{
+                'id': user_id
+            },
+            'notification_type':
+                'REGULAR'
         }
-        bot.send_recipient(user_id, payload, "REGULAR")
+        bot.send_raw(payload)
