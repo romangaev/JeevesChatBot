@@ -100,7 +100,7 @@ for document in user_state_collection.posts.find():
             {"type": "postback",
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION"}]
-    bot.send_image(user_id,"phrase_of_the_day.png")
+    bot.send_image(user_id, "phrase_of_the_day.png")
     bot.send_button_message(user_id,text,buttons)
 
 
