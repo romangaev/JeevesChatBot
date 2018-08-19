@@ -100,7 +100,7 @@ for document in user_state_collection.posts.find():
             {"type": "postback",
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION"}]
-    bot.send_image_url(user_id,'https://is1-ssl.mzstatic.com/image/thumb/Purple118/v4/2c/96/13/2c9613fb-cbbf-3910-15fd-92540ff89a16/mzl.ytnapyct.png/246x0w.jpg')
+    bot.send_image(user_id,"phrase_of_the_day.png")
     bot.send_button_message(user_id,text,buttons)
 
 
