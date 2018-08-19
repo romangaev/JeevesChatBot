@@ -80,7 +80,7 @@ for every in all_tags:
 for document in user_state_collection.posts.find():
     user_id = document["user_id"]
     dic={"text": "I don't know this word", "attachment": None, "examples": None}
-    while not dic["text"]=="I don't know this word":
+    while dic["text"]=="I don't know this word":
         types=['idioms','phrasal_verbs']
         type=random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type})
