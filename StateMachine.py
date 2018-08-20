@@ -30,11 +30,12 @@ class StateMachine:
         # classify the intent and get a new state
         intent_matrix = classify(message)
         print(intent_matrix)
-        if intent_matrix==[]:
-            response["text"] = "Not sure what you mean"
-            return response
-        intent = intent_matrix[0][0]
-        confidence = intent_matrix[0][1]
+        intent="none"
+        confidence=0.0
+        if not intent_matrix==[]:
+            intent = intent_matrix[0][0]
+            confidence = intent_matrix[0][1]
+
         new_state = ''
         number_of_intent = 0
 
@@ -43,6 +44,8 @@ class StateMachine:
                 new_state = every['state']
                 break
             number_of_intent += 1
+
+
         print(intent)
         # first lets take a look at the states
         # if initial state is empty then there is no context - just go straight to intents

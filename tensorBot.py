@@ -34,7 +34,7 @@ def bow(sentence, words, show_details=False):
 
     return(np.array(bag))
 
-ERROR_THRESHOLD = 0.25
+ERROR_THRESHOLD = 0.0
 def classify(sentence):
 
     # import our chat-bot intents file
