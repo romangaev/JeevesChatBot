@@ -243,7 +243,7 @@ class StateMachine:
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
             print('inside dictadd+data')
-            if intent == 'confirmation' or sentence.lower == "yes":
+            if intent == 'confirmation' or sentence.lower() == "yes":
                 # DBQUERY
                 user_vocab_collection = StateMachine.db.user_vocab_collection
                 user_vocab_collection.posts.update_one({'user_id': self.user_id},
@@ -252,7 +252,7 @@ class StateMachine:
                 respond = self.data['dictadd'] + ' added!'
                 self.data = {}
                 self.state = ''
-            elif intent == 'rejection' or sentence.lower == "no":
+            elif intent == 'rejection' or sentence.lower() == "no":
                 # user wants some other word
                 self.data = {}
                 self.state = 'dictadd'
