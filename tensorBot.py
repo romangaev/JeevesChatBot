@@ -66,8 +66,7 @@ def classify(sentence):
     classes = sorted(list(set(classes)))
 
     # remove stop words
-    words = [w for w in words if w not in stopwords.words('english')]
-    words = [w for w in words if w not in stopwords.words('russian')]
+    #words = [w for w in words if w not in stopwords.words('english')]
 
     print(len(documents), "documents")
     print(len(classes), "classes", classes)
@@ -109,8 +108,8 @@ def classify(sentence):
     tf.reset_default_graph()
     # Build neural network
     net = tflearn.input_data(shape=[None, len(train_x[0])])
-    net = tflearn.fully_connected(net, 8)
-    net = tflearn.fully_connected(net, 8)
+    net = tflearn.fully_connected(net, 38)
+    net = tflearn.fully_connected(net, 32)
     net = tflearn.fully_connected(net, len(train_y[0]), activation='softmax')
     net = tflearn.regression(net)
 
