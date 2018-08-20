@@ -22,16 +22,22 @@ class StateMachine:
         self.intents = ""
 
     def state_respond(self, message):
+        response = {}
+
         with open('intents.json') as json_data:
             self.intents = json.load(json_data)
 
         # classify the intent and get a new state
         intent_matrix = classify(message)
+        print(intent_matrix)
+        if intent_matrix is []:
+            response["text"] = "Not sure what you mean"
+            return response
         intent = intent_matrix[0][0]
         confidence = intent_matrix[0][1]
         new_state = ''
         number_of_intent = 0
-        response = {}
+
         for every in self.intents['intents']:
             if every['tag'] == intent:
                 new_state = every['state']
