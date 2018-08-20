@@ -1,17 +1,22 @@
 {"intents": [
         {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey", "Hi mate"],
-         "responses": ["Hi", "Good to see you again", "Hi there, how can I help?"],
+         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey", "Hi mate", "good morning","greetings"],
+         "responses": ["Hi!", "Good to see you again!", "Hi there, how can I help?", "I'm all ears", "Hey! I see you wanna ask me something"],
          "state": ""
         },
+        {"tag": "smalltalk",
+               "patterns": ["How is it going?", "How are you doing?", "How do you do?", "What's up?", "how are you?"],
+               "responses": ["Could be better. The weather in Botland is awful. I think I better stay at home in my server...", "Pretty amazing! I'm glad at least somebody cares about me...All my bot friends are not that emotional", "Fine, thanks! Is there anything I can do for you?"],
+               "state": ""
+        },
         {"tag": "info",
-          "patterns": ["Help!"],
-          "responses": ["Well. I'm English learning bot. You can check level of your English with me, ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn. Hopefully you'll learn something more than just offensive language"],
+          "patterns": ["Help!","What can you do?", "Tell me about yourself?", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?"],
+          "responses": ["Well. I'm English learning bot. You can ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn"],
           "state": ""
         },
         {"tag": "goodbye",
          "patterns": ["Bye", "See you later", "Goodbye", "see you in a bit"],
-         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."],
+         "responses": ["Yeah, always nice to chat with you, improve you language every day!", "See you! Enjoy your day!", "And this is it? Text me again if you have any questions"],
           "state": ""
         },
         {"tag": "thanks",
@@ -20,7 +25,7 @@
           "state": ""
         },
         {"tag": "dictopen",
-         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary", "I wanna get my word list"],
+         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary", "I wanna get my word list", "wordlist, please","vocab please"],
           "responses": ["Sure. Here is your list: "],
           "state": ""
         },
@@ -30,7 +35,7 @@
           "state": "dictclean"
         },
          {"tag": "dictadd",
-          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "vocabulary", "dictionary","vocab","I want to save this word", "save", "could you save it?"],
+          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "vocabulary", "dictionary","vocab","I want to save this word", "save", "could you save it?","add to my list", "put in my word list"],
             "responses_if_word_given": ["Sure!","Just to clarify."],
            "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
            "state": "dictadd"
