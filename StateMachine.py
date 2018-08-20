@@ -30,7 +30,7 @@ class StateMachine:
         # classify the intent and get a new state
         intent_matrix = classify(message)
         print(intent_matrix)
-        if intent_matrix is []:
+        if intent_matrix==[]:
             response["text"] = "Not sure what you mean"
             return response
         intent = intent_matrix[0][0]
