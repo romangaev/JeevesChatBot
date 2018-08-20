@@ -55,12 +55,13 @@ class StateMachine:
                     for every in result['vocabulary']:
                         response["text"] += every
                         response["text"] += '\n'
+
             elif intent == 'oxford_dic':
                 response = self.oxford_dic_transitions(message)
             elif intent == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
             elif intent == 'dictadd':
-                response = self.dict_add_transitions(message, intent, confidence, new_state)
+                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
             else:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
 
@@ -194,6 +195,9 @@ class StateMachine:
             self.data["examples"] = query_result["examples"]
             self.data["attachment"] = query_result["attachment"]
         return response
+
+
+
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
