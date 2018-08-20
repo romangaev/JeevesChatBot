@@ -40,7 +40,7 @@ classes = sorted(list(set(classes)))
 
 
 # remove stop words
-#words = [w for w in words if w not in stopwords.words('english')]
+words = [w for w in words if w not in stopwords.words('english')]
 
 print (len(documents), "documents")
 print (len(classes), "classes", classes)
