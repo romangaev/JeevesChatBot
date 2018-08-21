@@ -332,7 +332,7 @@ def get_subject_oxf(sentence):
 def get_subject_dicadd(sentence):
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)
-    chunkGram = r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
+    chunkGram = r"""  NPH: {<RB|DT|JJ|NN.*>+<IN|TO>|<VB.*><RP.*><IN|TO>|<VB.*><IN.*><IN|TO>|<VB.*><IN|TO>}      
       PPH: {<IN><NP>}             
       VPH: {<VB.*><NP|PP|CLAUSE>+$} 
       CLAUSE: {<NP><VP>}           """
@@ -346,9 +346,6 @@ def get_subject_dicadd(sentence):
         chunk_list.append(subtree.leaves())
     # found some chunks
     if not chunk_list == []:
-        if chunk_list.__len__() > 1:
-            word = chunk_list[-2]
-        else:
             word=chunk_list[-1]
     result = ""
     if isinstance(word, list):
@@ -359,4 +356,5 @@ def get_subject_dicadd(sentence):
             result += " "
     else:
         result = word[0]
-    return result.rstrip()
+    result= result.rstrip().rsplit(' ', 1)[0]
+    return result
