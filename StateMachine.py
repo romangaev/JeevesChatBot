@@ -31,6 +31,9 @@ class StateMachine:
 
         # classify the intent and get a new state
         intent_matrix = classify(message)
+        if message.lower().startswith(("what is","what does")) :
+            intent_matrix=[("oxford_dic",0.99)]
+
         print(intent_matrix)
         intent="none"
         confidence=0.0
@@ -285,24 +288,25 @@ class StateMachine:
 def get_subject_oxf(sentence):
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)
-    chunkGram = r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
-      PPH: {<IN><NP>}             
-      VPH: {<VB.*><NP|PP|CLAUSE>+$} 
-      CLAUSE: {<NP><VP>}           """
+    chunkGram = r"""  NPH: {<NN.*>|<RB|DT|JJ.*>+<NN.*>|<VB.*><RP.*>|<VB.*><IN.*>}     
+          PPH: {<IN><NP>}             
+          VPH: {<VB.*><NP|PP|CLAUSE>+$} 
+          CLAUSE: {<NP><VP>}           """
     chunkParser = nltk.RegexpParser(chunkGram)
     chunked = chunkParser.parse(pos_results)
     print(chunked)
-    list = []
+    chunk_list = []
     word = 'default'
     for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
         # print the noun phrase as a list of part-of-speech tagged words
-        list.append(subtree.leaves())
+        chunk_list.append(subtree.leaves())
     # found some chunks
-    if not list == []:
+    if not chunk_list == []:
         if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
-            word = list[0]
+            word = chunk_list[0]
         else:
-            word = list[-1]
+            word = chunk_list[-1]
+
 
     # didnt find any chunks
     if word == 'default':
@@ -311,36 +315,42 @@ def get_subject_oxf(sentence):
         else:
             word = pos_results[-1]
 
-    result = ""
-    for item in word:
-        result += item[0]
-        result += " "
-
+    result=""
+    if isinstance(word,list):
+        for every in word:
+            result+=every[0]
+            result+=" "
+    else:
+        result=word[0]
     return result.rstrip()
 
 
 def get_subject_dicadd(sentence):
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)
-    chunkGram=r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
+    chunkGram = r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
       PPH: {<IN><NP>}             
       VPH: {<VB.*><NP|PP|CLAUSE>+$} 
       CLAUSE: {<NP><VP>}           """
-    chunkParser= nltk.RegexpParser(chunkGram)
+    chunkParser = nltk.RegexpParser(chunkGram)
     chunked = chunkParser.parse(pos_results)
     print(chunked)
-    list=[]
-    word=[]
+    chunk_list = []
+    word = []
     for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
         # print the noun phrase as a list of part-of-speech tagged words
-        list.append(subtree.leaves())
+        chunk_list.append(subtree.leaves())
     # found some chunks
-    if not list==[]:
-            word=list[-2]
-    result=""
-    if not word==[]:
-        for item in word:
-            result+=item[0]
-            result+=" "
-
+    if not chunk_list == []:
+        if chunk_list.__len__() > 1:
+            word = chunk_list[-2]
+        else:
+            word=chunk_list[-1]
+    result = ""
+    if isinstance(word, list):
+        for every in word:
+            result += every[0]
+            result += " "
+    else:
+        result = word[0]
     return result.rstrip()

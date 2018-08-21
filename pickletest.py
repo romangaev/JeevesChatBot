@@ -19,27 +19,40 @@ phrase_of_the_day_collection.posts.update_one({"type":"idioms"},{ '$set':{"phras
 def get_subject(sentence):
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)
-    chunkGram=r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
-      PPH: {<IN><NP>}             
-      VPH: {<VB.*><NP|PP|CLAUSE>+$} 
-      CLAUSE: {<NP><VP>}           """
-    chunkParser= nltk.RegexpParser(chunkGram)
+    chunkGram = r"""  NPH: {<NN.*>|<RB|DT|JJ.*>+<NN.*>|<VB.*><RP.*>|<VB.*><IN.*>}     
+          PPH: {<IN><NP>}             
+          VPH: {<VB.*><NP|PP|CLAUSE>+$} 
+          CLAUSE: {<NP><VP>}           """
+    chunkParser = nltk.RegexpParser(chunkGram)
     chunked = chunkParser.parse(pos_results)
     print(chunked)
-    list=[]
-    word=[]
+    chunk_list = []
+    word = 'default'
     for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
         # print the noun phrase as a list of part-of-speech tagged words
-        list.append(subtree.leaves())
+        chunk_list.append(subtree.leaves())
     # found some chunks
-    if not list==[]:
-            word=list[-1]
-    result=""
-    if not word==[]:
-        for item in word:
-            result+=item[0]
-            result+=" "
+    if not chunk_list == []:
+        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+            word = chunk_list[0]
+        else:
+            word = chunk_list[-1]
 
+
+    # didnt find any chunks
+    if word == 'default':
+        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+            word = pos_results[2]
+        else:
+            word = pos_results[-1]
+
+    result=""
+    if isinstance(word,list):
+        for every in word:
+            result+=every[0]
+            result+=" "
+    else:
+        result=word[0]
     return result.rstrip()
 
-print(get_subject("some technology podcasts please"))
+print(get_subject("what does ahuenno mean"))

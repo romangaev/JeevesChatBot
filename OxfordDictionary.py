@@ -12,6 +12,8 @@ def oxford_dic_request(word_id):
     response = ""
     audio_url = ""
     examples = ""
+    audio_url_check_any = False
+    examples_check_any = False
 
     url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/'  + language + '/'  + word_id.lower()
     r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
@@ -45,6 +47,7 @@ def oxford_dic_request(word_id):
                     if "pronunciations" in j:
                         if "audioFile" in j["pronunciations"][0]:
                             audio_url = j["pronunciations"][0]["audioFile"]
+                            audio_url_check_any=True
                     for k in j["entries"]:
 
                         for v in k["senses"]:
@@ -58,6 +61,7 @@ def oxford_dic_request(word_id):
                                     def_stopper += 1
 
                             if "examples" in v:
+                                examples_check_any=True
                                 for s in v["examples"]:
                                 #    print('\t\tExample: '+str(w["text"]))
                                     if examples_counter>5:
@@ -66,8 +70,10 @@ def oxford_dic_request(word_id):
                                     examples += '\n'
                                     examples_counter +=1
 
-        if examples == "":
+        if not examples_check_any:
             examples = "Couldn't find any examples"
+        if not audio_url_check_any:
+            audio_url = "Couldn't find any audio"
 
         return {"text": response, "attachment": audio_url, "examples": examples}
     else:

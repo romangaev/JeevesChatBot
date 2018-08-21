@@ -20,12 +20,12 @@
           "state": ""
         },
         {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you", "That's helpful","Nice","Cheers","Cool"],
-         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "patterns": ["Thanks", "Thank you", "That's helpful","Nice","Cheers","Cool","Nice","Fair enough","make sense","Lovely","good","I like it","not too bad","cheers mate"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure","I'm glad you like it!"],
           "state": ""
         },
         {"tag": "dictopen",
-         "patterns": ["I want to open my dictionary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary", "I wanna get my word list", "wordlist, please","vocab please"],
+         "patterns": ["I want to open my dictionary","my dictionary","my list"," my vocabulary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary","vocabulary", "dictionary","vocab", "I wanna get my word list", "wordlist, please","vocab please"],
           "responses": ["Sure. Here is your list: "],
           "state": ""
         },
@@ -35,7 +35,7 @@
           "state": "dictclean"
         },
          {"tag": "dictadd",
-          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "vocabulary", "dictionary","vocab","I want to save this word", "save", "could you save it?","add to my list", "put in my word list"],
+          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "I want to save this word", "save", "could you save it?","add to my list", "put in my word list"],
             "responses_if_word_given": ["Sure!","Just to clarify."],
            "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
            "state": "dictadd"
@@ -50,12 +50,7 @@
                      "responses": [""],
                      "state": ""
         },
-        {"tag": "agreement",
-                           "patterns": ["Nice","Fair enough","make sense","Lovely","good","I like it"],
-                           "responses": ["I'm glad you like it"],
-                           "state": ""
-        },
-          {"tag": "reading",
+        {"tag": "reading",
                            "patterns": ["Give me something to read","I want to improve my reading skills","send me some English texts","send me some good articles to read"],
                            "responses": ["Sure, what level? Beginner, Intermediate, Advanced?"],
                            "state": "reading"
@@ -64,6 +59,11 @@
                                  "patterns": ["Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio"],
                                  "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"],
                                  "state": "listening"
+        },
+          {"tag": "offences",
+                                 "patterns": ["fuck"],
+                                 "responses": ["I wish you the same..."],
+                                 "state": ""
         },
         {"tag": "oxford_dic",
                                  "patterns": ["what does it mean", "What is","give me some examples of","How to pronounce","What is the definition of","What is the meaning of"," What is the sense of","Could you explain to me what is", "meaning of","give me synonyms to","give me antonyms to"],
