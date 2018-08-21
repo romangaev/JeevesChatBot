@@ -340,7 +340,7 @@ def get_subject_dicadd(sentence):
     chunked = chunkParser.parse(pos_results)
     print(chunked)
     chunk_list = []
-    word = []
+    word = ""
     for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
         # print the noun phrase as a list of part-of-speech tagged words
         chunk_list.append(subtree.leaves())
@@ -355,6 +355,6 @@ def get_subject_dicadd(sentence):
             result += every[0]
             result += " "
     else:
-        result = word[0]
+        result = word
     result= result.rstrip().rsplit(' ', 1)[0]
     return result
