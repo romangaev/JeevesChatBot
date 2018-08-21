@@ -1,6 +1,8 @@
 import json
 import os
 import random
+
+import nltk
 from pymongo import MongoClient
 from nltk import word_tokenize, pos_tag
 
@@ -184,7 +186,7 @@ class StateMachine:
 
 
     def oxford_dic_transitions(self, message):
-        self.data["word_id"] = word_tokenize(message.replace("'", "").replace('"', ""))[-1].lower()
+        self.data["word_id"] = get_subject_oxf(message.replace("'", "").replace('"', ""))
         print("word_id")
         print(self.data["word_id"])
         response = {"text": "no_text"}
@@ -221,24 +223,10 @@ class StateMachine:
 
         if self.state == '' and new_state == 'dictadd':
             print('inside entering dict add context')
+
             # retrieving the word to add
-            pos_results = pos_tag(word_tokenize(sentence.lower()))
-            index_vocab = 0
-            for i in range(0, len(pos_results)):
-                if pos_results[i][0] == 'dictionary' or pos_results[i][0] == 'vocabulary':
-                    index_vocab = i
-                    break
-            index_prep = 0
-            index_begin = 0
-            for i in range(index_vocab, 0, -1):
-                if pos_results[i][1] == 'IN' or pos_results[i][1] == 'TO':
-                    index_prep = i
-                if pos_results[i][1] == 'VB':
-                    index_begin = i + 1
-                    break
-            word_to_add = ''
-            for i in range(index_begin, index_prep):
-                word_to_add = word_to_add + pos_results[i][0] + ' '
+            word_to_add=get_subject_dicadd(sentence.replace("'", "").replace('"', ""))
+
             if word_to_add.__contains__('something') or word_to_add.__contains__('a word') or word_to_add.__contains__(
                     'word'):
                 word_to_add = ''
@@ -292,3 +280,67 @@ class StateMachine:
 
     def change_state(self, state):
         self.state = state
+
+
+def get_subject_oxf(sentence):
+    pos_results = pos_tag(word_tokenize(sentence.lower()))
+    print(pos_results)
+    chunkGram = r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
+      PPH: {<IN><NP>}             
+      VPH: {<VB.*><NP|PP|CLAUSE>+$} 
+      CLAUSE: {<NP><VP>}           """
+    chunkParser = nltk.RegexpParser(chunkGram)
+    chunked = chunkParser.parse(pos_results)
+    print(chunked)
+    list = []
+    word = 'default'
+    for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
+        # print the noun phrase as a list of part-of-speech tagged words
+        list.append(subtree.leaves())
+    # found some chunks
+    if not list == []:
+        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+            word = list[0]
+        else:
+            word = list[-1]
+
+    # didnt find any chunks
+    if word == 'default':
+        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+            word = pos_results[2]
+        else:
+            word = pos_results[-1]
+
+    result = ""
+    for item in word:
+        result += item[0]
+        result += " "
+
+    return result.rstrip()
+
+
+def get_subject_dicadd(sentence):
+    pos_results = pos_tag(word_tokenize(sentence.lower()))
+    print(pos_results)
+    chunkGram=r"""  NPH: {<RB|DT|JJ|NN.*>+|<VB.*><RP.*>|<VB.*><IN.*>}      
+      PPH: {<IN><NP>}             
+      VPH: {<VB.*><NP|PP|CLAUSE>+$} 
+      CLAUSE: {<NP><VP>}           """
+    chunkParser= nltk.RegexpParser(chunkGram)
+    chunked = chunkParser.parse(pos_results)
+    print(chunked)
+    list=[]
+    word=[]
+    for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
+        # print the noun phrase as a list of part-of-speech tagged words
+        list.append(subtree.leaves())
+    # found some chunks
+    if not list==[]:
+            word=list[-2]
+    result=""
+    if not word==[]:
+        for item in word:
+            result+=item[0]
+            result+=" "
+
+    return result.rstrip()

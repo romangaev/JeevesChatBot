@@ -10,7 +10,7 @@
                "state": ""
         },
         {"tag": "info",
-          "patterns": ["Help!","What can you do?", "Tell me about yourself?", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?"],
+          "patterns": ["Help!","What can you do?", "Tell me about yourself", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?"],
           "responses": ["Well. I'm English learning bot. You can ask for listening and reading resources, subscribe for stuff and manage your vocabulary to learn"],
           "state": ""
         },
@@ -66,7 +66,7 @@
                                  "state": "listening"
         },
         {"tag": "oxford_dic",
-                                 "patterns": ["What is it","Tell me about","How to pronounce","What is the definition","What is the word"," What is the sense of","Could you explain to me"],
+                                 "patterns": ["what does it mean", "What is","give me some examples of","How to pronounce","What is the definition of","What is the meaning of"," What is the sense of","Could you explain to me what is", "meaning of","give me synonyms to","give me antonyms to"],
                                  "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
                                  "state": "",
                                 "buttons":[{"type":"postback",
