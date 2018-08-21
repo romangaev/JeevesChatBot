@@ -17,42 +17,44 @@ phrase_of_the_day_collection.posts.update_one({"type":"idioms"},{ '$set':{"phras
 
 
 def get_subject(sentence):
-    pos_results = pos_tag(word_tokenize(sentence.lower()))
-    print(pos_results)
-    chunkGram = r"""  NPH: {<NN.*>|<RB|DT|JJ.*>+<NN.*>|<VB.*><RP.*>|<VB.*><IN.*>}     
-          PPH: {<IN><NP>}             
-          VPH: {<VB.*><NP|PP|CLAUSE>+$} 
-          CLAUSE: {<NP><VP>}           """
-    chunkParser = nltk.RegexpParser(chunkGram)
-    chunked = chunkParser.parse(pos_results)
-    print(chunked)
-    chunk_list = []
-    word = 'default'
-    for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
-        # print the noun phrase as a list of part-of-speech tagged words
-        chunk_list.append(subtree.leaves())
-    # found some chunks
-    if not chunk_list == []:
-        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
-            word = chunk_list[0]
+        pos_results = pos_tag(word_tokenize(sentence.lower()))
+        print(pos_results)
+        chunkGram = r"""  NPH: {<NN.*>|<RB|DT|JJ.*>+<NN.*>|<VB.*><RP.*>|<VB.*><IN.*>}     
+              PPH: {<IN><NP>}             
+              VPH: {<VB.*><NP|PP|CLAUSE>+$} 
+              CLAUSE: {<NP><VP>}           """
+        chunkParser = nltk.RegexpParser(chunkGram)
+        chunked = chunkParser.parse(pos_results)
+        print(chunked)
+        chunk_list = []
+        word = 'default'
+        for subtree in chunked.subtrees(filter=lambda t: t.label() == 'NPH'):
+            # print the noun phrase as a list of part-of-speech tagged words
+            chunk_list.append(subtree.leaves())
+        # found some chunks
+        if not chunk_list == []:
+            if pos_results[0][1].startswith('W') and pos_results[1][1].startswith('V'):
+                word = chunk_list[0]
+            else:
+                word = chunk_list[-1]
+
+        # didnt find any chunks
+        if word == 'default':
+            if pos_results[0][1].startswith('W') and pos_results[1][1].startswith('V'):
+                word = pos_results[2]
+            else:
+                word = pos_results[-1]
+
+        result = ""
+        if isinstance(word, list):
+            if word[0][1]== 'DT':
+                word.__delitem__(0)
+            for every in word:
+                result += every[0]
+                result += " "
         else:
-            word = chunk_list[-1]
+            result = word[0]
+        return result.rstrip()
 
 
-    # didnt find any chunks
-    if word == 'default':
-        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
-            word = pos_results[2]
-        else:
-            word = pos_results[-1]
-
-    result=""
-    if isinstance(word,list):
-        for every in word:
-            result+=every[0]
-            result+=" "
-    else:
-        result=word[0]
-    return result.rstrip()
-
-print(get_subject("what does ahuenno mean"))
+print(get_subject("what does the pine mean"))

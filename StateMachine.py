@@ -302,7 +302,7 @@ def get_subject_oxf(sentence):
         chunk_list.append(subtree.leaves())
     # found some chunks
     if not chunk_list == []:
-        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+        if pos_results[0][1].startswith('W') and pos_results[1][1].startswith('V'):
             word = chunk_list[0]
         else:
             word = chunk_list[-1]
@@ -310,13 +310,15 @@ def get_subject_oxf(sentence):
 
     # didnt find any chunks
     if word == 'default':
-        if pos_results[0][1] == 'WP' and pos_results[1][1] == 'VBZ':
+        if pos_results[0][1].startswith('W') and pos_results[1][1].startswith('V'):
             word = pos_results[2]
         else:
             word = pos_results[-1]
 
     result=""
     if isinstance(word,list):
+        if word[0][1] == 'DT':
+            word.__delitem__(0)
         for every in word:
             result+=every[0]
             result+=" "
@@ -348,6 +350,8 @@ def get_subject_dicadd(sentence):
             word=chunk_list[-1]
     result = ""
     if isinstance(word, list):
+        if word[0][1] == 'DT':
+            word.__delitem__(0)
         for every in word:
             result += every[0]
             result += " "
