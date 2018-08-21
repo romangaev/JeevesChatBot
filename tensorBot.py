@@ -142,4 +142,4 @@ def classify(sentence):
                     return print(random.choice(i['responses']))
 
             results.pop(0)'''
-print(classify("What can you do?"))
+print(classify("I want to clear my dictionary"))

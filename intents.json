@@ -31,7 +31,7 @@
           "state": ""
         },
           {"tag": "dictclean",
-         "patterns": ["I want to clean up my dictionary", "clean dictionary", "delete my vocabulary","clean","clear my list", "delete all items from my list"],
+         "patterns": ["I want to clean up my dictionary","I want to clear my dictionary", "clean dictionary", "delete my vocabulary","clean","clear my list", "delete all items from my list"],
           "responses": ["Are you sure? Cleaning up your list can't be undone!","It will delete everything from your list. Proceed?"],
           "state": "dictclean"
         },
@@ -42,7 +42,7 @@
            "state": "dictadd"
           },
         {"tag": "confirmation",
-               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure","Exactly"],
+               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure","Exactly","yep"],
                "responses": [""],
                "state": ""
         },
@@ -62,8 +62,8 @@
                                  "state": "listening"
         },
         {"tag": "offences",
-                                 "patterns": ["fuck"],
-                                 "responses": ["I wish you the same..."],
+                                 "patterns": ["fuck, dick, twat, cunt"],
+                                 "responses": ["I wish you the same...","Daniel, if it's you - go fuck yourself"],
                                  "state": ""
         },
         {"tag": "oxford_dic",
