@@ -33,7 +33,7 @@ def get_subject(sentence):
         list.append(subtree.leaves())
     # found some chunks
     if not list==[]:
-            word=list[-2]
+            word=list[-1]
     result=""
     if not word==[]:
         for item in word:
@@ -41,3 +41,5 @@ def get_subject(sentence):
             result+=" "
 
     return result.rstrip()
+
+print(get_subject("some technology podcasts please"))

@@ -5,7 +5,7 @@
          "state": ""
         },
         {"tag": "smalltalk",
-               "patterns": ["How is it going?", "How are you doing?", "How do you do?", "What's up?", "how are you?"],
+               "patterns": ["How is it going?", "How are you doing?", "How do you do?", "What's up?", "how are you?","how was your day?"],
                "responses": ["Could be better. The weather in Botland is awful. I think I better stay at home in my server...", "Pretty amazing! I'm glad at least somebody cares about me...All my bot friends are not that emotional", "Fine, thanks! Is there anything I can do for you?"],
                "state": ""
         },
