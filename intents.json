@@ -57,7 +57,7 @@
                            "state": "reading"
         },
         {"tag": "listening",
-                                 "patterns": ["I want to subscribe","subscription","subscribe","Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio","give me some listening", "listening", "listening resources"],
+                                 "patterns": ["recommend me some listening","I want to subscribe","subscription","subscribe","Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio","give me some listening", "listening", "listening resources"],
                                  "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"],
                                  "state": "listening"
         },

@@ -49,6 +49,9 @@ def receive_message():
                             bot.send_button_message(recipient_id, response_dic["text"], response_dic["buttons"])
                         elif "elements" in response_dic:
                             bot.send_generic_message(recipient_id, response_dic["elements"])
+                        elif "image" in response_dic:
+                            bot.send_image_url(recipient_id,response_dic["image"])
+                            send_message(recipient_id, response_dic["text"])
                         else:
                             send_message(recipient_id, response_dic["text"])
 
