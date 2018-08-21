@@ -2,6 +2,7 @@
 # LATEST WORKING VERSION
 
 import os
+import random
 
 import requests
 from flask import Flask, request
@@ -134,8 +135,7 @@ def get_message(user_id, message):
     #sample_responses = [classify(message)]
     # return selected item to the user
     #return random.choice(sample_responses)
-
-
+    respose_dic={}
 
     print(user_id)
     print(user_state_collection.posts.find_one({'user_id': user_id}) is not None)
@@ -144,6 +144,16 @@ def get_message(user_id, message):
         # user_state_machine = states[user_id]
         s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+
+        print("state before")
+        user_state_machine.printing_state()
+        respose_dic = user_state_machine.state_respond(message)
+        print("State after")
+        user_state_machine.printing_state()
+        # save it back to db
+        s_m_bytes = pickle.dumps(user_state_machine)
+        post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
+        user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
     else:
         user_state_machine = StateMachine.StateMachine('', user_id)
         s_m_bytes = pickle.dumps(user_state_machine)
@@ -152,15 +162,7 @@ def get_message(user_id, message):
         # states[user_id] = StateMachine.StateMachine('')
         # user_state_machine = states[user_id]
         print(states)
-    print("state before")
-    user_state_machine.printing_state()
-    respose_dic = user_state_machine.state_respond(message)
-    print("State after")
-    user_state_machine.printing_state()
-    # save it back to db
-    s_m_bytes = pickle.dumps(user_state_machine)
-    post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
-    user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
+        respose_dic ={"text": "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"}
     return respose_dic
 
 

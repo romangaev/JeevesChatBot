@@ -2,6 +2,7 @@
         {"tag": "greeting",
          "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey", "Hi mate", "good morning","greetings"],
          "responses": ["Hi!", "Good to see you again!", "Hi there, how can I help?", "I'm all ears", "Hey! I see you wanna ask me something"],
+          "response_first_time":["Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"],
          "state": ""
         },
         {"tag": "smalltalk",
@@ -10,7 +11,7 @@
                "state": ""
         },
         {"tag": "info",
-          "patterns": ["Help!","What can you do?", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?","what else you can do","show me how intelligent you are"],
+          "patterns": ["Help!","What can you do?","tell me what you can do", "Who are you?","What's your name?", "Are you a robot?","what else you can do","show me how intelligent you are"],
           "responses": ["Well... I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"],
           "state": ""
         },
@@ -20,7 +21,7 @@
           "state": ""
         },
         {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you", "That's helpful","Nice","Cheers","Cool","Nice","Fair enough","make sense","Lovely","good","I like it","not too bad","cheers mate"],
+         "patterns": ["Thanks", "Thank you","Nice","Cheers","Cool","Nice","Fair enough","make sense","Lovely","good","I like it","not too bad","cheers mate"],
          "responses": ["Happy to help!", "Any time!", "My pleasure","I'm glad you like it!"],
           "state": ""
         },

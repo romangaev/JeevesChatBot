@@ -10,7 +10,7 @@ import tensorflow as tf
 import random
 from nltk.corpus import stopwords
 
-
+ERROR_THRESHOLD = 0.2
 
 def clean_up_sentence(sentence):
     # tokenize the pattern
@@ -34,7 +34,7 @@ def bow(sentence, words, show_details=False):
 
     return(np.array(bag))
 
-ERROR_THRESHOLD = 0.0
+
 def classify(sentence):
 
     # import our chat-bot intents file
@@ -142,4 +142,4 @@ def classify(sentence):
                     return print(random.choice(i['responses']))
 
             results.pop(0)'''
-print(classify("ohuenno, bro"))
+print(classify("What can you do?"))
