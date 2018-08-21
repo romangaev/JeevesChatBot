@@ -62,7 +62,7 @@ class StateMachine:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
                 user_vocab_collection = StateMachine.db.user_vocab_collection
                 result = user_vocab_collection.posts.find_one({'user_id': self.user_id})
-
+                response["attachment"]='https://image.ibb.co/gT74Ce/vocab.png'
                 if result is not None:
                     response["text"] += '\n'
                     response["text"] += '\n'
