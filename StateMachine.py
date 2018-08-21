@@ -57,7 +57,7 @@ class StateMachine:
         if self.state == '':
             self.data = {}
             if confidence < 0.4:
-                response["text"] = random.choice(["Hm, didn't get you. May be you could paraphrase?", "Em...Not sure what you mean...", "I don't really know how to answer... May be I'm no that intelligent. Or may be you are just saying bollocks."])
+                response["text"] = random.choice([ "Em...Not sure what you mean...","Sorry what? Can't answer. My expertise is English learning!\n You can ask for help and I give you some ideas what we can talk about!"])
             elif intent == 'dictopen':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
                 user_vocab_collection = StateMachine.db.user_vocab_collection
