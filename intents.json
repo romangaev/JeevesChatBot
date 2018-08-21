@@ -10,7 +10,7 @@
                "state": ""
         },
         {"tag": "info",
-          "patterns": ["Help!","What can you do?", "Tell me about yourself", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?","what else you can do","show me how intelligent you are"],
+          "patterns": ["Help!","What can you do?", "Who are you?","What's your name?", "Are you a robot?","What do you like to do?","what else you can do","show me how intelligent you are"],
           "responses": ["Well... I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"],
           "state": ""
         },
@@ -25,7 +25,7 @@
           "state": ""
         },
         {"tag": "dictopen",
-         "patterns": ["I want to open my dictionary","my dictionary","my list"," my vocabulary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary","vocabulary", "dictionary","vocab", "I wanna get my word list", "wordlist, please","vocab please"],
+         "patterns": ["I want to open my dictionary","Show me my list","Show me the words from my dictionary","my dictionary","my list"," my vocabulary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary","vocabulary", "dictionary","vocab", "I wanna get my word list", "wordlist, please","vocab please"],
           "responses": ["Sure. Here is your list: "],
           "state": ""
         },
@@ -56,17 +56,17 @@
                            "state": "reading"
         },
         {"tag": "listening",
-                                 "patterns": ["Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio","give me some listening", "listening", "listening resources"],
+                                 "patterns": ["I want to subscribe","subscription","subscribe","Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio","give me some listening", "listening", "listening resources"],
                                  "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"],
                                  "state": "listening"
         },
-          {"tag": "offences",
+        {"tag": "offences",
                                  "patterns": ["fuck"],
                                  "responses": ["I wish you the same..."],
                                  "state": ""
         },
         {"tag": "oxford_dic",
-                                 "patterns": ["what does it mean", "What is","give me some examples of","How to pronounce","What is the definition of","What is the meaning of"," What is the sense of","Could you explain to me what is", "meaning of","give me synonyms to","give me antonyms to"],
+                                 "patterns": ["I want to subscribe for stuff","what does it mean","Tell me about the word","Tell me about", "What is","give me some examples of","How to pronounce","What is the definition of","What is the meaning of"," What is the sense of","Could you explain to me what is", "meaning of","give me synonyms to","give me antonyms to"],
                                  "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
                                  "state": "",
                                 "buttons":[{"type":"postback",
