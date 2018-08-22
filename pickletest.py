@@ -3,6 +3,7 @@ from random import shuffle
 import nltk
 from nltk import pos_tag, word_tokenize
 from pymongo import MongoClient
+
 '''
 MONGODB_URI ="mongodb://rgaev:iha492081@ds115592.mlab.com:15592/chatbot_db"
 client = MongoClient(MONGODB_URI)
@@ -13,7 +14,6 @@ dic =phrase_of_the_day_collection.posts.find_one({"type":"idioms"})
 list=dic["phrase"]
 shuffle(list)
 phrase_of_the_day_collection.posts.update_one({"type":"idioms"},{ '$set':{"phrase":list}})'''
-
 
 
 def get_subject_dicadd(sentence):
@@ -33,7 +33,7 @@ def get_subject_dicadd(sentence):
         chunk_list.append(subtree.leaves())
     # found some chunks
     if not chunk_list == []:
-            word=chunk_list[-1]
+        word = chunk_list[-1]
     result = ""
     if isinstance(word, list):
         if word[0][1] == 'DT':
@@ -43,7 +43,7 @@ def get_subject_dicadd(sentence):
             result += " "
     else:
         result = word
-    result= result.rstrip().rsplit(' ', 1)[0]
+    result = result.rstrip().rsplit(' ', 1)[0]
     return result
 
 

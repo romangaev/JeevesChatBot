@@ -1,6 +1,7 @@
 # things we need for NLP
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
+
 stemmer = LancasterStemmer()
 
 # things we need for Tensorflow
@@ -12,6 +13,7 @@ from nltk.corpus import stopwords
 
 # import our chat-bot intents file
 import json
+
 with open('intents.json') as json_data:
     intents = json.load(json_data)
 words = []
@@ -38,13 +40,12 @@ words = sorted(list(set(words)))
 # remove duplicates
 classes = sorted(list(set(classes)))
 
-
 # remove stop words
 words = [w for w in words if w not in stopwords.words('english')]
 
-print (len(documents), "documents")
-print (len(classes), "classes", classes)
-print (len(words), "unique stemmed words", words)
+print(len(documents), "documents")
+print(len(classes), "classes", classes)
+print(len(words), "unique stemmed words", words)
 
 # create our training data
 training = []
@@ -75,8 +76,8 @@ random.shuffle(training)
 training = np.array(training)
 
 # create train and test lists
-train_x = list(training[:,0])
-train_y = list(training[:,1])
+train_x = list(training[:, 0])
+train_y = list(training[:, 1])
 
 # reset underlying graph data
 tf.reset_default_graph()

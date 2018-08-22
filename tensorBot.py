@@ -1,6 +1,7 @@
 # things we need for NLP
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
+
 stemmer = LancasterStemmer()
 
 # things we need for Tensorflow
@@ -12,6 +13,7 @@ from nltk.corpus import stopwords
 
 ERROR_THRESHOLD = 0.2
 
+
 def clean_up_sentence(sentence):
     # tokenize the pattern
     sentence_words = nltk.word_tokenize(sentence)
@@ -19,24 +21,24 @@ def clean_up_sentence(sentence):
     sentence_words = [stemmer.stem(word.lower()) for word in sentence_words]
     return sentence_words
 
+
 # return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
 def bow(sentence, words, show_details=False):
     # tokenize the pattern
     sentence_words = clean_up_sentence(sentence)
     # bag of words
-    bag = [0]*len(words)
+    bag = [0] * len(words)
     for s in sentence_words:
-        for i,w in enumerate(words):
+        for i, w in enumerate(words):
             if w == s:
                 bag[i] = 1
                 if show_details:
-                    print ("found in bag: %s" % w)
+                    print("found in bag: %s" % w)
 
-    return(np.array(bag))
+    return (np.array(bag))
 
 
 def classify(sentence):
-
     # import our chat-bot intents file
     import json
     with open('intents.json') as json_data:
@@ -120,7 +122,7 @@ def classify(sentence):
     # generate probabilities from the model
     results = model.predict([bow(sentence, words)])[0]
     # filter out predictions below a threshold
-    results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD]
+    results = [[i, r] for i, r in enumerate(results) if r > ERROR_THRESHOLD]
     # sort by strength of probability
     results.sort(key=lambda x: x[1], reverse=True)
     return_list = []
@@ -128,6 +130,7 @@ def classify(sentence):
         return_list.append((classes[r[0]], r[1]))
     # return tuple of intent and probability
     return return_list
+
 
 '''def response(sentence, userID='123', show_details=False):
     results = classify(sentence)
@@ -142,4 +145,4 @@ def classify(sentence):
                     return print(random.choice(i['responses']))
 
             results.pop(0)'''
-print(classify("fuck"))
+print(classify("I want to clear my dictionary"))

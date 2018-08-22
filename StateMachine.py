@@ -77,7 +77,7 @@ class StateMachine:
             elif intent == 'listening':
                 response = self.listening_transitions(message, intent, confidence, new_state)
             elif intent == 'dictadd':
-                response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
+                response = self.dict_add_transitions(message, intent, confidence, new_state)
             else:
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
 
@@ -88,34 +88,13 @@ class StateMachine:
             print('StateMachineState:' + self.state)
 
         elif self.state == 'dictadd':
-            response["text"] = self.dict_add_transitions(message, intent, confidence, new_state)
+            response = self.dict_add_transitions(message, intent, confidence, new_state)
         elif self.state == 'listening':
             response = self.listening_transitions(message, intent, confidence, new_state)
         elif self.state == 'dictclean':
             response = self.dictclean_transitions(message, intent, confidence, new_state)
-        # elif self.state == 'listening':
-        # response = self.listening_transitions(message, intent, confidence, new_state)
 
         return response
-
-    def dictclean_transitions(self, sentence, intent, confidence, new_state):
-        response ={}
-        if intent == 'confirmation' or "yes" in sentence.lower():
-            # DBQUERY
-            user_vocab_collection = StateMachine.db.user_vocab_collection
-            user_vocab_collection.posts.update_one({'user_id': self.user_id},
-                                                   {"$set": {'vocabulary': []}})
-
-            response["text"]='Done. Those words were cleared...Literally...And no one will ever find their grave...'
-            response["attachment"] = "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
-
-        elif intent == 'rejection' or "no" in sentence.lower():
-            response["text"] = 'Okay. Let\'s have a spare on these words and keep them until we need... For a while.'
-
-        self.state = ''
-        return response
-
-
 
 
     def listening_transitions(self, sentence, intent, confidence, new_state):
@@ -189,7 +168,6 @@ class StateMachine:
                 self.state=""
         return response
 
-
     def oxford_dic_transitions(self, message):
         self.data["word_id"] = get_subject_oxf(message.replace("'", "").replace('"', ""))
         print("word_id")
@@ -212,8 +190,28 @@ class StateMachine:
             self.data["attachment"] = query_result["attachment"]
         return response
 
+    def dictclean_transitions(self, sentence, intent, confidence, new_state):
+        response = {}
+        if intent == 'confirmation' or "yes" in sentence.lower():
+            # DBQUERY
+            user_vocab_collection = StateMachine.db.user_vocab_collection
+            user_vocab_collection.posts.update_one({'user_id': self.user_id},
+                                                   {"$set": {'vocabulary': []}})
 
+            response["text"]='Done. Those words were cleared...Literally...And no one will ever find their grave...'
+            response["attachment"] = "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
 
+        elif intent == 'rejection' or "no" in sentence.lower():
+            response["text"] = 'Okay. Let\'s have a spare on these words and keep them until we need... For a while.'
+
+        elif confidence > 0.7 and not intent == 'dictclean':
+            self.state=""
+            self.data={}
+            response = self.state_respond(sentence)
+            response["text"] = "Okay, as you say, no more cleaning!\n" + response["text"]
+        else:
+            response["text"] = "Wait, are you still going to clean your vocabulary?"
+        return response
 
     def dict_add_transitions(self, sentence, intent, confidence, new_state):
         print('inside dict add method')
@@ -223,7 +221,8 @@ class StateMachine:
             if every['tag'] == 'dictadd':
                 break
             number_of_intent += 1
-        respond = 'I didn\'t get you'
+        response={}
+        response["text"] = 'I didn\'t get you'
         # if we are entering dictadd context
 
         if self.state == '' and new_state == 'dictadd':
@@ -241,10 +240,10 @@ class StateMachine:
             print("word to add:" + word_to_add)
             # if we didnt find the word then ask for the word
             if word_to_add == '':
-                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
+                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
             else:
                 self.data['dictadd'] = word_to_add
-                respond = random.choice(self.intents['intents'][number_of_intent][
+                response["text"] = random.choice(self.intents['intents'][number_of_intent][
                                             'responses_if_word_given']) + " Add to your dictionary:" + word_to_add + ". Right?"
         # if will get some confirmation
         elif self.state == 'dictadd' and self.data:
@@ -255,14 +254,22 @@ class StateMachine:
                 user_vocab_collection.posts.update_one({'user_id': self.user_id},
                                                        {"$push": {'vocabulary': self.data['dictadd']}}, upsert=True)
 
-                respond = self.data['dictadd'] + ' added!'
+                response["text"] = self.data['dictadd'] + ' added!'
                 self.data = {}
                 self.state = ''
             elif intent == 'rejection' or sentence.lower() == "no":
                 # user wants some other word
                 self.data = {}
                 self.state = 'dictadd'
-                respond = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
+                response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses_if_not_given'])
+            elif confidence>0.7 and not intent=="dictadd":
+                self.state = ''
+                self.data = {}
+                response = self.state_respond(sentence)
+                response["text"] = "Okay, as you say, no more Your Vocab!\n"+response["text"]
+            else:
+                response["text"] = 'I didn\'t get you. Are we adding "'+ self.data['dictadd']+'" to Your Vocab?'
+
 
         elif self.state == 'dictadd' and not self.data:
             print('inside dictadd+no data')
@@ -274,11 +281,9 @@ class StateMachine:
             self.data = {}
             self.state = ''
             print('almost added...' + sentence)
-            respond = sentence + ' - added!'
-            print(type(respond))
-        else:
-            respond = 'I dont know'
-        return respond
+            response["text"] = 'Done. "'+sentence + '" - added!'
+            print(type(response))
+        return response
 
     def printing_state(self):
         print(self.state)
@@ -286,7 +291,7 @@ class StateMachine:
     def change_state(self, state):
         self.state = state
 
-
+# POS and CHUNKING
 def get_subject_oxf(sentence):
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)

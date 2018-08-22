@@ -1,85 +1,294 @@
-{"intents": [
-        {"tag": "greeting",
-         "patterns": ["Hi", "How are you", "hi there", "Hello", "Good afternoon","Hey", "Hi mate", "good morning","greetings"],
-         "responses": ["Hi!", "Good to see you again!", "Hi there, how can I help?", "I'm all ears", "Hey! I see you wanna ask me something"],
-          "response_first_time":["Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"],
-         "state": ""
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "How are you",
+        "hi there",
+        "Hello",
+        "Good afternoon",
+        "Hey",
+        "Hi mate",
+        "good morning",
+        "greetings"
+      ],
+      "responses": [
+        "Hi!",
+        "Good to see you again!",
+        "Hi there, how can I help?",
+        "I'm all ears",
+        "Hey! I see you wanna ask me something"
+      ],
+      "response_first_time": [
+        "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "smalltalk",
+      "patterns": [
+        "How is it going?",
+        "How are you doing?",
+        "How do you do?",
+        "What's up?",
+        "how are you?",
+        "how was your day?"
+      ],
+      "responses": [
+        "Could be better. The weather in Botland is awful. I think I better stay at home in my server...",
+        "Pretty amazing! I'm glad at least somebody cares about me...All my bot friends are not that emotional",
+        "Fine, thanks! Is there anything I can do for you?"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "info",
+      "patterns": [
+        "Help!",
+        "What can you do?",
+        "tell me what you can do",
+        "Who are you?",
+        "What's your name?",
+        "Are you a robot?",
+        "what else you can do",
+        "show me how intelligent you are"
+      ],
+      "responses": [
+        "Well... I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "See you later",
+        "Goodbye",
+        "see you in a bit"
+      ],
+      "responses": [
+        "Yeah, always nice to chat with you, improve you language every day!",
+        "See you! Enjoy your day!",
+        "And this is it? Text me again if you have any questions"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "Nice",
+        "Cheers",
+        "Cool",
+        "Nice",
+        "Fair enough",
+        "make sense",
+        "Lovely",
+        "good",
+        "I like it",
+        "not too bad",
+        "cheers mate"
+      ],
+      "responses": [
+        "Happy to help!",
+        "Any time!",
+        "My pleasure",
+        "I'm glad you like it!"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "dictopen",
+      "patterns": [
+        "I want to open my dictionary",
+        "Show me my list",
+        "Show me the words from my dictionary",
+        "my dictionary",
+        "my list",
+        " my vocabulary",
+        "Give me my dictionary",
+        "Give me my list of words",
+        "see my dictionary",
+        "see my vocabulary",
+        "vocabulary",
+        "dictionary",
+        "vocab",
+        "I wanna get my word list",
+        "wordlist, please",
+        "vocab please"
+      ],
+      "responses": [
+        "Sure. Here is your list: "
+      ],
+      "state": ""
+    },
+    {
+      "tag": "dictclean",
+      "patterns": [
+        "I want to clean up my dictionary",
+        "I want to clear my dictionary",
+        "clean dictionary",
+        "delete my vocabulary",
+        "clean",
+        "clear my list",
+        "clear",
+        "delete all items from my list"
+      ],
+      "responses": [
+        "Are you sure? Cleaning up your list can't be undone!",
+        "It will delete everything from your list. Proceed?"
+      ],
+      "state": "dictclean"
+    },
+    {
+      "tag": "dictadd",
+      "patterns": [
+        "I want to add a word in my vocabulary",
+        "I want to add this in dictionary",
+        "Can I put a word in the dictionary",
+        "I wanna save a word",
+        "I want to save this word",
+        "save",
+        "could you save it?",
+        "add to my list",
+        "put in my word list"
+      ],
+      "responses_if_word_given": [
+        "Sure!",
+        "Just to clarify."
+      ],
+      "responses_if_not_given": [
+        "No probs. What is the word that you want to add then?",
+        "What is the word then?",
+        "Okay, just tell me the correct word to add!"
+      ],
+      "state": "dictadd"
+    },
+    {
+      "tag": "confirmation",
+      "patterns": [
+        "Yes",
+        "right",
+        "Alright",
+        "Correct",
+        "that's it",
+        "affirmative",
+        "of course",
+        "Sure",
+        "Exactly",
+        "yep"
+      ],
+      "responses": [
+        ""
+      ],
+      "state": ""
+    },
+    {
+      "tag": "rejection",
+      "patterns": [
+        "No",
+        "nope",
+        "Wrong",
+        "You didn't get me",
+        "negative",
+        "Nah",
+        "No, thanks"
+      ],
+      "responses": [
+        ""
+      ],
+      "state": ""
+    },
+    {
+      "tag": "reading",
+      "patterns": [
+        "Give me something to read",
+        "I want to improve my reading skills",
+        "send me some English texts",
+        "send me some good articles to read"
+      ],
+      "responses": [
+        "Sure, what level? Beginner, Intermediate, Advanced?"
+      ],
+      "state": "reading"
+    },
+    {
+      "tag": "listening",
+      "patterns": [
+        "recommend me some listening",
+        "I want to subscribe",
+        "subscription",
+        "subscribe",
+        "Give me something to listen",
+        "I want to improve my listening skills",
+        "send me some English podcasts to listen",
+        "I want to prepare myself for audition",
+        "Do you have any audio files?",
+        "podcast",
+        "podcasts",
+        "audio",
+        "give me some listening",
+        "listening",
+        "listening resources"
+      ],
+      "responses": [
+        "Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"
+      ],
+      "state": "listening"
+    },
+    {
+      "tag": "offences",
+      "patterns": [
+        "fuck, dick, twat, cunt"
+      ],
+      "responses": [
+        "I wish you the same...",
+        "Daniel, if it's you - go fuck yourself"
+      ],
+      "state": ""
+    },
+    {
+      "tag": "oxford_dic",
+      "patterns": [
+        "I want to subscribe for stuff",
+        "what does it mean",
+        "Tell me about the word",
+        "Tell me about",
+        "What is",
+        "give me some examples of",
+        "How to pronounce",
+        "What is the definition of",
+        "What is the meaning of",
+        " What is the sense of",
+        "Could you explain to me what is",
+        "meaning of",
+        "give me synonyms to",
+        "give me antonyms to"
+      ],
+      "responses": [
+        "Here is what can I tell you about it, sir:\n\n",
+        "Hopefully, you'll be pleased by this information:\n\n"
+      ],
+      "state": "",
+      "buttons": [
+        {
+          "type": "postback",
+          "title": "Examples",
+          "payload": "OXFORD_DIC_EXAMPLES"
         },
-        {"tag": "smalltalk",
-               "patterns": ["How is it going?", "How are you doing?", "How do you do?", "What's up?", "how are you?","how was your day?"],
-               "responses": ["Could be better. The weather in Botland is awful. I think I better stay at home in my server...", "Pretty amazing! I'm glad at least somebody cares about me...All my bot friends are not that emotional", "Fine, thanks! Is there anything I can do for you?"],
-               "state": ""
+        {
+          "type": "postback",
+          "title": "Synonyms-Antonyms",
+          "payload": "OXFORD_DIC_SYNONYMS"
         },
-        {"tag": "info",
-          "patterns": ["Help!","What can you do?","tell me what you can do", "Who are you?","What's your name?", "Are you a robot?","what else you can do","show me how intelligent you are"],
-          "responses": ["Well... I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"],
-          "state": ""
-        },
-        {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye", "see you in a bit"],
-         "responses": ["Yeah, always nice to chat with you, improve you language every day!", "See you! Enjoy your day!", "And this is it? Text me again if you have any questions"],
-          "state": ""
-        },
-        {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you","Nice","Cheers","Cool","Nice","Fair enough","make sense","Lovely","good","I like it","not too bad","cheers mate"],
-         "responses": ["Happy to help!", "Any time!", "My pleasure","I'm glad you like it!"],
-          "state": ""
-        },
-        {"tag": "dictopen",
-         "patterns": ["I want to open my dictionary","Show me my list","Show me the words from my dictionary","my dictionary","my list"," my vocabulary", "Give me my dictionary", "Give me my list of words","see my dictionary","see my vocabulary","vocabulary", "dictionary","vocab", "I wanna get my word list", "wordlist, please","vocab please"],
-          "responses": ["Sure. Here is your list: "],
-          "state": ""
-        },
-          {"tag": "dictclean",
-         "patterns": ["I want to clean up my dictionary","I want to clear my dictionary", "clean dictionary", "delete my vocabulary","clean","clear my list", "delete all items from my list"],
-          "responses": ["Are you sure? Cleaning up your list can't be undone!","It will delete everything from your list. Proceed?"],
-          "state": "dictclean"
-        },
-         {"tag": "dictadd",
-          "patterns": ["I want to add a word in my vocabulary", "I want to add this in dictionary", "Can I put a word in the dictionary", "I wanna save a word", "I want to save this word", "save", "could you save it?","add to my list", "put in my word list"],
-            "responses_if_word_given": ["Sure!","Just to clarify."],
-           "responses_if_not_given": ["No probs. What is the word?","Which particular?","Okay, just tell me the word"],
-           "state": "dictadd"
-          },
-        {"tag": "confirmation",
-               "patterns": ["Yes","right","Alright","Correct","that's it","affirmative","of course","Sure","Exactly","yep"],
-               "responses": [""],
-               "state": ""
-        },
-        {"tag": "rejection",
-                     "patterns": ["No","nope","Wrong","You didn't get me","negative","Nah","No, thanks"],
-                     "responses": [""],
-                     "state": ""
-        },
-        {"tag": "reading",
-                           "patterns": ["Give me something to read","I want to improve my reading skills","send me some English texts","send me some good articles to read"],
-                           "responses": ["Sure, what level? Beginner, Intermediate, Advanced?"],
-                           "state": "reading"
-        },
-        {"tag": "listening",
-                                 "patterns": ["recommend me some listening","I want to subscribe","subscription","subscribe","Give me something to listen","I want to improve my listening skills","send me some English podcasts to listen","I want to prepare myself for audition","Do you have any audio files?", "podcast","podcasts", "audio","give me some listening", "listening", "listening resources"],
-                                 "responses": ["Sure, what do you wanna listen?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"],
-                                 "state": "listening"
-        },
-        {"tag": "offences",
-                                 "patterns": ["fuck, dick, twat, cunt"],
-                                 "responses": ["I wish you the same...","Daniel, if it's you - go fuck yourself"],
-                                 "state": ""
-        },
-        {"tag": "oxford_dic",
-                                 "patterns": ["I want to subscribe for stuff","what does it mean","Tell me about the word","Tell me about", "What is","give me some examples of","How to pronounce","What is the definition of","What is the meaning of"," What is the sense of","Could you explain to me what is", "meaning of","give me synonyms to","give me antonyms to"],
-                                 "responses": ["Here is what can I tell you about it, sir:\n\n","Hopefully, you'll be pleased by this information:\n\n"],
-                                 "state": "",
-                                "buttons":[{"type":"postback",
-                                            "title":"Examples",
-                                            "payload":"OXFORD_DIC_EXAMPLES"},
-                                          {"type": "postback",
-                                            "title": "Synonyms-Antonyms",
-                                            "payload": "OXFORD_DIC_SYNONYMS"},
-                                          {"type": "postback",
-                                                    "title": "Pronunciation",
-                                                    "payload": "OXFORD_DIC_PRONUNCIATION"}
-                                          ]
+        {
+          "type": "postback",
+          "title": "Pronunciation",
+          "payload": "OXFORD_DIC_PRONUNCIATION"
         }
-   ]
+      ]
+    }
+  ]
 }

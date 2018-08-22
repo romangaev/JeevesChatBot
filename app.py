@@ -21,9 +21,11 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 MONGODB_URI = os.environ['MONGODB_URI']
 client = MongoClient(MONGODB_URI)
 db = client.chatbot_db
-user_state_collection=db.user_state_collection
+user_state_collection = db.user_state_collection
 bot = Bot(ACCESS_TOKEN)
 states = {}
+
+
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
@@ -50,7 +52,7 @@ def receive_message():
                         elif "elements" in response_dic:
                             bot.send_generic_message(recipient_id, response_dic["elements"])
                         elif "image" in response_dic:
-                            bot.send_image_url(recipient_id,response_dic["image"])
+                            bot.send_image_url(recipient_id, response_dic["image"])
                             send_message(recipient_id, response_dic["text"])
                         else:
                             send_message(recipient_id, response_dic["text"])
@@ -83,32 +85,33 @@ def receive_message():
                     elif "OXFORD_DIC_SYNONYMS" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-                        syn_ant={}
+                        syn_ant = {}
                         if "word_id" in user_state_machine.data:
-                            syn_ant=OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
+                            syn_ant = OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
                         else:
-                            syn_ant=OxfordDictionary.oxford_dic_syn_ant(message_text.split(".",1)[1])
+                            syn_ant = OxfordDictionary.oxford_dic_syn_ant(message_text.split(".", 1)[1])
                         send_message(sender_id, syn_ant["synonyms"])
-                        send_message(sender_id,syn_ant["antonyms"])
+                        send_message(sender_id, syn_ant["antonyms"])
 
                     elif "OXFORD_DIC_EXAMPLES" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-                        examples=""
+                        examples = ""
                         if "examples" in user_state_machine.data:
-                            examples =user_state_machine.data["examples"]
+                            examples = user_state_machine.data["examples"]
                         else:
-                            examples=OxfordDictionary.oxford_dic_request(message_text.split(".",1)[1])["examples"]
+                            examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
                         send_message(sender_id, examples)
 
                     elif "OXFORD_DIC_PRONUNCIATION" in message_text:
                         s_m_bytes = user_state_collection.posts.find_one({'user_id': sender_id})
                         user_state_machine = pickle.loads(s_m_bytes['state_machine'])
-                        attachment =""
+                        attachment = ""
                         if "attachment" in user_state_machine.data:
-                            attachment =user_state_machine.data["attachment"]
+                            attachment = user_state_machine.data["attachment"]
                         else:
-                            attachment=OxfordDictionary.oxford_dic_request(message_text.split(".",1)[1])["attachment"]
+                            attachment = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])[
+                                "attachment"]
 
                         if attachment == "":
                             send_message(sender_id, "Couldn't find any pronunciation...")
@@ -117,9 +120,8 @@ def receive_message():
                             print(url)
                             r = requests.get(url, allow_redirects=True)
                             open('temp.mp3', 'wb').write(r.content)
-                            bot.send_file_url(sender_id,url)
+                            bot.send_file_url(sender_id, url)
                             os.remove("temp.mp3")
-
 
     # http: // audio.oxforddictionaries.com / en / mp3 / pronunciation_gb_1_8.mp3
     return "Message Processed"
@@ -135,10 +137,10 @@ def verify_fb_token(token_sent):
 
 # chooses a random message to send to the user
 def get_message(user_id, message):
-    #sample_responses = [classify(message)]
+    # sample_responses = [classify(message)]
     # return selected item to the user
-    #return random.choice(sample_responses)
-    respose_dic={}
+    # return random.choice(sample_responses)
+    respose_dic = {}
 
     print(user_id)
     print(user_state_collection.posts.find_one({'user_id': user_id}) is not None)
@@ -165,7 +167,8 @@ def get_message(user_id, message):
         # states[user_id] = StateMachine.StateMachine('')
         # user_state_machine = states[user_id]
         print(states)
-        respose_dic ={"text": "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"}
+        respose_dic = {
+            "text": "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"}
     return respose_dic
 
 
@@ -174,6 +177,7 @@ def send_message(recipient_id, response):
     # sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+
 
 if __name__ == "__main__":
     app.run()
