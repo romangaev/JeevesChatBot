@@ -200,9 +200,13 @@ class StateMachine:
 
             response["text"]='Done. Those words were cleared...Literally...And no one will ever find their grave...'
             response["attachment"] = "http://www.noiseaddicts.com/samples_1w72b820/3727.mp3"
+            self.state = ""
+            self.data = {}
 
         elif intent == 'rejection' or "no" in sentence.lower():
             response["text"] = 'Okay. Let\'s have a spare on these words and keep them until we need... For a while.'
+            self.state = ""
+            self.data = {}
 
         elif confidence > 0.7 and not intent == 'dictclean':
             self.state=""

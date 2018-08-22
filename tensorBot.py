@@ -19,6 +19,8 @@ def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     # stem each word
     sentence_words = [stemmer.stem(word.lower()) for word in sentence_words]
+    # TODO stopwords
+    sentence_words = [w for w in sentence_words if w not in stopwords.words('english')]
     return sentence_words
 
 
@@ -145,4 +147,4 @@ def classify(sentence):
                     return print(random.choice(i['responses']))
 
             results.pop(0)'''
-print(classify("I want to clear my dictionary"))
+print(classify("tell me about self"))
