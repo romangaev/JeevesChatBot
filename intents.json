@@ -50,7 +50,7 @@
         "tell me what you can do",
         "Who are you?",
         "What's your name?",
-        "Are you a robot?",
+        "how is it to be a bot?",
         "what else you can do",
         "show me how intelligent you are"
       ],
@@ -115,12 +115,17 @@
         "vocabulary",
         "dictionary",
         "vocab",
+        "my vocab",
         "I wanna get my word list",
         "wordlist, please",
-        "vocab please"
+        "vocab please",
+        "remind me my word list",
+        "remind me my dictionary"
       ],
       "responses": [
-        "Sure. Here is your list: "
+        "Sure. Here is your list: ",
+        "Your Vocab is here. Check if you know all of these:",
+        "You asked, we delivered. Here is your list: "
       ],
       "state": ""
     },
