@@ -88,8 +88,7 @@ for document in user_state_collection.posts.find():
         type = random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
-        # update number
-        phrase_of_the_day_collection.posts.update_one({'type': type}, {"$inc": {'current_number': +1}}, upsert=True)
+
 
         dic = OxfordDictionary.oxford_dic_request(phrase)
     text = dic["text"]
@@ -106,3 +105,6 @@ for document in user_state_collection.posts.find():
 
     bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
     bot.send_button_message(user_id, text, buttons)
+
+# update number
+phrase_of_the_day_collection.posts.update_one({'type': type}, {"$inc": {'current_number': +1}}, upsert=True)
