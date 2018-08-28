@@ -80,17 +80,17 @@ for every in all_tags:
                     bot.send_raw(payload)
 
 # SEND THE PHRASE OF THE DAY
-for document in user_state_collection.posts.find():
-    user_id = document["user_id"]
-    dic = {"text": "I don't know this word", "attachment": None, "examples": None}
-    while dic["text"] == "I don't know this word":
+dic = {"text": "I don't know this word", "attachment": None, "examples": None}
+while dic["text"] == "I don't know this word":
         types = ['idioms', 'phrasal_verbs']
         type = random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
-
-
         dic = OxfordDictionary.oxford_dic_request(phrase)
+
+for document in user_state_collection.posts.find():
+    user_id = document["user_id"]
+
     text = dic["text"]
     print(text)
     buttons = [{"type": "postback",
