@@ -81,10 +81,11 @@ for every in all_tags:
 
 # SEND THE PHRASE OF THE DAY
 dic = {"text": "I don't know this word", "attachment": None, "examples": None}
+type_of_phrase = ""
 while dic["text"] == "I don't know this word":
         types = ['idioms', 'phrasal_verbs']
-        type = random.choice(types)
-        result = phrase_of_the_day_collection.posts.find_one({'type': type})
+        type_of_phrase = random.choice(types)
+        result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
         dic = OxfordDictionary.oxford_dic_request(phrase)
 
@@ -107,4 +108,4 @@ for document in user_state_collection.posts.find():
     bot.send_button_message(user_id, text, buttons)
 
 # update number
-phrase_of_the_day_collection.posts.update_one({'type': type}, {"$inc": {'current_number': +1}}, upsert=True)
+phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}}, upsert=True)
