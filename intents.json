@@ -14,11 +14,12 @@
         "greetings"
       ],
       "responses": [
-        "Hi!",
+        "Hi! Is there anything I can do for you?",
         "Good to see you again!",
         "Hi there, how can I help?",
         "I'm all ears",
-        "Hey! I see you wanna ask me something"
+        "Ground control to major Tom",
+        "Hi! I see you wanna ask me something :)"
       ],
       "response_first_time": [
         "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"

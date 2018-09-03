@@ -56,7 +56,7 @@ class StateMachine:
         # if initial state is empty then there is no context - just go straight to intents
         if self.state == '':
             self.data = {}
-            if confidence > 0.2 and intent=='info':
+            if confidence > 0.3 and intent == 'info':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif confidence < 0.4:
                 response["text"] = random.choice([ "Em...Not sure what you mean...","Sorry what? Can't answer. My expertise is English learning!\n You can ask for help and I give you some ideas what we can talk about!"])
