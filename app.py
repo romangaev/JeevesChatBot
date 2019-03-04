@@ -2,7 +2,6 @@
 # LATEST WORKING VERSION
 
 import os
-import random
 
 import requests
 from flask import Flask, request
@@ -12,9 +11,8 @@ from pymongo import MongoClient
 import OxfordDictionary
 from bson.binary import Binary
 import pickle
-
 import subscriptions
-
+'''
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
@@ -24,7 +22,6 @@ db = client.chatbot_db
 user_state_collection = db.user_state_collection
 bot = Bot(ACCESS_TOKEN)
 states = {}
-
 
 # We will receive messages that Facebook sends our bot at this endpoint
 @app.route("/", methods=['GET', 'POST'])
@@ -181,3 +178,4 @@ def send_message(recipient_id, response):
 
 if __name__ == "__main__":
     app.run()
+'''''

@@ -59,7 +59,7 @@ class StateMachine:
             if confidence > 0.3 and intent == 'info':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
             elif confidence < 0.4:
-                response["text"] = random.choice([ "Em...Not sure what you mean...","Sorry what? Can't answer. My expertise is English learning!\n You can ask for help and I give you some ideas what we can talk about!"])
+                response["text"] = random.choice(["Em...Not sure what you mean...", "Sorry what? Can't answer. My expertise is English learning!\n You can ask for help and I give you some ideas what we can talk about!"])
             elif intent == 'dictopen':
                 response["text"] = random.choice(self.intents['intents'][number_of_intent]['responses'])
                 user_vocab_collection = StateMachine.db.user_vocab_collection
@@ -365,5 +365,5 @@ def get_subject_dicadd(sentence):
             result += " "
     else:
         result = word
-    result= result.rstrip().rsplit(' ', 1)[0]
+    result = result.rstrip().rsplit(' ', 1)[0]
     return result
