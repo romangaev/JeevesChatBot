@@ -21,6 +21,17 @@ db = client.chatbot_db
 user_state_collection = db.user_state_collection
 states = {}
 
+def build_menu(buttons,
+               n_cols,
+               header_buttons=None,
+               footer_buttons=None):
+    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+    if header_buttons:
+        menu.insert(0, header_buttons)
+    if footer_buttons:
+        menu.append(footer_buttons)
+    return menu
+
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
     if "buttons" in response_dic:
@@ -119,13 +130,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-def build_menu(buttons,
-               n_cols,
-               header_buttons=None,
-               footer_buttons=None):
-    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
-    if header_buttons:
-        menu.insert(0, header_buttons)
-    if footer_buttons:
-        menu.append(footer_buttons)
-    return menu
