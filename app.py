@@ -36,7 +36,7 @@ def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
     if "buttons" in response_dic:
         titles = [x['title'] for x in response_dic['buttons']]
-        button_list = [InlineKeyboardButton(x, callback_data=None) for x in titles]
+        button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
         reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
         bot.sendMessage(update.message.chat_id, response_dic["text"], reply_markup=reply_markup)
         logging.info("echoing some message...")
