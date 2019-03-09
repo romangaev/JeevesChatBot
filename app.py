@@ -1,5 +1,6 @@
 # coding: utf-8
 # more examples: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/README.md
+import telegram
 from pymongo import MongoClient
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
@@ -22,11 +23,14 @@ states = {}
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
 
-    bot.sendMessage(update.message.chat_id, text=response_dic["text"])
+    custom_keyboard = [['top-left', 'top-right'],
+                       ['bottom-left', 'bottom-right']]
+    reply_markup = telegram.ReplyKeyboardMarkup(custom_keyboard)
+    bot.sendMessage(update.message.chat_id, text=response_dic["text"], reply_markup=reply_markup)
     logging.info("echoing some message...")
 
 def slash_start(bot, update):
-    bot.sendMessage(update.message.chat_id, text="Hello! I'm Jeeves, English learning bot!")
+    bot.sendMessage(update.message.chat_id, text="Привет! Я - Дживс, бот для изучения английского!\n Могу порекомендовать вам ресурсы для аудирования, подписывать на тематические подкасты и даже управлять вашим личным словарем! Попробуйте что нибудь их этого:\n- добавь <слово> в мой словарь\n- скинь что нибудь послушать на английском\n- Что значит <слово>?")
     logging.info("replying start command...")
 
 def get_message(user_id, message):
