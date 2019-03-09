@@ -164,7 +164,7 @@ class StateMachine:
                         }
                     ]
                 })
-                response["elements"]=elements
+                response["elements"] = elements
                 self.state=""
         return response
 
@@ -367,3 +367,6 @@ def get_subject_dicadd(sentence):
         result = word
     result = result.rstrip().rsplit(' ', 1)[0]
     return result
+
+
+

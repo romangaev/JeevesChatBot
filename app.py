@@ -2,6 +2,7 @@
 # more examples: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/README.md
 import telegram
 from pymongo import MongoClient
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import os
@@ -22,12 +23,49 @@ states = {}
 
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
+    if "buttons" in response_dic:
+        titles = [x['title'] for x in response_dic['buttons']]
+        button_list = [InlineKeyboardButton(x, callback_data=None) for x in titles]
+        reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+        bot.sendMessage(update.message.chat_id, response_dic["text"], reply_markup=reply_markup)
+        logging.info("echoing some message...")
+    else:
+        bot.sendMessage(update.message.chat_id, text=response_dic["text"])
+        logging.info("echoing some message...")
+    '''elif "elements" in response_dic:
+        bot.send_generic_message(recipient_id, response_dic["elements"])
+    elif "image" in response_dic:
+        bot.send_image_url(recipient_id, response_dic["image"])
+        send_message(recipient_id, response_dic["text"])
+    else:
+        send_message(recipient_id, response_dic["text"])
 
-    custom_keyboard = [['top-left', 'top-right'],
-                       ['bottom-left', 'bottom-right']]
-    reply_markup = telegram.ReplyKeyboardMarkup(custom_keyboard)
-    bot.sendMessage(update.message.chat_id, text=response_dic["text"], reply_markup=reply_markup)
-    logging.info("echoing some message...")
+    if "attachment" in response_dic:
+        bot.send_audio_url(recipient_id, response_dic["attachment"])
+'''
+    ''' elements.append({
+                    "title": podcasts[x]['title'],
+                    "image_url": podcasts[x]['img'],
+                    "subtitle": podcasts[x]['description'],
+                    "default_action": {
+                        "type": "web_url",
+                        "url": podcasts[x]['link'],
+                        "webview_height_ratio": "tall",
+                    },
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": podcasts[x]['link'],
+                            "title": "Listen!"
+                        }, {
+                            "type": "postback",
+                            "title": payload,
+                            "payload": payload+"_"+tag
+                        }
+                    ]
+                })'''
+
+
 
 def slash_start(bot, update):
     bot.sendMessage(update.message.chat_id, text="Привет! Я - Дживс, бот для изучения английского!\n Могу порекомендовать вам ресурсы для аудирования, подписывать на тематические подкасты и даже управлять вашим личным словарем! Попробуйте что нибудь их этого:\n- добавь <слово> в мой словарь\n- скинь что нибудь послушать на английском\n- Что значит <слово>?")
@@ -38,6 +76,7 @@ def get_message(user_id, message):
     # return selected item to the user
     # return random.choice(sample_responses)
     respose_dic = {}
+
 
     print(user_id)
     print(user_state_collection.posts.find_one({'user_id': user_id}) is not None)
@@ -80,3 +119,13 @@ def main():
 if __name__ == "__main__":
     main()
 
+def build_menu(buttons,
+               n_cols,
+               header_buttons=None,
+               footer_buttons=None):
+    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+    if header_buttons:
+        menu.insert(0, header_buttons)
+    if footer_buttons:
+        menu.append(footer_buttons)
+    return menu
