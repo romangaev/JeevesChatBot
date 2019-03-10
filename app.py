@@ -32,11 +32,11 @@ def build_menu(buttons,
         menu.append(footer_buttons)
     return menu
 
-def call_back_buttons(call):
+def call_back_buttons(bot, update):
     print('CALL BACK BABY!')
-    if call.data == "Examples":
-                message_text = call.data
-                s_m_bytes = user_state_collection.posts.find_one({'user_id': call.message.chat.id})
+    if update.callback_query.data == "Examples":
+                message_text = update.callback_query.data
+                s_m_bytes = user_state_collection.posts.find_one({'user_id': update.message.chat_id})
                 user_state_machine = pickle.loads(s_m_bytes['state_machine'])
                 examples = ""
                 if "examples" in user_state_machine.data:
@@ -44,11 +44,11 @@ def call_back_buttons(call):
                 else:
                     examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
 
-                call.bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=examples)
-    if call.data == "Synonyms-Antonyms":
-                call.bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Пыщь")
-    if call.data == "Pronunciation":
-                call.bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Пыщь")
+                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text=examples)
+    if update.callback_query.data == "Synonyms-Antonyms":
+                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
+    if update.callback_query.data == "Pronunciation":
+                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
 
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
