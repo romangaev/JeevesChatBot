@@ -3,7 +3,7 @@
 import telegram
 from pymongo import MongoClient
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 import logging
 import os
 import StateMachine
@@ -31,6 +31,24 @@ def build_menu(buttons,
     if footer_buttons:
         menu.append(footer_buttons)
     return menu
+
+def call_back_buttons(bot,call):
+        if call.message:
+            if call.data == "Examples":
+                message_text = call.data
+                s_m_bytes = user_state_collection.posts.find_one({'user_id': call.message.chat.id})
+                user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+                examples = ""
+                if "examples" in user_state_machine.data:
+                    examples = user_state_machine.data["examples"]
+                else:
+                    examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=examples)
+            if call.data == "Synonyms-Antonyms":
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Пыщь")
+            if call.data == "Pronunciation":
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Пыщь")
 
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
@@ -123,6 +141,7 @@ def main():
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
     dp.add_handler(MessageHandler(Filters.text, idle_main))
+    dp.add_handler(CallbackQueryHandler(call_back_buttons))
     logging.info("starting polling")
     updater.start_polling()
     updater.idle()
