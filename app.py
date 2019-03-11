@@ -35,7 +35,8 @@ def build_menu(buttons,
 def call_back_buttons(bot, update):
     print('CALL BACK BABY!')
     print(type(bot))
-    print(type(update))
+    print(type(update.callback_query.message))
+
     if update.callback_query.data == "Examples":
                 message_text = update.callback_query.data
                 s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
