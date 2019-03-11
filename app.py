@@ -33,7 +33,7 @@ def build_menu(buttons,
     return menu
 
 
-def call_back_buttons(update, context):
+def call_back_buttons(bot, update):
     print('CALL BACK BABY!')
     if update.callback_query.data == "Examples":
                 message_text = update.callback_query.data
