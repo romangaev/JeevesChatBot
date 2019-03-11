@@ -38,7 +38,7 @@ def call_back_buttons(bot, update):
     print(type(update))
     if update.callback_query.data == "Examples":
                 message_text = update.callback_query.data
-                s_m_bytes = user_state_collection.posts.find_one({'user_id': update.message.chat_id})
+                s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
                 user_state_machine = pickle.loads(s_m_bytes['state_machine'])
                 examples = ""
                 if "examples" in user_state_machine.data:
@@ -46,7 +46,7 @@ def call_back_buttons(bot, update):
                 else:
                     examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
 
-                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text=examples)
+                bot.edit_message_text(chat_id=update.callback_query.message.chat_id, message_id=update.callback_query.message.chat_id, text=examples)
     if update.callback_query.data == "Synonyms-Antonyms":
                 bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
     if update.callback_query.data == "Pronunciation":
