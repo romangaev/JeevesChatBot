@@ -32,11 +32,9 @@ def build_menu(buttons,
         menu.append(footer_buttons)
     return menu
 
-def call_back_buttons(bot, update):
-    print('CALL BACK BABY!')
-    print(type(bot))
-    print(type(update.callback_query.message))
 
+def call_back_buttons(update, context):
+    print('CALL BACK BABY!')
     if update.callback_query.data == "Examples":
                 message_text = update.callback_query.data
                 s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
@@ -47,7 +45,7 @@ def call_back_buttons(bot, update):
                 else:
                     examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
 
-                bot.edit_message_text(chat_id=update.callback_query.message.chat_id, message_id=update.callback_query.message.chat_id, text=examples)
+                update.callback_query.edit_message_text(text=examples)
     if update.callback_query.data == "Synonyms-Antonyms":
                 bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
     if update.callback_query.data == "Pronunciation":
