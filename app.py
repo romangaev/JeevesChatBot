@@ -34,9 +34,32 @@ def build_menu(buttons,
 
 
 def call_back_buttons(bot, update):
+    buttons = [
+        {
+            "type": "postback",
+            "title": "Examples",
+            "payload": "OXFORD_DIC_EXAMPLES"
+        },
+        {
+            "type": "postback",
+            "title": "Synonyms-Antonyms",
+            "payload": "OXFORD_DIC_SYNONYMS"
+        },
+        {
+            "type": "postback",
+            "title": "Pronunciation",
+            "payload": "OXFORD_DIC_PRONUNCIATION"
+        }]
+
+
+
+    titles = [x['title'] for x in buttons]
+    button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+
     print('CALL BACK BABY!')
+    message_text = update.callback_query.data
     if update.callback_query.data == "Examples":
-                message_text = update.callback_query.data
                 s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
                 user_state_machine = pickle.loads(s_m_bytes['state_machine'])
                 examples = ""
@@ -46,10 +69,20 @@ def call_back_buttons(bot, update):
                     examples = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])["examples"]
 
                 update.callback_query.edit_message_text(text=examples)
+                update.callback_query.edit_message_reply_markup(reply_markup=reply_markup)
     if update.callback_query.data == "Synonyms-Antonyms":
-                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
+        s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
+        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+        syn_ant = {}
+        if "word_id" in user_state_machine.data:
+            syn_ant = OxfordDictionary.oxford_dic_syn_ant(user_state_machine.data["word_id"])
+        else:
+            syn_ant = OxfordDictionary.oxford_dic_syn_ant(message_text.split(".", 1)[1])
+        update.callback_query.edit_message_text(text=syn_ant["synonyms"])
+        update.callback_query.edit_message_text(text=syn_ant["antonyms"])
+
     if update.callback_query.data == "Pronunciation":
-                bot.edit_message_text(chat_id=update.message.chat_id, message_id=update.message.chat_id, text="Пыщь")
+        update.callback_query.edit_message_text(text=examples)
 
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
