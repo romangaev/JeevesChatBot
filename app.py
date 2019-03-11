@@ -66,7 +66,7 @@ def call_back_buttons(bot, update):
         else:
             attachment = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])[
                 "attachment"]
-        if attachment == "":
+        if attachment == "" or attachment =="Couldn't find any audio":
             bot.sendMessage(update.callback_query.message.chat_id, text="Couldn't find any pronunciation samples...")
         else:
             url = attachment
