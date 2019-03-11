@@ -58,7 +58,20 @@ def call_back_buttons(bot, update):
         bot.sendMessage(update.callback_query.message.chat_id, text=syn_ant["antonyms"])
 
     if update.callback_query.data == "Pronunciation":
-        update.callback_query.edit_message_text(text=examples)
+        s_m_bytes = user_state_collection.posts.find_one({'user_id': update.callback_query.message.chat_id})
+        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+        attachment = ""
+        if "attachment" in user_state_machine.data:
+            attachment = user_state_machine.data["attachment"]
+        else:
+            attachment = OxfordDictionary.oxford_dic_request(message_text.split(".", 1)[1])[
+                "attachment"]
+        if attachment == "":
+            bot.sendMessage(update.callback_query.message.chat_id, text="Couldn't find any pronunciation samples...")
+        else:
+            url = attachment
+            print(url)
+            bot.sendAudio(update.callback_query.message.chat_id, audio=url)
 
 def idle_main(bot, update):
     response_dic = get_message(update.message.chat_id, update.message.text)
