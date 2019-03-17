@@ -297,6 +297,29 @@ class StateMachine:
 
 # POS and CHUNKING
 def get_subject_oxf(sentence):
+    import unicodedata as ud
+    latin_letters = {}
+    def is_latin(uchr):
+        try:
+            return latin_letters[uchr]
+        except KeyError:
+            return latin_letters.setdefault(uchr, 'LATIN' in ud.name(uchr))
+
+    def only_roman_chars(unistr):
+        return all(is_latin(uchr)
+                   for uchr in unistr
+                   if uchr.isalpha())  # isalpha suggested by John Machin
+
+
+    result = ""
+    for every in word_tokenize(sentence.lower()):
+        if only_roman_chars(every):
+            result=every
+            break
+
+
+    return result.rstrip()
+    '''
     pos_results = pos_tag(word_tokenize(sentence.lower()))
     print(pos_results)
     chunkGram = r"""  NPH: {<NN.*>|<RB|DT|JJ.*>+<NN.*>|<VB.*><RP.*>|<VB.*><IN.*>}     
@@ -335,7 +358,7 @@ def get_subject_oxf(sentence):
             result+=" "
     else:
         result=word[0]
-    return result.rstrip()
+    return result.rstrip()'''
 
 
 def get_subject_dicadd(sentence):

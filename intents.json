@@ -3,100 +3,89 @@
     {
       "tag": "greeting",
       "patterns": [
-        "Hi",
-        "How are you",
-        "hi there",
-        "Hello",
-        "Good afternoon",
-        "Hey",
-        "Hi mate",
-        "good morning",
-        "greetings"
+        "Привет",
+        "приветики",
+        "здорова",
+        "здравствуй",
+        "добрый день",
+        "эй",
+        "дароу",
+        "добрый вечер",
+        "приветствую"
       ],
       "responses": [
-        "Hi! Is there anything I can do for you?",
-        "Good to see you again!",
-        "Hi there, how can I help?",
-        "I'm all ears",
-        "Ground control to major Tom",
-        "Hi! I see you wanna ask me something :)"
+        "Приветствую! Чем могу быть полезен?",
+        "Салют",
+        "На связи...",
+        "Ну привет",
+        "Ground control to major Tom...",
+        "Привет. Излагай :)"
       ],
       "response_first_time": [
-        "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"
+        "Привет! Меня зовут Дживс, я помогу тебе выучить язык Шекспира, Байрона и Канье Уэста. Если ты сам этого захочешь конечно же.\n Можешь получать от меня интересные подкасты, подписки а также узнавать информацию о том как использовать слова! Попробуй что-нибудь из этого:\n # Отправь мне что-нибудь послушать\n # что значит <слово>?"
       ],
       "state": ""
     },
     {
       "tag": "smalltalk",
       "patterns": [
-        "How is it going?",
-        "How are you doing?",
-        "How do you do?",
-        "What's up?",
-        "how are you?",
-        "how was your day?"
+        "Как дела?",
+        "Как ты?",
+        "Что новенького?",
+        "Как оно?",
+        "У тебя все хорошо?",
+        "ты в порядке?"
       ],
       "responses": [
-        "Could be better. The weather in Botland is awful. I think I better stay at home in my server...",
-        "Pretty amazing! I'm glad at least somebody cares about me...All my bot friends are not that emotional",
-        "Fine, thanks! Is there anything I can do for you?"
+        "бывало и лучше :)",
+        "Было хорошо, пока ты не написал :)"
       ],
       "state": ""
     },
     {
       "tag": "info",
       "patterns": [
-        "Help!",
-        "What can you do?",
-        "tell me what you can do",
-        "Who are you?",
-        "What's your name?",
-        "how is it to be a bot?",
-        "what else you can do",
-        "show me how intelligent you are"
+        "Помощь",
+        "что ты умеешь",
+        "что ты можешь",
+        "кто ты",
+        "как тебя зовут",
+        "как ты можешь мне помочь"
       ],
       "responses": [
-        "Well... I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"
+        "Привет! Меня зовут Дживс, я помогу тебе выучить язык Шекспира, Байрона и Канье Уэста. Если ты сам этого захочешь конечно же.\n Можешь получать от меня интересные подкасты, подписки а также узнавать информацию о том как использовать слова! Попробуй что-нибудь из этого:\n # Отправь мне что-нибудь послушать\n # что значит <слово>?"
       ],
       "state": ""
     },
     {
       "tag": "goodbye",
       "patterns": [
-        "Bye",
-        "See you later",
-        "Goodbye",
-        "see you in a bit"
+        "Пока",
+        "ладно мне пора",
+        "прощай",
+        "до свидания"
       ],
       "responses": [
-        "Yeah, always nice to chat with you, improve you language every day!",
-        "See you! Enjoy your day!",
-        "And this is it? Text me again if you have any questions"
+        "Удачи! Хорошего дня!",
+        "Давай, не забывай про меня"
       ],
       "state": ""
     },
     {
       "tag": "thanks",
       "patterns": [
-        "Thanks",
-        "Thank you",
-        "Nice",
-        "Cheers",
-        "Cool",
-        "Nice",
-        "Fair enough",
-        "make sense",
-        "Lovely",
-        "good",
-        "I like it",
-        "not too bad",
-        "cheers mate"
+        "Спасибо",
+        "Благодарю",
+        "супер",
+        "От души",
+        "Красавчик",
+        "молодец"
       ],
       "responses": [
-        "Happy to help!",
-        "Any time!",
-        "My pleasure",
-        "I'm glad you like it!"
+        "Рад помочь",
+        "В любое время",
+        "Не за что",
+        "Пожалуйста"
       ],
       "state": ""
     },
@@ -175,16 +164,11 @@
     {
       "tag": "confirmation",
       "patterns": [
-        "Yes",
-        "right",
-        "Alright",
-        "Correct",
-        "that's it",
-        "affirmative",
-        "of course",
-        "Sure",
-        "Exactly",
-        "yep"
+        "Ага",
+        "Да",
+        "Верно",
+        "Правильно",
+        "Так точно"
       ],
       "responses": [
         ""
@@ -194,13 +178,10 @@
     {
       "tag": "rejection",
       "patterns": [
-        "No",
-        "nope",
-        "Wrong",
-        "You didn't get me",
-        "negative",
-        "Nah",
-        "No, thanks"
+        "Не",
+        "Нет",
+        "неправильно",
+        "неа"
       ],
       "responses": [
         ""
@@ -223,56 +204,47 @@
     {
       "tag": "listening",
       "patterns": [
-        " give me some stuff to listen",
-        "recommend me some listening",
-        "I want to subscribe",
-        "subscription",
-        "subscribe",
-        "Give me something to listen",
-        "I want to improve my listening skills",
-        "send me some English podcasts to listen",
-        "I want to prepare myself for audition",
-        "Do you have any audio files?",
-        "podcast",
-        "podcasts",
-        "audio",
-        "give me some listening",
-        "listening",
-        "listening resources",
-        "I want to subscribe for stuff"
+        "Дай мне что нибудь послушать",
+        "скинь что нибудь послушать",
+        "скинь подкаст",
+        "подкаст",
+        "аудирование",
+        "сбрось послушать",
+        "хочу подписаться на какой нибудь подкаст"
       ],
       "responses": [
-        "Sure, what do you wanna listen to?\n-BBC Learning\n-Football\n-Politics\n-Longreads\n-Science\n-Technology\n-Global"
+        "Не вопрос, что будем слушать?\n-BBC Learning\n-Футбол\n-Политика\n-Лонгриды\n-Наука\n-Техника\n-Разное"
       ],
       "state": "listening"
     },
     {
       "tag": "offences",
       "patterns": [
-        "fuck, dick, twat, cunt"
+        "хуй",
+        "пизда",
+        "сука",
+        "блять",
+        "ебать"
       ],
       "responses": [
-        "I wish you the same...",
-        "Daniel, if it's you - go fuck yourself"
+        "И вам того же!"
       ],
       "state": ""
     },
     {
       "tag": "oxford_dic",
       "patterns": [
-        "what does it mean",
-        "Tell me about \"the word\"",
-        "Tell me about",
-        "What is",
-        "give me some examples of",
-        "How to pronounce",
-        "What is the definition of",
-        "What is the meaning of",
-        " What is the sense of",
-        "Could you explain to me what is",
-        "meaning of",
-        "give me synonyms to",
-        "give me antonyms to"
+        "что это значит",
+        "расскажи о ",
+        "значение",
+        "что такое",
+        "перевод",
+        "примеры",
+        "произношение",
+        "синонимы",
+        "смысл",
+        "антонимы",
+        "контекст"
       ],
       "responses": [
         "Here is what can I tell you about it, sir:\n\n",

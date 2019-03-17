@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 # import our chat-bot intents file
 import json
 
-with open('intents.json') as json_data:
+with open('intents.json', encoding='utf-8') as json_data:
     intents = json.load(json_data)
 words = []
 classes = []
