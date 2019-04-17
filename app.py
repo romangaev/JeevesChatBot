@@ -80,12 +80,17 @@ def idle_main(bot, update):
         button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
         reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
         bot.sendMessage(update.message.chat_id, response_dic["text"], reply_markup=reply_markup)
+    elif "elements" in response_dic:
+        titles =  [response_dic["elements"][0]['buttons'][0]['title']]
+        button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
+        reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+        bot.sendPhoto(update.message.chat_id, response_dic["elements"][0]["image_url"])
+        bot.sendMessage(update.message.chat_id, response_dic["elements"][0]['title'], reply_markup=reply_markup)
         logging.info("echoing some message...")
     else:
         bot.sendMessage(update.message.chat_id, text=response_dic["text"])
         logging.info("echoing some message...")
-    '''elif "elements" in response_dic:
-        bot.send_generic_message(recipient_id, response_dic["elements"])
+'''
     elif "image" in response_dic:
         bot.send_image_url(recipient_id, response_dic["image"])
         send_message(recipient_id, response_dic["text"])
@@ -94,8 +99,7 @@ def idle_main(bot, update):
 
     if "attachment" in response_dic:
         bot.send_audio_url(recipient_id, response_dic["attachment"])
-'''
-    ''' elements.append({
+ elements.append({
                     "title": podcasts[x]['title'],
                     "image_url": podcasts[x]['img'],
                     "subtitle": podcasts[x]['description'],

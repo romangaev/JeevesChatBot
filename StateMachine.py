@@ -111,29 +111,29 @@ class StateMachine:
         else:
 
             podcasts = []
-            if "sports" in sentence.lower() or "football" in sentence.lower():
+            if "спорт" in sentence.lower() or "футбол" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('football')
                 tag="football"
             elif "bbc" in sentence.lower() or "learning" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('bbc')
                 tag = "bbc"
-            elif "politics" in sentence.lower() or "government" in sentence.lower():
+            elif "политика" in sentence.lower() or "government" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('politics')
                 tag = "politics"
-            elif "science" in sentence.lower() or "research" in sentence.lower():
+            elif "наука" in sentence.lower() or "research" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('science')
                 tag = "science"
-            elif "analytics" in sentence.lower() or "longreads" in sentence.lower():
+            elif "лонгрид" in sentence.lower() or "лонгриды" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('longreads')
                 tag = "longreads"
-            elif "technology" in sentence.lower() or "tech" in sentence.lower():
+            elif "техника" in sentence.lower() or "tech" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('technology')
                 tag = "technology"
-            elif "global" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
+            elif "разное" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('global')
                 tag = "global"
             else:
-                response["text"] = "Hm...Sorry, I don't have anything about it"
+                response["text"] = "Упс, кажется такого у меня еще нет!"
                 return response
 
             payload='SUBSCRIBE'
