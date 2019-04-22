@@ -82,7 +82,7 @@ def idle_main(bot, update):
         bot.sendMessage(update.message.chat_id, response_dic["text"], reply_markup=reply_markup)
     elif "elements" in response_dic:
         titles =  [response_dic["elements"][0]['buttons'][0]['title']]
-        button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
+        button_list = [InlineKeyboardButton(x, url=response_dic["elements"][0]['buttons'][0]['url']) for x in titles]
         reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
         bot.sendPhoto(update.message.chat_id, response_dic["elements"][0]["image_url"])
         bot.sendMessage(update.message.chat_id, response_dic["elements"][0]['title'], reply_markup=reply_markup)
