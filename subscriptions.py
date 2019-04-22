@@ -13,7 +13,7 @@ user_subscriptions_collection = db.user_subscriptions_collection
 
 BBC = {'rss_url':"http://feeds.bbci.co.uk/learningenglish/english/features/6-minute-english/rss",
 'img_url':'https://pbs.twimg.com/profile_images/540543625071820800/9Pdrd-66.png'}
-THEGUARDIAN_FOOTBALL ={'rss_url':"https://audioboom.com/channels/4746648.rss",
+THEGUARDIAN_FOOTBALL ={'rss_url':"https://www.theguardian.com/football/series/footballweekly/podcast.xml",
 'img_url':'https://images.theabcdn.com/i/29436324/2000x500/c'}
 THEGUARDIAN_POLITICS ={'rss_url':"https://audioboom.com/channels/1215206.rss",
 'img_url':'https://images.theabcdn.com/i/22243017/2000x500/c'}
