@@ -55,7 +55,7 @@ def get_podcasts(tag):
                 news_item = {}
                 news_item['title'] = item.title.text
                 news_item['description'] = item.description.text
-                news_item['link'] = item.enclosure.url
+                news_item['link'] = item.link.text
                 news_item['img'] = src['img_url']
                 news_items.append(news_item)
 
