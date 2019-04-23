@@ -114,24 +114,15 @@ class StateMachine:
             if "спорт" in sentence.lower() or "футбол" in sentence.lower():
                 podcasts = subscriptions.get_podcasts('football')
                 tag="football"
-            elif "bbc" in sentence.lower() or "learning" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('bbc')
-                tag = "bbc"
-            elif "политика" in sentence.lower() or "government" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('politics')
-                tag = "politics"
-            elif "наука" in sentence.lower() or "research" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('science')
-                tag = "science"
-            elif "лонгрид" in sentence.lower() or "лонгриды" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('longreads')
-                tag = "longreads"
-            elif "техника" in sentence.lower() or "tech" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('technology')
-                tag = "technology"
-            elif "разное" in sentence.lower() or "society" in sentence.lower() or "environment" in sentence.lower():
-                podcasts = subscriptions.get_podcasts('global')
-                tag = "global"
+            elif "английский" in sentence.lower() or "english" in sentence.lower() or "язык" in sentence.lower():
+                podcasts = subscriptions.get_podcasts('english')
+                tag = 'english'
+            elif "дискавери" in sentence.lower() or "discovery" in sentence.lower():
+                podcasts = subscriptions.get_podcasts('discovery')
+                tag = 'discovery'
+            elif "новости" in sentence.lower() or "news" in sentence.lower():
+                podcasts = subscriptions.get_podcasts("news")
+                tag = "news"
             else:
                 response["text"] = "Упс, кажется такого у меня еще нет!"
                 return response
