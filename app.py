@@ -163,10 +163,10 @@ def get_message(user_id, message):
             "text": "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"}
     return respose_dic
 
-'''
+
 def callback_minute(context):
         context.bot.send_message(chat_id="1794329440603929",
-                                text='One message every minute')'''
+                                text='One message every minute')
 def main():
     updater = Updater(TG_TOKEN, use_context=True)
     dp = updater.dispatcher
@@ -176,9 +176,9 @@ def main():
     logging.info("starting polling")
     updater.start_polling()
     updater.idle()
-    '''
+
     job = updater.job_queue
-    job.run_repeating(callback_minute, interval=60, first=0)'''
+    job.run_repeating(callback_minute, interval=60, first=0)
 
 if __name__ == "__main__":
     main()
