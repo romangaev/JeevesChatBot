@@ -165,8 +165,8 @@ def get_message(user_id, message):
 
 
 def callback_minute(bot, update):
-        bot.send_message(chat_id="1794329440603929",
-                                text='One message every minute')
+        bot.send_message(chat_id="@meandyourmother", text='One message every minute')
+        print('SEND SUBSCRIPTION')
 def main():
     updater = Updater(TG_TOKEN)
     dp = updater.dispatcher
