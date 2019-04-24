@@ -164,11 +164,11 @@ def get_message(user_id, message):
     return respose_dic
 
 
-def callback_minute(context):
-        context.bot.send_message(chat_id="1794329440603929",
+def callback_minute(bot, update):
+        bot.send_message(chat_id="1794329440603929",
                                 text='One message every minute')
 def main():
-    updater = Updater(TG_TOKEN, use_context=True)
+    updater = Updater(TG_TOKEN)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
     dp.add_handler(MessageHandler(Filters.text, idle_main))
