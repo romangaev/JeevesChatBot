@@ -6,20 +6,24 @@ from pymongo import MongoClient
 
 import OxfordDictionary
 from subscriptions import get_podcasts
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 
 MONGODB_URI = os.environ['MONGODB_URI']
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+TG_TOKEN = os.environ['TG_TOKEN']
+
 client = MongoClient(MONGODB_URI)
 db = client.chatbot_db
 user_subscriptions_collection = db.user_subscriptions_collection
 user_state_collection = db.user_state_collection
 podcasts_feed_collection = db.podcasts_feed_collection
 phrase_of_the_day_collection = db.phrase_of_the_day_collection
-bot = Bot(ACCESS_TOKEN)
+#bot = Bot(ACCESS_TOKEN)
+updater = Updater(TG_TOKEN)
 all_tags = ["bbc", 'football', 'politics', 'science', 'longreads', 'technology', 'global']
 
 # SEND ALL SUBSCRIPTIONS
-for every in all_tags:
+'''for every in all_tags:
     latest = get_podcasts(every)[0]['title']
     if podcasts_feed_collection.posts.find_one({'tag': every}) is None or not latest == \
                                                                               podcasts_feed_collection.posts.find_one(
@@ -78,7 +82,7 @@ for every in all_tags:
                     }
 
                     bot.send_raw(payload)
-
+'''
 # SEND THE PHRASE OF THE DAY
 dic = {"text": "I don't know this word", "attachment": None, "examples": None}
 type_of_phrase = ""
@@ -104,8 +108,13 @@ for document in user_state_collection.posts.find():
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION." + phrase}]
 
-    bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
-    bot.send_button_message(user_id, text, buttons)
+    bot.sendPhoto(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
+    #bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
+    titles = [x['title'] for x in buttons]
+    button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+    bot.sendMessage(user_id, text, reply_markup=reply_markup)
+    #bot.send_button_message(user_id, text, buttons)
 
 # update number
 phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}}, upsert=True)
