@@ -12,6 +12,7 @@ from bson.binary import Binary
 import pickle
 import subscriptions
 import random
+from datetime import time
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -165,7 +166,7 @@ def get_message(user_id, message):
     return respose_dic
 
 
-def callback_minute(bot, job):
+def callback_daily(bot, job):
         # SEND THE PHRASE OF THE DAY
         phrase_of_the_day_collection = db.phrase_of_the_day_collection
         dic = {"text": "I don't know this word", "attachment": None, "examples": None}
@@ -205,8 +206,9 @@ def callback_minute(bot, job):
 def main():
     updater = Updater(TG_TOKEN)
     job = updater.job_queue
-    job.run_repeating(callback_minute, interval=60, first=0)
+    job.run_repeating(callback_daily, interval=60, first=0)
 
+    job.run_daily(callback_daily, time(21,3), context=None, name=None)
 
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
