@@ -3,7 +3,7 @@
 import telegram
 from pymongo import MongoClient
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, Job,JobQueue
 import logging
 import os
 import StateMachine
@@ -164,11 +164,15 @@ def get_message(user_id, message):
     return respose_dic
 
 
-def callback_minute(bot, update):
+def callback_minute(bot, job):
         bot.send_message(chat_id="@meandyourmother", text='One message every minute')
         print('SEND SUBSCRIPTION')
 def main():
     updater = Updater(TG_TOKEN)
+    job = updater.job_queue
+    job.run_repeating(callback_minute, interval=60, first=0)
+
+
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
     dp.add_handler(MessageHandler(Filters.text, idle_main))
@@ -177,8 +181,6 @@ def main():
     updater.start_polling()
     updater.idle()
 
-    job = updater.job_queue
-    job.run_repeating(callback_minute, interval=60, first=0)
 
 if __name__ == "__main__":
     main()
