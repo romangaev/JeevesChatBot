@@ -11,6 +11,7 @@ import OxfordDictionary
 from bson.binary import Binary
 import pickle
 import subscriptions
+import random
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -165,8 +166,42 @@ def get_message(user_id, message):
 
 
 def callback_minute(bot, job):
-        bot.send_message(chat_id=352720760, text='One message every minute')
-        print('SEND SUBSCRIPTION')
+        # SEND THE PHRASE OF THE DAY
+        phrase_of_the_day_collection = db.phrase_of_the_day_collection
+        dic = {"text": "I don't know this word", "attachment": None, "examples": None}
+        type_of_phrase = ""
+        while dic["text"] == "I don't know this word":
+            types = ['idioms', 'phrasal_verbs']
+            type_of_phrase = random.choice(types)
+            result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
+            phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
+            dic = OxfordDictionary.oxford_dic_request(phrase)
+
+        for document in user_state_collection.posts.find():
+            user_id = document["user_id"]
+
+            text = dic["text"]
+            print(text)
+            buttons = [{"type": "postback",
+                        "title": "Examples",
+                        "payload": "OXFORD_DIC_EXAMPLES." + phrase},
+                       {"type": "postback",
+                        "title": "Synonyms-Antonyms",
+                        "payload": "OXFORD_DIC_SYNONYMS." + phrase},
+                       {"type": "postback",
+                        "title": "Pronunciation",
+                        "payload": "OXFORD_DIC_PRONUNCIATION." + phrase}]
+
+            bot.sendPhoto(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
+            titles = [x['title'] for x in buttons]
+            button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
+            reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+            bot.sendMessage(user_id, text, reply_markup=reply_markup)
+
+        # update number
+        phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}},upsert=True)
+
+
 def main():
     updater = Updater(TG_TOKEN)
     job = updater.job_queue
