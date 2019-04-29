@@ -78,7 +78,7 @@ def oxford_dic_request(word_id):
 
         return {"text": response, "attachment": audio_url, "examples": examples}
     else:
-        return {"text": "I don't know this word", "attachment": None, "examples": None}
+        return {"text": "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)", "attachment": None, "examples": None}
 
 
 def oxford_dic_syn_ant(word_id):
@@ -115,8 +115,8 @@ def oxford_dic_syn_ant(word_id):
                                 syn_counter += 1
 
     if antonyms == "Antonyms:\n":
-        antonyms = "...And don't think there are any antonyms"
+        antonyms = "...Увы, антонимов, к сожалению не нашлось!"
     if synonyms == "Synonyms:\n":
-        synonyms = "Well..As for synonyms, I couldn't find anything related"
+        synonyms = "Не могу подобрать синоним!(Я всего лишь кот, не судите строго!)"
 
     return {"synonyms": synonyms, "antonyms": antonyms}

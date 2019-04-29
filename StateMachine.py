@@ -175,7 +175,7 @@ class StateMachine:
             query_result = OxfordDictionary.oxford_dic_request(self.data["word_id"])
             response["text"] = query_result["text"]
 
-            if not response["text"] == "I don't know this word":
+            if not response["text"] == "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)":
                 response["buttons"] = self.intents['intents'][number_of_intent]['buttons']
             self.data["examples"] = query_result["examples"]
             self.data["attachment"] = query_result["attachment"]
