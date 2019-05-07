@@ -1,10 +1,13 @@
 import os
+import pickle
 import random
 
+from bson import Binary
 from pymessenger.bot import Bot
 from pymongo import MongoClient
 
 import OxfordDictionary
+from app import build_menu
 from subscriptions import get_podcasts
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
@@ -84,14 +87,16 @@ all_tags = ["bbc", 'football', 'politics', 'science', 'longreads', 'technology',
                     bot.send_raw(payload)
 '''
 # SEND THE PHRASE OF THE DAY
-dic = {"text": "I don't know this word", "attachment": None, "examples": None}
+dic = {"text": "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)", "attachment": None, "examples": None}
 type_of_phrase = ""
-while dic["text"] == "I don't know this word":
+while dic["text"] == "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)":
         types = ['idioms', 'phrasal_verbs']
         type_of_phrase = random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
         dic = OxfordDictionary.oxford_dic_request(phrase)
+
+
 
 for document in user_state_collection.posts.find():
     user_id = document["user_id"]
@@ -115,6 +120,14 @@ for document in user_state_collection.posts.find():
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
     bot.sendMessage(user_id, text, reply_markup=reply_markup)
     #bot.send_button_message(user_id, text, buttons)
+
+    s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
+    user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+    user_state_machine.data["examples"] = dic["examples"]
+    user_state_machine.data["attachment"] = dic["attachment"]
+    s_m_bytes = pickle.dumps(user_state_machine)
+    post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
+    user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
 
 # update number
 phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}}, upsert=True)
