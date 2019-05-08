@@ -87,13 +87,15 @@ all_tags = ["bbc", 'football', 'politics', 'science', 'longreads', 'technology',
                     bot.send_raw(payload)
 '''
 # SEND THE PHRASE OF THE DAY
-dic = {"text": "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)", "attachment": None, "examples": None}
+dic = {"text": "404", "attachment": None, "examples": None}
 type_of_phrase = ""
-while dic["text"] == "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)":
+while dic["text"] == "404":
         types = ['idioms', 'phrasal_verbs']
         type_of_phrase = random.choice(types)
         result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
+        # update number
+        phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}}, upsert=True)
         dic = OxfordDictionary.oxford_dic_request(phrase)
         print('WORD OF THE DAY')
         print(dic)
@@ -131,5 +133,3 @@ for document in user_state_collection.posts.find():
     post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
     user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
 
-# update number
-phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}}, upsert=True)

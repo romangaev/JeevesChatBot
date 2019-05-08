@@ -78,7 +78,7 @@ def oxford_dic_request(word_id):
 
         return {"text": response, "attachment": audio_url, "examples": examples}
     else:
-        return {"text": "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)", "attachment": None, "examples": None}
+        return {"text": "404", "attachment": None, "examples": None}
 
 
 def oxford_dic_syn_ant(word_id):
