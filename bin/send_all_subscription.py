@@ -95,6 +95,8 @@ while dic["text"] == "Не нашлось такого слова! Провер�
         result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
         phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
         dic = OxfordDictionary.oxford_dic_request(phrase)
+        print('WORD OF THE DAY')
+        print(dic)
 
 
 
