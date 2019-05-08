@@ -306,8 +306,7 @@ def get_subject_oxf(sentence):
     result = ""
     for every in word_tokenize(sentence.lower()):
         if only_roman_chars(every):
-            result=every
-            break
+            result = result+every+' '
 
 
     return result.rstrip()

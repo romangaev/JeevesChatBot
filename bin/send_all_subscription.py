@@ -117,7 +117,7 @@ for document in user_state_collection.posts.find():
                 "title": "Pronunciation",
                 "payload": "OXFORD_DIC_PRONUNCIATION." + phrase}]
 
-    bot.sendPhoto(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
+    bot.sendPhoto(user_id, "https://i.ibb.co/71bh29h/pod.png")
     #bot.send_image_url(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
     titles = [x['title'] for x in buttons]
     button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
