@@ -169,13 +169,15 @@ def get_message(user_id, message):
 def callback_daily(bot, job):
         # SEND THE PHRASE OF THE DAY
         phrase_of_the_day_collection = db.phrase_of_the_day_collection
-        dic = {"text": "I don't know this word", "attachment": None, "examples": None}
+        dic = {"text": "404", "attachment": None, "examples": None}
         type_of_phrase = ""
-        while dic["text"] == "I don't know this word":
+        while dic["text"] == "404":
             types = ['idioms', 'phrasal_verbs']
             type_of_phrase = random.choice(types)
             result = phrase_of_the_day_collection.posts.find_one({'type': type_of_phrase})
             phrase = result["phrase"][result["current_number"] % len(result["phrase"])]
+            phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}},
+                                                          upsert=True)
             dic = OxfordDictionary.oxford_dic_request(phrase)
 
         for document in user_state_collection.posts.find():
@@ -193,21 +195,26 @@ def callback_daily(bot, job):
                         "title": "Pronunciation",
                         "payload": "OXFORD_DIC_PRONUNCIATION." + phrase}]
 
-            bot.sendPhoto(user_id, "https://image.ibb.co/kEx6oK/phrase_of_the_day.png")
+            bot.sendPhoto(user_id, "https://i.ibb.co/71bh29h/pod.png")
             titles = [x['title'] for x in buttons]
             button_list = [InlineKeyboardButton(x, callback_data=x) for x in titles]
             reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
             bot.sendMessage(user_id, text, reply_markup=reply_markup)
 
-        # update number
-        phrase_of_the_day_collection.posts.update_one({'type': type_of_phrase}, {"$inc": {'current_number': +1}},upsert=True)
+        s_m_bytes = user_state_collection.posts.find_one({'user_id': user_id})
+        user_state_machine = pickle.loads(s_m_bytes['state_machine'])
+        user_state_machine.data["examples"] = dic["examples"]
+        user_state_machine.data["attachment"] = dic["attachment"]
+        s_m_bytes = pickle.dumps(user_state_machine)
+        post = {'user_id': user_id, 'state_machine': Binary(s_m_bytes)}
+        user_state_collection.posts.update_one({'user_id': user_id}, {"$set": post}, upsert=False)
 
 
 def main():
     updater = Updater(TG_TOKEN)
     job = updater.job_queue
-    job.run_daily(callback_daily, time(18,10), context=None, name=None)
-
+    #job.run_daily(callback_daily, time(18,10), context=None, name=None)
+    job.run_repeating(callback_daily, interval=60, first=0)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
     dp.add_handler(MessageHandler(Filters.text, idle_main))
