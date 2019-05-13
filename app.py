@@ -213,8 +213,8 @@ def callback_daily(bot, job):
 def main():
     updater = Updater(TG_TOKEN)
     job = updater.job_queue
-    #job.run_daily(callback_daily, time(18,10), context=None, name=None)
-    job.run_repeating(callback_daily, interval=60, first=0)
+    job.run_daily(callback_daily, time(18,10), context=None, name=None)
+    #job.run_repeating(callback_daily, interval=60, first=0)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", slash_start), group=0)
     dp.add_handler(MessageHandler(Filters.text, idle_main))
