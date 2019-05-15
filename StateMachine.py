@@ -163,7 +163,7 @@ class StateMachine:
         self.data["word_id"] = get_subject_oxf(message.replace("'", "").replace('"', ""))
         print("word_id")
         print(self.data["word_id"])
-        response = {"text": "no_text"}
+        response = {"text": "Не нашлось такого слова! Проверьте грамматику -  у меня сложно с распознанием ошибок :)"}
         if (self.data["word_id"].isalpha()):
             number_of_intent = 0
             for every in self.intents['intents']:

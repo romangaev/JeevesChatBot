@@ -161,9 +161,8 @@ def get_message(user_id, message):
         # states[user_id] = StateMachine.StateMachine('')
         # user_state_machine = states[user_id]
         print(states)
-        respose_dic = {
-            "text": "Hi! I'm English learning bot.\n You can ask for listening resources, subscribe for stuff and manage your vocabulary to learn. Try something of that:\n # add a word to my dictionary\n # give me some listening resources\n # what does /something/ mean?"}
-    return respose_dic
+        respose_dic = {"text": "Привет! Меня зовут Дживс, я помогу тебе выучить язык Шекспира, Байрона и Канье Уэста.\n Можешь получать от меня интересные подкасты, подписки а также узнавать информацию о том как использовать слова! Попробуй что-нибудь из этого:\n\n # Отправь мне что-нибудь послушать\n\n # что значит <слово>?"}
+      return respose_dic
 
 
 def callback_daily(bot, job):
