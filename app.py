@@ -162,7 +162,7 @@ def get_message(user_id, message):
         # user_state_machine = states[user_id]
         print(states)
         respose_dic = {"text": "Привет! Меня зовут Дживс, я помогу тебе выучить язык Шекспира, Байрона и Канье Уэста.\n Можешь получать от меня интересные подкасты, подписки а также узнавать информацию о том как использовать слова! Попробуй что-нибудь из этого:\n\n # Отправь мне что-нибудь послушать\n\n # что значит <слово>?"}
-      return respose_dic
+    return respose_dic
 
 
 def callback_daily(bot, job):
