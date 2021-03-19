@@ -25,7 +25,7 @@ idna==2.7
 imbalanced-learn==0.4.3
 incremental==17.5.0
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 Keras==2.2.2
 Keras-Applications==1.0.4
 Keras-Preprocessing==1.0.2
